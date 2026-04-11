@@ -22,10 +22,6 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
     return Array.from(set).sort();
   }, []);
 
-  useEffect(() => {
-  document.title = "SUSsegado.net - TemNoPosto? - Busca de Medicamentos";
-}, []);
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!municipio || !searchTerm) return;
