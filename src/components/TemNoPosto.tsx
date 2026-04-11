@@ -169,11 +169,10 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-gray-500 text-sm">
-            Os dados apresentados são informativos e baseados em planilhas públicas. 
+            Os dados apresentados são informativos e baseados em planilhas públicas.
             A disponibilidade real pode variar.
-          <p className="text-gray-400 text-sm leading-relaxed">
-          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">© 2026 SUSsegado - Facilitando a saúde pública.</p>
           </p>
+          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">© 2026 SUSsegado - Facilitando a saúde pública.</p>
         </div>
       </footer>
     </div>
