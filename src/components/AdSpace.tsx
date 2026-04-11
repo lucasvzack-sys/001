@@ -16,8 +16,8 @@ export default function AdSpace({ className = "" }: { className?: string }) {
       {/* Esta tag "ins" é o buraco onde o Google vai injetar o banner */}
       <ins className="adsbygoogle"
            style={{ display: 'block', width: '100%' }}
-           data-ad-client="ca-pub-TEU_CODIGO_AQUI"
-           data-ad-slot="TEU_BLOCO_AQUI"
+           data-ad-client="ca-pub-5745806143307154"
+           data-ad-slot="9876543210"
            data-ad-format="auto"
            data-full-width-responsive="true">
       </ins>
