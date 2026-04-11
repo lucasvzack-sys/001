@@ -22,6 +22,7 @@ export default function Portal({ onNavigate }: PortalProps) {
           referrerPolicy="no-referrer"
         />
 
+        {/* Primeiro Banner (Já existente) */}
         <AdSpace className="mb-12 max-w-2xl mx-auto" />
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 tracking-tight">
@@ -78,6 +79,10 @@ export default function Portal({ onNavigate }: PortalProps) {
             </div>
           </motion.button>
         </div>
+
+        {/* Segundo Banner de Propaganda Adicionado Aqui */}
+        <AdSpace className="mt-12 max-w-2xl mx-auto" />
+
       </motion.div>
 
       <footer className="mt-20 text-gray-400 text-sm">
