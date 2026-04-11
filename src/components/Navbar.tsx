@@ -62,7 +62,7 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
 
           {/* Novo botão de Contato */}
           <a
-            href="mailto:contato@sussegado.com.br"
+            href="mailto:lucasvzack@gmail.com"
             className="p-2 sm:px-3 sm:py-2 rounded-xl flex items-center text-gray-600 hover:bg-gray-100 transition-colors"
             title="Contato"
           >
