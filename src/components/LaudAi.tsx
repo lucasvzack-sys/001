@@ -265,12 +265,11 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
           <p className="text-gray-400 text-sm leading-relaxed">
-            Este sistema não armazena dados. Use apenas para auxílio na redação. 
-            Revise sempre antes de salvar no prontuário oficial. 
+            Este sistema não armazena dados. Use apenas para auxílio na redação.
+            Revise sempre antes de salvar no prontuário oficial.
             A responsabilidade final pela informação médica é do profissional assistente.
-          <p className="text-gray-400 text-sm leading-relaxed">
-          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">© 2026 SUSsegado - Facilitando a saúde pública.</p>
           </p>
+          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">© 2026 SUSsegado - Facilitando a saúde pública.</p>
         </div>
       </footer>
     </div>
