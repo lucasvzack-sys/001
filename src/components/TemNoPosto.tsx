@@ -171,6 +171,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           <p className="text-gray-500 text-sm">
             Os dados apresentados são informativos e baseados em planilhas públicas. 
             A disponibilidade real pode variar.
+          <p className="text-gray-400 text-sm leading-relaxed">
           <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">© 2026 SUSsegado - Facilitando a saúde pública.</p>
           </p>
         </div>
