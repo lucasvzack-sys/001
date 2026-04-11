@@ -19,18 +19,26 @@ export default function CrossPromo({ target, onNavigate }: CrossPromoProps) {
       onClick={() => onNavigate(target)}
     >
       <div className="flex items-center justify-between">
-        <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Conheça também</h4>
-          <h3 className={`text-xl font-bold ${isLaudAi ? 'text-medical-blue' : 'text-sus-green'}`}>
-            {isLaudAi ? 'LaudAí' : 'TemNoPosto?'}
-          </h3>
-          <p className="text-sm text-gray-600 mt-1">
-            {isLaudAi 
-              ? 'Resuma laudos e exames para o prontuário em segundos.' 
-              : 'Saiba onde encontrar seus medicamentos gratuitamente.'}
-          </p>
+        <div className="flex items-center gap-4">
+          {/* Logo adicionado com base na aplicação de destino */}
+          <img 
+            src={isLaudAi ? '/laudai.png' : '/temnoposto.png'} 
+            alt={isLaudAi ? 'Logo LaudAí' : 'Logo TemNoPosto?'} 
+            className="w-16 h-16 object-contain drop-shadow-sm"
+          />
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Conheça também</h4>
+            <h3 className={`text-xl font-bold ${isLaudAi ? 'text-medical-blue' : 'text-sus-green'}`}>
+              {isLaudAi ? 'LaudAí' : 'TemNoPosto?'}
+            </h3>
+            <p className="text-sm text-gray-600 mt-1">
+              {isLaudAi 
+                ? 'Resuma laudos e exames para o prontuário em segundos.' 
+                : 'Saiba onde encontrar seus medicamentos gratuitamente.'}
+            </p>
+          </div>
         </div>
-        <div className={`p-3 rounded-full ${isLaudAi ? 'bg-medical-blue text-white' : 'bg-sus-green text-white'}`}>
+        <div className={`p-3 shrink-0 rounded-full ${isLaudAi ? 'bg-medical-blue text-white' : 'bg-sus-green text-white'}`}>
           <ArrowRight size={20} />
         </div>
       </div>
