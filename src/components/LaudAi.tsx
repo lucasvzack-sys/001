@@ -268,6 +268,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
             Este sistema não armazena dados. Use apenas para auxílio na redação. 
             Revise sempre antes de salvar no prontuário oficial. 
             A responsabilidade final pela informação médica é do profissional assistente.
+          <p className="text-gray-400 text-sm leading-relaxed">
           <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">© 2026 SUSsegado - Facilitando a saúde pública.</p>
           </p>
         </div>
