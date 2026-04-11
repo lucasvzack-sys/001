@@ -29,7 +29,7 @@ export default function Portal({ onNavigate }: PortalProps) {
           Bem-vindo ao <span className="text-medical-blue">SUS</span>segado
         </h1>
         <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-          Sua central de ferramentas inteligentes para facilitar o dia a dia na saúde pública.
+          Sua central de ferramentas para facilitar o dia a dia na saúde.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">
