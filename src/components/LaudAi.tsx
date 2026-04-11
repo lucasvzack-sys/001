@@ -112,7 +112,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-10"
         >
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">AnotAí</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">LaudAí</h2>
           <p className="text-gray-600 max-w-xl mx-auto">
             Transforme laudos complexos em resumos técnicos prontos para o prontuário médico.
           </p>
