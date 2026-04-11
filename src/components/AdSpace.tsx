@@ -1,16 +1,26 @@
-import { motion } from 'motion/react';
+import { useEffect } from 'react';
 
 export default function AdSpace({ className = "" }: { className?: string }) {
+  
+  useEffect(() => {
+    // Este código avisa o Google que o espaço está pronto para receber o anúncio
+    try {
+      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("Erro no anúncio", e);
+    }
+  }, []);
+
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className={`bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center p-8 min-h-[150px] ${className}`}
-    >
-      <div className="text-center">
-        <p className="text-gray-400 text-sm font-medium uppercase tracking-widest mb-1">Espaço para Anúncio</p>
-        <p className="text-gray-300 text-xs italic">Publicidade</p>
-      </div>
-    </motion.div>
+    <div className={`flex items-center justify-center min-h-[150px] overflow-hidden ${className}`}>
+      {/* Esta tag "ins" é o buraco onde o Google vai injetar o banner */}
+      <ins className="adsbygoogle"
+           style={{ display: 'block', width: '100%' }}
+           data-ad-client="ca-pub-TEU_CODIGO_AQUI"
+           data-ad-slot="TEU_BLOCO_AQUI"
+           data-ad-format="auto"
+           data-full-width-responsive="true">
+      </ins>
+    </div>
   );
 }
