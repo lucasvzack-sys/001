@@ -110,8 +110,14 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
+          className="text-center mb-10 flex flex-col items-center"
         >
+          {/* Logo adicionada aqui */}
+          <img 
+            src="/laudai.png" 
+            alt="Logo LaudAí" 
+            className="w-32 md:w-48 h-auto mb-6 object-contain" 
+        />
           <h2 className="text-3xl font-bold text-gray-900 mb-4">LaudAí</h2>
           <p className="text-gray-600 max-w-xl mx-auto">
             Transforme laudos complexos em resumos técnicos prontos para o prontuário médico.
