@@ -1,0 +1,7 @@
+{
+  "name": "SUSsegado",
+  "description": "Portal de ferramentas para o SUS: TemNoPosto (busca de medicamentos) e LaudAí (resumo de laudos médicos).",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
