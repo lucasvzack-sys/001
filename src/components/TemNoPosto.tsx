@@ -53,7 +53,13 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Busca de Medicamentos</h2>
+          {/* Logo adicionada aqui */}
+          <img 
+            src="/temnoposto.png" 
+            alt="Logo Tem No Posto" 
+            className="w-32 md:w-48 h-auto mb-6 object-contain"
+          />
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">TemNoPosto?</h2>
           <p className="text-gray-600">Verifique a disponibilidade gratuita na rede pública do seu município.</p>
         </motion.div>
 
