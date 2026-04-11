@@ -51,7 +51,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-12 flex flex-col items-center"
         >
           {/* Logo adicionada aqui */}
           <img 
