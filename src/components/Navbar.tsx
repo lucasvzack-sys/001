@@ -70,16 +70,19 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
             <span className="hidden md:inline font-medium">Contato</span>
           </a>
 
-          {/* Novo botão de Doação */}
-          <a
-            href="https://link.mercadopago.com.br/sussegado"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 sm:px-4 sm:py-2 rounded-xl flex items-center text-pink-600 bg-pink-50 hover:bg-pink-100 transition-colors font-bold"
+          {/* Botão de Doação atualizado */}
+          <button
+            onClick={() => onNavigate('doar')}
+            className={`p-2 sm:px-4 sm:py-2 rounded-xl flex items-center font-bold transition-colors ${
+              currentView === 'doar'
+                ? 'bg-pink-100 text-pink-700'
+                : 'text-pink-600 bg-pink-50 hover:bg-pink-100'
+            }`}
             title="Apoie o Projeto"
           >
             <Heart size={20} className="sm:mr-2 fill-current" />
             <span className="hidden md:inline">Doar</span>
+          </button>
           </a>
         </div>
       </div>
