@@ -274,6 +274,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
             Este sistema não armazena dados. Use apenas para auxílio na redação.
             Revise sempre antes de salvar no prontuário oficial.
             A responsabilidade final pela informação médica é do profissional assistente.
+          </p>
         </div>
       </footer>
     </div>
