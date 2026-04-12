@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { View } from '../types';
 import AdSpace from './AdSpace';
+import { Sparkles } from 'lucide-react';
 
 interface PortalProps {
   onNavigate: (view: View) => void;
