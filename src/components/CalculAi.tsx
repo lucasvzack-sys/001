@@ -1,5 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Calculator, Activity, Heart, Brain, Baby, Stethoscope } from 'lucide-react';
+import { 
+  Calculator, Activity, Heart, Brain, Baby, Stethoscope, 
+  ArrowLeft, Smile, Calendar, PlusSquare, FileText
+} from 'lucide-react';
 import { View } from '../types';
 import Navbar from './Navbar';
 
@@ -7,16 +10,23 @@ interface CalculAiProps {
   onNavigate: (view: View) => void;
 }
 
-type Category = 'Geral' | 'Cardio' | 'Emergência/UTI' | 'Neuro/Psi' | 'Obstetrícia/Ped';
+type Category = 'Geral' | 'Cardiologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Obstetrícia' | 'Pediatria';
 
-export default function CalculAi({ onNavigate }: CalculAiProps) {
-  const [activeCategory, setActiveCategory] = useState<Category>('Geral');
+// ==========================================
+// COMPONENTE AUXILIAR COMPARTILHADO
+// ==========================================
+const CheckboxItem = ({ label, checked, onChange }: { label: string, checked: boolean, onChange: (c: boolean) => void }) => (
+  <label className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+    <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="w-5 h-5 text-orange-600 rounded border-gray-300 focus:ring-orange-500" />
+    <span className="text-gray-700">{label}</span>
+  </label>
+);
 
-  // ==========================================
-  // ESTADOS E LÓGICAS DAS CALCULADORAS
-  // ==========================================
-  
-  // 1. GERAL: IMC
+// ==========================================
+// COMPONENTES DAS CALCULADORAS (ISOLADOS)
+// ==========================================
+
+const CalcIMC = () => {
   const [imc, setImc] = useState({ peso: '', altura: '' });
   const resultImc = useMemo(() => {
     const p = parseFloat(imc.peso);
@@ -25,14 +35,102 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     return null;
   }, [imc]);
 
-  // 2. EMERGÊNCIA: Glasgow
-  const [glasgow, setGlasgow] = useState({ ocular: 4, verbal: 5, motor: 6 });
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-6">Calculadora de IMC</h3>
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Peso (kg)</label>
+          <input type="number" value={imc.peso} onChange={(e) => setImc({...imc, peso: e.target.value})} className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 bg-gray-50 p-4 text-lg" placeholder="Ex: 70" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Altura (cm)</label>
+          <input type="number" value={imc.altura} onChange={(e) => setImc({...imc, altura: e.target.value})} className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 bg-gray-50 p-4 text-lg" placeholder="Ex: 175" />
+        </div>
+        {resultImc && (
+          <div className="mt-8 p-6 bg-orange-50 rounded-2xl text-center">
+            <span className="text-sm text-orange-800 block uppercase font-bold tracking-wider mb-2">Resultado</span>
+            <span className="text-6xl font-black text-orange-600">{resultImc}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-  // 3. EMERGÊNCIA: CURB-65
+const CalcGlasgow = () => {
+  const [glasgow, setGlasgow] = useState({ ocular: 4, verbal: 5, motor: 6 });
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-6">Escala de Coma de Glasgow</h3>
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Abertura Ocular</label>
+          <select onChange={(e) => setGlasgow({...glasgow, ocular: parseInt(e.target.value)})} className="block w-full rounded-xl border-gray-200 bg-gray-50 p-4 text-lg">
+            <option value="4">4 - Espontânea</option>
+            <option value="3">3 - À voz</option>
+            <option value="2">2 - À dor</option>
+            <option value="1">1 - Nenhuma</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Resposta Verbal</label>
+          <select onChange={(e) => setGlasgow({...glasgow, verbal: parseInt(e.target.value)})} className="block w-full rounded-xl border-gray-200 bg-gray-50 p-4 text-lg">
+            <option value="5">5 - Orientado</option>
+            <option value="4">4 - Confuso</option>
+            <option value="3">3 - Palavras inapropriadas</option>
+            <option value="2">2 - Sons incompreensíveis</option>
+            <option value="1">1 - Nenhuma</option>
+            <option value="1">NT - Não testável (Tubo)</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Resposta Motora</label>
+          <select onChange={(e) => setGlasgow({...glasgow, motor: parseInt(e.target.value)})} className="block w-full rounded-xl border-gray-200 bg-gray-50 p-4 text-lg">
+            <option value="6">6 - Obedece comandos</option>
+            <option value="5">5 - Localiza dor</option>
+            <option value="4">4 - Flexão normal (retirada)</option>
+            <option value="3">3 - Flexão anormal (decorticação)</option>
+            <option value="2">2 - Extensão anormal (descerebração)</option>
+            <option value="1">1 - Nenhuma</option>
+          </select>
+        </div>
+        <div className="mt-8 p-6 bg-blue-50 rounded-2xl text-center">
+          <span className="text-sm text-blue-800 block uppercase font-bold tracking-wider mb-2">Total</span>
+          <span className="text-6xl font-black text-blue-600">{glasgow.ocular + glasgow.verbal + glasgow.motor}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcCURB65 = () => {
   const [curb, setCurb] = useState({ confusao: false, ureia: false, resp: false, pa: false, idade: false });
   const scoreCurb = useMemo(() => Object.values(curb).filter(Boolean).length, [curb]);
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-2">Escore CURB-65</h3>
+      <p className="text-sm text-gray-500 mb-6">Avaliação de risco em Pneumonia Adquirida na Comunidade</p>
+      <div className="space-y-4">
+        <CheckboxItem label="Confusão Mental" checked={curb.confusao} onChange={(c) => setCurb({...curb, confusao: c})} />
+        <CheckboxItem label="Ureia > 43 mg/dL (ou BUN > 19 mg/dL)" checked={curb.ureia} onChange={(c) => setCurb({...curb, ureia: c})} />
+        <CheckboxItem label="Frequência Respiratória ≥ 30 irpm" checked={curb.resp} onChange={(c) => setCurb({...curb, resp: c})} />
+        <CheckboxItem label="PAS < 90 ou PAD ≤ 60 mmHg" checked={curb.pa} onChange={(c) => setCurb({...curb, pa: c})} />
+        <CheckboxItem label="Idade ≥ 65 anos" checked={curb.idade} onChange={(c) => setCurb({...curb, idade: c})} />
+        
+        <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+          <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Mortalidade (30 dias)</span>
+          <span className="text-6xl font-black text-red-600">{scoreCurb} <span className="text-2xl font-normal text-red-800">pts</span></span>
+          <p className="text-lg mt-4 text-red-900 font-medium">
+            {scoreCurb <= 1 ? 'Baixo Risco (Ambulatorial)' : scoreCurb === 2 ? 'Risco Moderado (Considerar Internação)' : 'Alto Risco (Internação/UTI)'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-  // 4. CARDIO: CHA2DS2-VASc
+const CalcCHADS = () => {
   const [chads, setChads] = useState({ insuficiencia: false, has: false, idade: '<65', diabetes: false, stroke: false, vascular: false, sexo: 'M' });
   const scoreChads = useMemo(() => {
     let score = 0;
@@ -47,7 +145,46 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     return score;
   }, [chads]);
 
-  // 5. OBSTETRÍCIA: Idade Gestacional / DPP (Pela DUM)
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-2">CHA₂DS₂-VASc</h3>
+      <p className="text-sm text-gray-500 mb-6">Risco de AVC em Fibrilação Atrial</p>
+      <div className="space-y-4">
+        <CheckboxItem label="Insuficiência Cardíaca / Disfunção VE" checked={chads.insuficiencia} onChange={(c) => setChads({...chads, insuficiencia: c})} />
+        <CheckboxItem label="Hipertensão Arterial" checked={chads.has} onChange={(c) => setChads({...chads, has: c})} />
+        <CheckboxItem label="Diabetes Mellitus" checked={chads.diabetes} onChange={(c) => setChads({...chads, diabetes: c})} />
+        <CheckboxItem label="AVC, AIT ou Tromboembolismo prévio (+2)" checked={chads.stroke} onChange={(c) => setChads({...chads, stroke: c})} />
+        <CheckboxItem label="Doença Vascular (IAM, DAOP, Placa Aórtica)" checked={chads.vascular} onChange={(c) => setChads({...chads, vascular: c})} />
+        
+        <div className="pt-4">
+          <label className="block text-sm font-medium text-gray-700 mb-3">Idade</label>
+          <div className="grid grid-cols-3 gap-3">
+            {['<65', '65-74', '>=75'].map((age) => (
+              <button key={age} onClick={() => setChads({...chads, idade: age})} className={`p-3 rounded-xl text-md border transition-all ${chads.idade === age ? 'bg-orange-100 border-orange-500 text-orange-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
+                {age}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="pt-4">
+          <label className="block text-sm font-medium text-gray-700 mb-3">Sexo</label>
+          <div className="grid grid-cols-2 gap-3">
+            <button onClick={() => setChads({...chads, sexo: 'M'})} className={`p-3 rounded-xl text-md border transition-all ${chads.sexo === 'M' ? 'bg-blue-100 border-blue-500 text-blue-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Masculino</button>
+            <button onClick={() => setChads({...chads, sexo: 'F'})} className={`p-3 rounded-xl text-md border transition-all ${chads.sexo === 'F' ? 'bg-pink-100 border-pink-500 text-pink-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Feminino</button>
+          </div>
+        </div>
+
+        <div className="mt-8 p-6 bg-purple-50 rounded-2xl text-center">
+          <span className="text-sm text-purple-800 block uppercase font-bold tracking-wider mb-2">Escore Total</span>
+          <span className="text-6xl font-black text-purple-600">{scoreChads}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcIdadeGestacional = () => {
   const [dum, setDum] = useState('');
   const resultGO = useMemo(() => {
     if (!dum) return null;
@@ -70,7 +207,35 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     return { semanas, dias, dpp };
   }, [dum]);
 
-  // 6. OBSTETRÍCIA: DUM por USG
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-2">Idade Gestacional e DPP</h3>
+      <p className="text-sm text-gray-500 mb-6">Cálculo a partir da Data da Última Menstruação (DUM)</p>
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Informe a DUM</label>
+          <input type="date" value={dum} onChange={(e) => setDum(e.target.value)} className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 bg-gray-50 p-4 text-lg text-gray-700" />
+        </div>
+        
+        {resultGO && !resultGO.erro && (
+          <div className="mt-8 space-y-4">
+            <div className="p-6 bg-pink-50 rounded-2xl flex flex-col items-center justify-center">
+              <span className="text-sm font-bold text-pink-800 uppercase mb-2">Idade Gestacional Atual</span>
+              <span className="text-4xl font-black text-pink-600">{resultGO.semanas}s e {resultGO.dias}d</span>
+            </div>
+            <div className="p-6 bg-purple-50 rounded-2xl flex flex-col items-center justify-center">
+              <span className="text-sm font-bold text-purple-800 uppercase mb-2">Data Provável do Parto (DPP)</span>
+              <span className="text-3xl font-black text-purple-600">{resultGO.dpp}</span>
+            </div>
+          </div>
+        )}
+        {resultGO?.erro && <p className="text-red-500 text-center mt-4">Data inserida inválida.</p>}
+      </div>
+    </div>
+  );
+};
+
+const CalcDUMUSG = () => {
   const [usgData, setUsgData] = useState({ data: '', semanas: '', dias: '' });
   const resultUsg = useMemo(() => {
     if (!usgData.data || !usgData.semanas) return null;
@@ -98,339 +263,276 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     };
   }, [usgData]);
 
-  // 7. NEURO: NIHSS
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-6">DUM pela Data do Ultrassom</h3>
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Data da realização do Ultrassom</label>
+          <input type="date" value={usgData.data} onChange={(e) => setUsgData({...usgData, data: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Semanas no USG</label>
+            <input type="number" value={usgData.semanas} onChange={(e) => setUsgData({...usgData, semanas: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 12" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Dias no USG</label>
+            <input type="number" value={usgData.dias} onChange={(e) => setUsgData({...usgData, dias: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 3" />
+          </div>
+        </div>
+        {resultUsg && (
+          <div className="mt-8 space-y-4">
+            <div className="p-4 bg-green-50 rounded-xl flex flex-col sm:flex-row items-center justify-between">
+              <span className="text-sm font-bold text-green-800 uppercase">DUM Estimada:</span>
+              <span className="text-xl font-bold text-green-600">{resultUsg.dum}</span>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-xl flex flex-col sm:flex-row items-center justify-between">
+              <span className="text-sm font-bold text-blue-800 uppercase">IG Atual:</span>
+              <span className="text-xl font-bold text-blue-600">{resultUsg.ig}</span>
+            </div>
+            <div className="p-4 bg-purple-50 rounded-xl flex flex-col sm:flex-row items-center justify-between">
+              <span className="text-sm font-bold text-purple-800 uppercase">DPP:</span>
+              <span className="text-xl font-bold text-purple-600">{resultUsg.dpp}</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const CalcNIHSS = () => {
   const [nihss, setNihss] = useState(new Array(11).fill(0));
   const scoreNihss = useMemo(() => nihss.reduce((a, b) => a + b, 0), [nihss]);
+  
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-2">Escala NIHSS</h3>
+      <p className="text-sm text-gray-500 mb-6">Avaliação de gravidade no Acidente Vascular Cerebral (AVC)</p>
+      <div className="space-y-3">
+        <div className="grid grid-cols-1 gap-3">
+          {[
+            "1a. Nível de Consciência", "1b. Perguntas (Mês/Idade)", "1c. Comandos (Olhos/Mãos)", 
+            "2. Olhar Conjugado", "3. Campos Visuais", "4. Paralisia Facial", 
+            "5. Motor Braços", "6. Motor Pernas", "7. Ataxia de Membros", "8. Sensibilidade", "9. Linguagem/Afasia"
+          ].map((label, idx) => (
+            <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 rounded-xl">
+              <span className="text-md text-gray-700 font-medium mb-2 sm:mb-0">{label}</span>
+              <input type="number" min="0" max="4" value={nihss[idx]} onChange={(e) => {
+                const newNihss = [...nihss];
+                newNihss[idx] = parseInt(e.target.value) || 0;
+                setNihss(newNihss);
+              }} className="w-20 p-2 border border-gray-300 rounded-lg text-center text-lg focus:ring-orange-500" />
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+          <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Score NIHSS Total</span>
+          <span className="text-6xl font-black text-red-600">{scoreNihss}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-  // 8. PSI: PHQ-9
+const CalcPHQ9 = () => {
   const [phq9, setPhq9] = useState(new Array(9).fill(0));
   const scorePhq9 = useMemo(() => phq9.reduce((a, b) => a + b, 0), [phq9]);
 
-  // 9. NEURO: Mini-Mental (MEEM)
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-2">PHQ-9 (Rastreio de Depressão)</h3>
+      <p className="text-sm text-gray-500 mb-6">Frequência dos sintomas nas últimas 2 semanas: 0=Nunca, 3=Quase todos os dias.</p>
+      <div className="space-y-4">
+        {[
+          "Pouco interesse ou prazer em fazer as coisas", "Sentir-se 'para baixo', deprimido ou sem perspectiva", 
+          "Dificuldade para pegar no sono, ou dormir demais", "Sentir-se cansado ou com pouca energia", 
+          "Falta de apetite ou comendo demais", "Sentir-se mal consigo mesmo ou um fracasso", 
+          "Dificuldade de concentração (ex: ler ou ver TV)", "Lentidão ou agitação motora observável", 
+          "Pensamentos de se ferir ou de que estaria melhor morto"
+        ].map((q, idx) => (
+          <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100">
+            <span className="text-sm text-gray-700 pr-4 mb-2 sm:mb-0 flex-1">{idx+1}. {q}</span>
+            <select value={phq9[idx]} onChange={(e) => {
+              const newPhq = [...phq9];
+              newPhq[idx] = parseInt(e.target.value);
+              setPhq9(newPhq);
+            }} className="p-2 bg-gray-50 border border-gray-200 rounded-lg text-md min-w-[80px]">
+              <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
+            </select>
+          </div>
+        ))}
+        <div className="mt-8 p-6 bg-indigo-50 rounded-2xl text-center">
+          <span className="text-sm text-indigo-800 block uppercase font-bold tracking-wider mb-2">Total Score</span>
+          <span className="text-5xl font-black text-indigo-600">{scorePhq9}</span>
+          <p className="text-lg mt-3 font-medium text-indigo-900">
+            {scorePhq9 >= 20 ? 'Depressão Grave' : scorePhq9 >= 15 ? 'Depressão Moderadamente Grave' : scorePhq9 >= 10 ? 'Depressão Moderada' : scorePhq9 >= 5 ? 'Depressão Leve' : 'Mínima / Sem Depressão'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcMEEM = () => {
   const [meem, setMeem] = useState({ orientacao: 0, registro: 0, atencao: 0, evocacao: 0, linguagem: 0 });
   const scoreMeem = useMemo(() => Object.values(meem).reduce((a, b) => a + b, 0), [meem]);
 
-  // ==========================================
-  // COMPONENTES AUXILIARES
-  // ==========================================
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-800 mb-6">Mini-Exame do Estado Mental (MEEM)</h3>
+      <div className="space-y-5">
+        {[
+          { key: 'orientacao', label: 'Orientação Temporal e Espacial', max: 10 },
+          { key: 'registro', label: 'Registro (3 palavras)', max: 3 },
+          { key: 'atencao', label: 'Atenção e Cálculo (100-7 ou Mundo)', max: 5 },
+          { key: 'evocacao', label: 'Evocação (Lembrar as 3 palavras)', max: 3 },
+          { key: 'linguagem', label: 'Linguagem e Comando visual/motor', max: 9 }
+        ].map(({ key, label, max }) => (
+          <div key={key} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 rounded-xl">
+            <span className="text-md text-gray-700 font-medium mb-2 sm:mb-0">{label} <span className="text-xs text-gray-400 ml-1">(Max: {max})</span></span>
+            <input type="number" min="0" max={max} value={(meem as any)[key]} onChange={(e) => setMeem({...meem, [key]: parseInt(e.target.value) || 0})} className="w-20 p-2 bg-white border border-gray-300 rounded-lg text-center text-lg focus:ring-yellow-500" />
+          </div>
+        ))}
+        <div className="mt-8 p-6 bg-yellow-50 rounded-2xl text-center border border-yellow-100">
+          <span className="text-sm text-yellow-800 block uppercase font-bold tracking-wider mb-2">Score Total</span>
+          <span className="text-6xl font-black text-yellow-600">{scoreMeem} <span className="text-2xl font-normal text-yellow-800">/ 30</span></span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+// ==========================================
+// COMPONENTE PRINCIPAL
+// ==========================================
+
+export default function CalculAi({ onNavigate }: CalculAiProps) {
+  const [activeCategory, setActiveCategory] = useState<Category>('Geral');
+  const [selectedCalc, setSelectedCalc] = useState<string | null>(null);
+
   const categories: { name: Category; icon: any }[] = [
     { name: 'Geral', icon: Stethoscope },
-    { name: 'Cardio', icon: Heart },
-    { name: 'Emergência/UTI', icon: Activity },
-    { name: 'Neuro/Psi', icon: Brain },
-    { name: 'Obstetrícia/Ped', icon: Baby },
+    { name: 'Cardiologia', icon: Heart },
+    { name: 'Emergência e UTI', icon: Activity },
+    { name: 'Neurologia', icon: Brain },
+    { name: 'Psiquiatria', icon: Smile },
+    { name: 'Obstetrícia', icon: Baby },
+    { name: 'Pediatria', icon: Baby }, // Separado de Obstetrícia, usando mesmo ícone ou atualize se importar outro
   ];
 
-  const CheckboxItem = ({ label, checked, onChange }: { label: string, checked: boolean, onChange: (c: boolean) => void }) => (
-    <label className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="w-5 h-5 text-orange-600 rounded border-gray-300 focus:ring-orange-500" />
-      <span className="text-gray-700">{label}</span>
-    </label>
-  );
+  const calculatorsList = [
+    { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo rápido do Índice de Massa Corporal', icon: Calculator },
+    { id: 'chads', title: 'CHA₂DS₂-VASc', category: 'Cardiologia', desc: 'Risco de AVC em pacientes com Fibrilação Atrial', icon: Heart },
+    { id: 'glasgow', title: 'Escala de Glasgow', category: 'Emergência e UTI', desc: 'Avaliação neurológica e nível de consciência', icon: Activity },
+    { id: 'curb65', title: 'Escore CURB-65', category: 'Emergência e UTI', desc: 'Estratificação de risco para Pneumonia', icon: Activity },
+    { id: 'nihss', title: 'Escala NIHSS', category: 'Neurologia', desc: 'Avaliação padronizada de déficit neurológico no AVC', icon: FileText },
+    { id: 'meem', title: 'Mini-Mental (MEEM)', category: 'Neurologia', desc: 'Rastreio de comprometimento cognitivo', icon: Brain },
+    { id: 'phq9', title: 'Questionário PHQ-9', category: 'Psiquiatria', desc: 'Ferramenta de rastreio e monitoramento da depressão', icon: Smile },
+    { id: 'ig', title: 'Idade Gestacional / DPP', category: 'Obstetrícia', desc: 'Cálculo a partir da DUM', icon: Calendar },
+    { id: 'dum_usg', title: 'DUM via Ultrassom', category: 'Obstetrícia', desc: 'Estimativa de DUM pela biometria fetal', icon: PlusSquare },
+  ];
+
+  const filteredCalculators = calculatorsList.filter(calc => calc.category === activeCategory);
+
+  const renderCalculatorContent = () => {
+    switch (selectedCalc) {
+      case 'imc': return <CalcIMC />;
+      case 'glasgow': return <CalcGlasgow />;
+      case 'curb65': return <CalcCURB65 />;
+      case 'chads': return <CalcCHADS />;
+      case 'ig': return <CalcIdadeGestacional />;
+      case 'dum_usg': return <CalcDUMUSG />;
+      case 'nihss': return <CalcNIHSS />;
+      case 'phq9': return <CalcPHQ9 />;
+      case 'meem': return <CalcMEEM />;
+      default: return null;
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-20">
       <Navbar currentView="calculai" onNavigate={onNavigate} />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 flex items-center">
-            <Calculator className="mr-3 text-orange-600" /> CalculAí
-          </h1>
-          <p className="text-gray-600 mt-2">Suporte à decisão clínica baseada em evidências.</p>
-        </header>
-
-        {/* Abas de Categorias */}
-        <div className="flex space-x-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-          {categories.map((cat) => (
-            <button key={cat.name} onClick={() => setActiveCategory(cat.name)} className={`flex items-center px-5 py-2.5 rounded-full whitespace-nowrap transition-all font-medium ${activeCategory === cat.name ? 'bg-orange-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200'}`}>
-              <cat.icon size={18} className="mr-2" />
-              {cat.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* ================= GERAL ================= */}
-          {activeCategory === 'Geral' && (
-            <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Calculadora de IMC</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Peso (kg)</label>
-                  <input type="number" value={imc.peso} onChange={(e) => setImc({...imc, peso: e.target.value})} className="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 bg-gray-50 p-3" placeholder="Ex: 70" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Altura (cm)</label>
-                  <input type="number" value={imc.altura} onChange={(e) => setImc({...imc, altura: e.target.value})} className="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 bg-gray-50 p-3" placeholder="Ex: 175" />
-                </div>
-                {resultImc && (
-                  <div className="mt-4 p-4 bg-orange-50 rounded-2xl text-center">
-                    <span className="text-sm text-orange-800 block uppercase font-bold tracking-wider">Resultado</span>
-                    <span className="text-4xl font-black text-orange-600">{resultImc}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* ================= EMERGÊNCIA/UTI ================= */}
-          {activeCategory === 'Emergência/UTI' && (
-            <>
-              {/* GLASGOW */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Escala de Glasgow</h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Abertura Ocular</label>
-                    <select onChange={(e) => setGlasgow({...glasgow, ocular: parseInt(e.target.value)})} className="mt-1 block w-full rounded-xl border-gray-100 bg-gray-50 p-3">
-                      <option value="4">4 - Espontânea</option>
-                      <option value="3">3 - À voz</option>
-                      <option value="2">2 - À dor</option>
-                      <option value="1">1 - Nenhuma</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Resposta Verbal</label>
-                    <select onChange={(e) => setGlasgow({...glasgow, verbal: parseInt(e.target.value)})} className="mt-1 block w-full rounded-xl border-gray-100 bg-gray-50 p-3">
-                      <option value="5">5 - Orientado</option>
-                      <option value="4">4 - Confuso</option>
-                      <option value="3">3 - Palavras inapropriadas</option>
-                      <option value="2">2 - Sons incompreensíveis</option>
-                      <option value="1">1 - Nenhuma</option>
-                      <option value="1">NT - Não testável (Tubo)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Resposta Motora</label>
-                    <select onChange={(e) => setGlasgow({...glasgow, motor: parseInt(e.target.value)})} className="mt-1 block w-full rounded-xl border-gray-100 bg-gray-50 p-3">
-                      <option value="6">6 - Obedece comandos</option>
-                      <option value="5">5 - Localiza dor</option>
-                      <option value="4">4 - Flexão normal (retirada)</option>
-                      <option value="3">3 - Flexão anormal (decorticação)</option>
-                      <option value="2">2 - Extensão anormal (descerebração)</option>
-                      <option value="1">1 - Nenhuma</option>
-                    </select>
-                  </div>
-                  <div className="mt-4 p-4 bg-blue-50 rounded-2xl text-center">
-                    <span className="text-sm text-blue-800 block uppercase font-bold tracking-wider">Total</span>
-                    <span className="text-4xl font-black text-blue-600">{glasgow.ocular + glasgow.verbal + glasgow.motor}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* CURB-65 */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-1">Escore CURB-65</h3>
-                <p className="text-xs text-gray-500 mb-4">Avaliação de risco em Pneumonia Adquirida na Comunidade</p>
-                <div className="space-y-3">
-                  <CheckboxItem label="Confusão Mental" checked={curb.confusao} onChange={(c) => setCurb({...curb, confusao: c})} />
-                  <CheckboxItem label="Ureia > 43 mg/dL (ou BUN > 19 mg/dL)" checked={curb.ureia} onChange={(c) => setCurb({...curb, ureia: c})} />
-                  <CheckboxItem label="Frequência Respiratória ≥ 30 irpm" checked={curb.resp} onChange={(c) => setCurb({...curb, resp: c})} />
-                  <CheckboxItem label="PAS < 90 ou PAD ≤ 60 mmHg" checked={curb.pa} onChange={(c) => setCurb({...curb, pa: c})} />
-                  <CheckboxItem label="Idade ≥ 65 anos" checked={curb.idade} onChange={(c) => setCurb({...curb, idade: c})} />
-                  
-                  <div className="mt-4 p-4 bg-red-50 rounded-2xl text-center">
-                    <span className="text-sm text-red-800 block uppercase font-bold tracking-wider">Mortalidade (30 dias)</span>
-                    <span className="text-4xl font-black text-red-600">{scoreCurb} <span className="text-lg font-normal text-red-800">pontos</span></span>
-                    <p className="text-sm mt-2 text-red-900 font-medium">
-                      {scoreCurb <= 1 ? 'Baixo Risco (Ambulatorial)' : scoreCurb === 2 ? 'Risco Moderado (Considerar Internação)' : 'Alto Risco (Internação/UTI)'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* ================= CARDIO ================= */}
-          {activeCategory === 'Cardio' && (
-            <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-              <h3 className="text-xl font-bold text-gray-800 mb-1">CHA₂DS₂-VASc</h3>
-              <p className="text-xs text-gray-500 mb-4">Risco de AVC em Fibrilação Atrial</p>
-              <div className="space-y-3">
-                <CheckboxItem label="Insuficiência Cardíaca / Disfunção VE" checked={chads.insuficiencia} onChange={(c) => setChads({...chads, insuficiencia: c})} />
-                <CheckboxItem label="Hipertensão Arterial" checked={chads.has} onChange={(c) => setChads({...chads, has: c})} />
-                <CheckboxItem label="Diabetes Mellitus" checked={chads.diabetes} onChange={(c) => setChads({...chads, diabetes: c})} />
-                <CheckboxItem label="AVC, AIT ou Tromboembolismo prévio (+2)" checked={chads.stroke} onChange={(c) => setChads({...chads, stroke: c})} />
-                <CheckboxItem label="Doença Vascular (IAM, DAOP, Placa Aórtica)" checked={chads.vascular} onChange={(c) => setChads({...chads, vascular: c})} />
-                
-                <div className="pt-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Idade</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {['<65', '65-74', '>=75'].map((age) => (
-                      <button key={age} onClick={() => setChads({...chads, idade: age})} className={`p-2 rounded-xl text-sm border transition-all ${chads.idade === age ? 'bg-orange-100 border-orange-500 text-orange-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
-                        {age}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Sexo</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button onClick={() => setChads({...chads, sexo: 'M'})} className={`p-2 rounded-xl text-sm border transition-all ${chads.sexo === 'M' ? 'bg-blue-100 border-blue-500 text-blue-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Masculino</button>
-                    <button onClick={() => setChads({...chads, sexo: 'F'})} className={`p-2 rounded-xl text-sm border transition-all ${chads.sexo === 'F' ? 'bg-pink-100 border-pink-500 text-pink-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Feminino</button>
-                  </div>
-                </div>
-
-                <div className="mt-6 p-4 bg-purple-50 rounded-2xl text-center">
-                  <span className="text-sm text-purple-800 block uppercase font-bold tracking-wider">Escore Total</span>
-                  <span className="text-4xl font-black text-purple-600">{scoreChads}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* ================= OBSTETRÍCIA / PED ================= */}
-          {activeCategory === 'Obstetrícia/Ped' && (
-            <>
-              {/* Idade Gestacional pela DUM */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-1">Idade Gestacional e DPP</h3>
-                <p className="text-xs text-gray-500 mb-4">A partir da Data da Última Menstruação (DUM)</p>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Informe a DUM</label>
-                    <input type="date" value={dum} onChange={(e) => setDum(e.target.value)} className="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 bg-gray-50 p-3 text-gray-700" />
-                  </div>
-                  
-                  {resultGO && !resultGO.erro && (
-                    <div className="mt-6 space-y-3">
-                      <div className="p-4 bg-pink-50 rounded-2xl flex justify-between items-center">
-                        <span className="text-sm font-bold text-pink-800 uppercase">IG Atual</span>
-                        <span className="text-2xl font-black text-pink-600">{resultGO.semanas}s e {resultGO.dias}d</span>
-                      </div>
-                      <div className="p-4 bg-purple-50 rounded-2xl flex justify-between items-center">
-                        <span className="text-sm font-bold text-purple-800 uppercase">DPP</span>
-                        <span className="text-xl font-black text-purple-600">{resultGO.dpp}</span>
-                      </div>
-                    </div>
-                  )}
-                  {resultGO?.erro && <p className="text-red-500 text-sm mt-2 text-center">Data inserida inválida.</p>}
-                </div>
-              </div>
-
-              {/* DUM POR USG */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">DUM pela Data do USG</h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Data do Ultrassom</label>
-                    <input type="date" value={usgData.data} onChange={(e) => setUsgData({...usgData, data: e.target.value})} className="mt-1 block w-full rounded-xl border-gray-300 bg-gray-50 p-3" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Semanas no USG</label>
-                      <input type="number" value={usgData.semanas} onChange={(e) => setUsgData({...usgData, semanas: e.target.value})} className="mt-1 block w-full rounded-xl border-gray-300 bg-gray-50 p-3" placeholder="Ex: 12" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Dias no USG</label>
-                      <input type="number" value={usgData.dias} onChange={(e) => setUsgData({...usgData, dias: e.target.value})} className="mt-1 block w-full rounded-xl border-gray-300 bg-gray-50 p-3" placeholder="Ex: 3" />
-                    </div>
-                  </div>
-                  {resultUsg && (
-                    <div className="mt-4 space-y-2">
-                      <div className="p-3 bg-green-50 rounded-xl flex justify-between">
-                        <span className="text-sm font-bold text-green-800 uppercase">DUM Estimada:</span>
-                        <span className="font-bold text-green-600">{resultUsg.dum}</span>
-                      </div>
-                      <div className="p-3 bg-blue-50 rounded-xl flex justify-between">
-                        <span className="text-sm font-bold text-blue-800 uppercase">IG Atual:</span>
-                        <span className="font-bold text-blue-600">{resultUsg.ig}</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* ================= NEURO / PSI ================= */}
-          {activeCategory === 'Neuro/Psi' && (
-            <>
-              {/* NEURO: NIHSS */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">NIHSS (Escala de AVC)</h3>
-                <div className="space-y-3">
-                  <p className="text-xs text-gray-500">Selecione a pontuação de cada item (0 a 4 conforme o item).</p>
-                  <div className="grid grid-cols-1 gap-2">
-                    {[
-                      "1a. Nível de Consciência", "1b. Perguntas (Mês/Idade)", "1c. Comandos (Olhos)", 
-                      "2. Olhar Conjugado", "3. Campos Visuais", "4. Paralisia Facial", 
-                      "5. Motor Braços", "6. Motor Pernas", "7. Ataxia", "8. Sensibilidade", "9. Linguagem"
-                    ].map((label, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-                        <span className="text-sm text-gray-600">{label}</span>
-                        <input type="number" min="0" max="4" value={nihss[idx]} onChange={(e) => {
-                          const newNihss = [...nihss];
-                          newNihss[idx] = parseInt(e.target.value) || 0;
-                          setNihss(newNihss);
-                        }} className="w-12 p-1 border rounded text-center" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 p-4 bg-red-50 rounded-2xl text-center">
-                    <span className="text-sm text-red-800 block uppercase font-bold tracking-wider">Score NIHSS</span>
-                    <span className="text-4xl font-black text-red-600">{scoreNihss}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* PSI: PHQ-9 */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">PHQ-9 (Depressão)</h3>
-                <div className="space-y-2">
-                  <p className="text-xs text-gray-500 mb-2">Nas últimas 2 semanas: 0=Nunca, 3=Quase todos dias.</p>
-                  {[
-                    "Pouco interesse ou prazer", "Sentir-se 'para baixo'", "Dificuldade em dormir", 
-                    "Sentir-se cansado", "Apetite ruim ou excessivo", "Sentir-se mal consigo mesmo", 
-                    "Dificuldade de concentração", "Lentidão ou agitação", "Pensamentos de se ferir"
-                  ].map((q, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-1 border-b border-gray-50">
-                      <span className="text-xs text-gray-600 pr-2">{idx+1}. {q}</span>
-                      <select value={phq9[idx]} onChange={(e) => {
-                        const newPhq = [...phq9];
-                        newPhq[idx] = parseInt(e.target.value);
-                        setPhq9(newPhq);
-                      }} className="text-xs p-1 bg-gray-50 rounded">
-                        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                      </select>
-                    </div>
-                  ))}
-                  <div className="mt-4 p-4 bg-indigo-50 rounded-2xl text-center">
-                    <span className="text-sm text-indigo-800 block font-bold">Total: {scorePhq9}</span>
-                    <p className="text-xs mt-1 italic">
-                      {scorePhq9 >= 20 ? 'Depressão Grave' : scorePhq9 >= 15 ? 'Mod. Grave' : scorePhq9 >= 10 ? 'Moderada' : 'Leve/Mínima'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* NEURO: MEEM */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Mini-Mental (MEEM)</h3>
-                <div className="space-y-4">
-                  {Object.entries(meem).map(([key, val]) => (
-                    <div key={key} className="flex items-center justify-between">
-                      <span className="text-sm capitalize text-gray-700">{key}</span>
-                      <input type="number" value={val} onChange={(e) => setMeem({...meem, [key]: parseInt(e.target.value) || 0})} className="w-16 p-2 bg-gray-50 border rounded-xl text-center" />
-                    </div>
-                  ))}
-                  <div className="mt-4 p-4 bg-yellow-50 rounded-2xl text-center border border-yellow-100">
-                    <span className="text-sm text-yellow-800 block uppercase font-bold tracking-wider">Total Score</span>
-                    <span className="text-4xl font-black text-yellow-600">{scoreMeem} <span className="text-lg">/ 30</span></span>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-
-        </div>
         
-        <p className="mt-12 text-center text-xs text-gray-400">
-          Nota: Estas ferramentas são criadas para auxiliar estudantes e profissionais. Não substituem a conduta e o julgamento clínico individualizado.
-        </p>
+        {/* VIEW: CALCULADORA ESPECÍFICA (Página Inteira) */}
+        {selectedCalc ? (
+          <div className="max-w-3xl mx-auto">
+            <button 
+              onClick={() => setSelectedCalc(null)} 
+              className="flex items-center text-gray-600 mb-6 hover:text-orange-600 transition-colors font-medium bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100"
+            >
+              <ArrowLeft size={18} className="mr-2" /> Voltar para lista
+            </button>
+            {renderCalculatorContent()}
+          </div>
+        ) : (
+          
+          /* VIEW: LISTA DE CALCULADORAS (Grid inicial) */
+          <>
+            <header className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center">
+                <Calculator className="mr-3 text-orange-600" /> CalculAí
+              </h1>
+              <p className="text-gray-600 mt-2">Selecione uma especialidade e escolha a ferramenta clínica.</p>
+            </header>
+
+            {/* Abas de Categorias */}
+            <div className="flex space-x-3 mb-10 overflow-x-auto pb-4 scrollbar-hide">
+              {categories.map((cat) => (
+                <button 
+                  key={cat.name} 
+                  onClick={() => setActiveCategory(cat.name)} 
+                  className={`flex items-center px-5 py-3 rounded-2xl whitespace-nowrap transition-all font-medium ${
+                    activeCategory === cat.name 
+                      ? 'bg-orange-600 text-white shadow-lg shadow-orange-200' 
+                      : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <cat.icon size={18} className="mr-2" />
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+
+            {/* Grid de Cards das Calculadoras */}
+            {filteredCalculators.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCalculators.map((calc) => (
+                  <div 
+                    key={calc.id} 
+                    onClick={() => setSelectedCalc(calc.id)}
+                    className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md hover:border-orange-200 hover:-translate-y-1 transition-all group"
+                  >
+                    <div className="flex items-center mb-4 text-orange-600 group-hover:text-orange-500 transition-colors">
+                      <div className="bg-orange-50 p-3 rounded-2xl">
+                        <calc.icon size={24} />
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">{calc.title}</h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">{calc.desc}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 border-dashed">
+                <Baby size={48} className="mx-auto text-gray-300 mb-4" />
+                <p className="text-gray-500 font-medium">Nenhuma calculadora disponível nesta categoria ainda.</p>
+                <p className="text-sm text-gray-400 mt-2">Em breve adicionaremos novas ferramentas!</p>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Rodapé fixo informativo */}
+        {!selectedCalc && (
+          <p className="mt-16 text-center text-xs text-gray-400 max-w-2xl mx-auto">
+            Nota: Estas ferramentas são criadas para auxiliar estudantes e profissionais de saúde. Não substituem o julgamento clínico individualizado.
+          </p>
+        )}
       </main>
     </div>
   );
