@@ -458,7 +458,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
               </button>
               <div className="flex items-center bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100">
                 {/* Logo aumentada na página da calculadora */}
-                <img src="/calculai.png" alt="Logo" className="w-12 h-12 mr-3 object-contain" />
+                <img src="/calculai.png" alt="Logo" className="w-12 h-20 mr-3 object-contain" />
                 <h2 className="text-xl font-bold text-gray-800">{currentCalcData?.title}</h2>
               </div>
             </div>
@@ -468,7 +468,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
           <>
             <header className="mb-8 flex items-center">
               {/* Logo gigante na página principal do CalculAí */}
-              <img src="/calculai.png" alt="CalculAí" className="w-20 h-20 mr-4 object-contain" />
+              <img src="/calculai.png" alt="CalculAí" className="w-20 h-32 mr-4 object-contain" />
               <div>
                 <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
                 <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
