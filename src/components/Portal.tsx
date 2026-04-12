@@ -18,7 +18,7 @@ export default function Portal({ onNavigate }: PortalProps) {
         <img 
           src="/susegado.png" 
           alt="SUSsegado Logo" 
-          className="h-64 mx-auto mb-8 drop-shadow-2xl"
+          className="h-90 mx-auto mb-8 drop-shadow-2xl"
           referrerPolicy="no-referrer"
         />
 
