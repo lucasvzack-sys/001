@@ -18,7 +18,7 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
           <img 
             src="susegadoicone.png" 
             alt="SUSsegado.net" 
-            className="h-12 mr-2 group-hover:scale-110 transition-transform"
+            className="h-16 mr-2 group-hover:scale-110 transition-transform"
             referrerPolicy="no-referrer"
           />
           <span className="font-bold text-gray-800 hidden sm:inline">SUSsegado</span>
