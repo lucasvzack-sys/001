@@ -23,7 +23,7 @@ export default function Portal({ onNavigate }: PortalProps) {
           referrerPolicy="no-referrer"
         />
 
-        {/* Primeiro Banner (Já existente) */}
+        {/* Primeiro Banner */}
         <AdSpace className="mb-12 max-w-2xl mx-auto" />
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 tracking-tight">
@@ -102,19 +102,17 @@ export default function Portal({ onNavigate }: PortalProps) {
               Acessar calculadoras <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
             </div>
           </motion.button>
+
+          {/* 4. Em Breve Novidades - Inserido dentro da grid para fechar o par */}
+          <div className="bg-white/50 backdrop-blur-sm border-2 border-dashed border-gray-300 p-8 rounded-3xl flex flex-col items-center justify-center text-gray-500 text-center">
+            <Sparkles className="mb-3 text-yellow-500" size={32} />
+            <h2 className="text-xl font-bold text-gray-400">Em breve</h2>
+            <p className="text-sm italic">Novas ferramentas em desenvolvimento...</p>
+          </div>
         </div>
 
-      {/* 4. Em Breve Novidades */}
-            <div className="bg-white/50 backdrop-blur-sm border-2 border-dashed border-gray-300 p-8 rounded-3xl flex flex-col items-center justify-center text-gray-500 text-center">
-              <Sparkles className="mb-3 text-yellow-500" size={32} />
-              <h2 className="text-xl font-bold text-gray-400">Em breve</h2>
-              <p className="text-sm italic">Novas ferramentas em desenvolvimento...</p>
-            </div>
-
-          </div>
-
-          <AdSpace className="mt-12 max-w-2xl mx-auto" />
-        </motion.div>
-      </div>
-    );
-  }
+        <AdSpace className="mt-12 max-w-2xl mx-auto" />
+      </motion.div>
+    </div>
+  );
+}
