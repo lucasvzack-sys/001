@@ -177,6 +177,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           <p className="text-gray-500 text-sm">
             Os dados apresentados são informativos e baseados em planilhas públicas.
             A disponibilidade real pode variar.
+          </p>
         </div>
       </footer>
     </div>
