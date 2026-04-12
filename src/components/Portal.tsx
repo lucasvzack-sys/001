@@ -78,6 +78,29 @@ export default function Portal({ onNavigate }: PortalProps) {
               Acessar ferramenta <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
             </div>
           </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => onNavigate('calculai')}
+            className="group relative overflow-hidden bg-white p-8 rounded-3xl shadow-2xl border-2 border-transparent hover:border-orange-400 transition-all text-left"
+          >
+            <div className="flex items-center mb-4">
+              <img 
+                src="/calculai.png" 
+                alt="CalculAí Logo" 
+                className="h-16 mr-4"
+                referrerPolicy="no-referrer"
+              />
+              <h2 className="text-2xl font-bold text-gray-800">CalculAí</h2>
+            </div>
+            <p className="text-gray-600">
+              Escores e calculadoras médicas essenciais: IMC, Risco Cardiovascular, Glasgow, CURB-65 e muito mais.
+            </p>
+            <div className="mt-6 flex items-center text-orange-600 font-bold">
+              Acessar calculadoras <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+            </div>
+          </motion.button>
         </div>
 
         {/* Segundo Banner de Propaganda Adicionado Aqui */}
