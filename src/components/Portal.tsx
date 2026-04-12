@@ -103,11 +103,19 @@ export default function Portal({ onNavigate }: PortalProps) {
           </motion.button>
         </div>
 
-        {/* Segundo Banner de Propaganda Adicionado Aqui */}
+        {/* NOVO BANNER "EM BREVE NOVIDADES" */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="bg-white/50 backdrop-blur-sm border-2 border-dashed border-gray-300 p-6 rounded-3xl flex items-center justify-center text-gray-500 max-w-2xl mx-auto"
+        >
+          <Sparkles className="mr-2 text-yellow-500" size={20} />
+          <span className="font-medium italic">Em breve novidades...</span>
+        </motion.div>
+
         <AdSpace className="mt-12 max-w-2xl mx-auto" />
-
       </motion.div>
-
     </div>
   );
 }
