@@ -27,11 +27,11 @@ export default function Footer({ onNavigate }: FooterProps) {
           <h3 className="text-lg font-bold text-white mb-4">Contato</h3>
           <p className="mb-2">
             <a href="mailto:lucasvzack@gmail.com" className="hover:text-white transition-colors">
-              lucasvzack@gmail.com
+              SUSsegado.net
             </a>
           </p>
           <p className="text-sm text-gray-500 mt-4">
-            © {new Date().getFullYear()} SUSsegado. Todos os direitos reservados.
+            © {new Date().getFullYear()} SUSsegado.net - Todos os direitos reservados.
           </p>
         </div>
       </div>
