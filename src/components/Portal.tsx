@@ -26,7 +26,7 @@ export default function Portal({ onNavigate }: PortalProps) {
         <AdSpace className="mb-12 max-w-2xl mx-auto" />
         
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 tracking-tight">
-          Bem-vindo ao <span className="text-medical-blue">SUS</span>segado
+          Bem-vindo ao <span className="text-medical-blue">SUS</span>segado.net
         </h1>
         <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
           Sua central de ferramentas para facilitar o dia a dia na saúde.
