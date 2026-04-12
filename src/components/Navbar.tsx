@@ -83,7 +83,6 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
             <Heart size={20} className="sm:mr-2 fill-current" />
             <span className="hidden md:inline">Doar</span>
           </button>
-          </a>
         </div>
       </div>
     </nav>
