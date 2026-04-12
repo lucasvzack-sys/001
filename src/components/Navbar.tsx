@@ -17,11 +17,11 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
         >
           <img 
             src="susegadoicone.png" 
-            alt="SUSsegado.net" 
+            alt="SUSsego.com.br" 
             className="h-14 mr-2 group-hover:scale-110 transition-transform"
             referrerPolicy="no-referrer"
           />
-          <span className="font-bold text-gray-800 hidden sm:inline">SUSsegado</span>
+          <span className="font-bold text-gray-800 hidden sm:inline">SUSsego.com.br</span>
         </div>
 
         <div className="flex items-center space-x-1 sm:space-x-4 ml-4">
