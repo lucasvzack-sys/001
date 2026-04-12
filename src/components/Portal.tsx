@@ -105,16 +105,16 @@ export default function Portal({ onNavigate }: PortalProps) {
         </div>
 
       {/* 4. Em Breve Novidades */}
-          <div className="bg-white/50 backdrop-blur-sm border-2 border-dashed border-gray-300 p-8 rounded-3xl flex flex-col items-center justify-center text-gray-500 text-center">
-            <Sparkles className="mb-3 text-yellow-500" size={32} />
-            <h2 className="text-xl font-bold text-gray-400">Em breve</h2>
-            <p className="text-sm italic">Novas ferramentas em desenvolvimento...</p>
+            <div className="bg-white/50 backdrop-blur-sm border-2 border-dashed border-gray-300 p-8 rounded-3xl flex flex-col items-center justify-center text-gray-500 text-center">
+              <Sparkles className="mb-3 text-yellow-500" size={32} />
+              <h2 className="text-xl font-bold text-gray-400">Em breve</h2>
+              <p className="text-sm italic">Novas ferramentas em desenvolvimento...</p>
+            </div>
+
           </div>
 
-        </div>
-
-        <AdSpace className="mt-12 max-w-2xl mx-auto" />
-      </motion.div>
-    </div>
-  );
-}
+          <AdSpace className="mt-12 max-w-2xl mx-auto" />
+        </motion.div>
+      </div>
+    );
+  }
