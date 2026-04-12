@@ -85,9 +85,6 @@ export default function Portal({ onNavigate }: PortalProps) {
 
       </motion.div>
 
-      <footer className="mt-20 text-gray-400 text-sm">
-        © 2026 SUSsegado - Facilitando a saúde pública.
-      </footer>
     </div>
   );
 }
