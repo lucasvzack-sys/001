@@ -20,7 +20,7 @@ export default function Doar({ onNavigate }: DoarProps) {
             <div className="bg-pink-100 p-4 rounded-full mb-4">
               <Heart className="text-pink-600 w-12 h-12" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800">Apoie o Ecossistema SUSsegado</h1>
+            <h1 className="text-3xl font-bold text-gray-800">Apoie o SUSsegado.net</h1>
           </div>
 
           <div className="space-y-8 text-gray-700">
@@ -28,7 +28,7 @@ export default function Doar({ onNavigate }: DoarProps) {
             <section>
               <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Quem Somos?</h2>
               <p className="leading-relaxed text-lg">
-                Olá! Meu nome é Lucas, sou estudante de medicina e o criador deste projeto. O <strong>SUSsegado</strong> nasceu da necessidade real de conectar as facilidades da tecnologia às demandas da saúde pública. Entendendo as dificuldades diárias tanto dos profissionais de saúde quanto dos pacientes, decidi desenvolver ferramentas que desburocratizassem processos — seja descobrindo a disponibilidade de um remédio nas unidades básicas ou descomplicando a leitura de laudos e exames complexos.
+                Olá! Meu nome é Lucas Zacaria, sou estudante de medicina e o criador deste projeto. O <strong>SUSsegado</strong> nasceu com o objetivo de transformar burocracia em facilidade. Por meio das ferramentas TemNoPosto? e o LaudAí, meu objetivo é democratizar o acesso à informação e simplificar a compreensão de exames e a busca por medicamentos, conectando as demandas do dia a dia às soluções digitais.
               </p>
             </section>
 
@@ -36,10 +36,10 @@ export default function Doar({ onNavigate }: DoarProps) {
             <section>
               <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Por que a sua doação é importante?</h2>
               <p className="leading-relaxed text-lg">
-                Todas as ferramentas oferecidas aqui (como o <i>TemNoPosto?</i> e o <i>LaudAí</i>) são mantidas de forma <strong>100% gratuita</strong> e sem anúncios invasivos. Porém, manter esse site funcionando envolve custos constantes com servidores de hospedagem, domínios, integração de dados e APIs de inteligência artificial utilizadas para os laudos médicos. 
+                Todas as ferramentas oferecidas aqui (como o <i>TemNoPosto?</i> e o <i>LaudAí</i>) são mantidas de forma <strong>100% gratuita</strong>. Porém, manter esse site funcionando envolve custos constantes com servidores de hospedagem, domínios, integração de dados e APIs de inteligência artificial utilizadas para os laudos médicos. 
               </p>
               <p className="leading-relaxed text-lg mt-3">
-                Ao fazer uma contribuição de qualquer valor, você me ajuda a cobrir esses custos operacionais e a dedicar mais tempo para continuar aprimorando e criando novas funcionalidades para a comunidade.
+                Sua contribuição, de qualquer valor, ajuda a cobrir esses custos operacionais e me permite dedicar mais tempo ao desenvolvimento de novas funcionalidades para ajudar pacientes e profissionais de saúde.
               </p>
             </section>
 
