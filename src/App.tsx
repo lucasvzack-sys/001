@@ -5,6 +5,7 @@ import Portal from './components/Portal';
 import TemNoPosto from './components/TemNoPosto';
 import LaudAi from './components/LaudAi';
 import Doar from './components/Doar'; // Importe a nova página
+import CalculAi from './components/CalculAi';
 import Footer from './components/Footer'; // Importe o Footer
 import { View } from './types';
 
@@ -65,6 +66,17 @@ export default function App() {
               transition={{ duration: 0.3 }}
             >
               <Doar onNavigate={handleNavigate} />
+            </motion.div>
+          )}
+          {currentView === 'calculai' && (
+            <motion.div
+              key="calculai"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <CalculAi onNavigate={handleNavigate} />
             </motion.div>
           )}
         </AnimatePresence>
