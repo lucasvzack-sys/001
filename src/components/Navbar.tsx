@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Pill, FileText, Heart, Mail } from 'lucide-react';
+import { Home, Pill, FileText, Heart, Mail, Calculator } from 'lucide-react';
 import { View } from '../types';
 
 interface NavbarProps {
@@ -58,6 +58,19 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
           >
             <FileText size={20} className="sm:mr-2" />
             <span className="hidden md:inline font-medium">LaudAí</span>
+          </button>
+
+          <button
+            onClick={() => onNavigate('calculai')}
+            className={`p-2 sm:px-3 sm:py-2 rounded-xl flex items-center transition-all ${
+              currentView === 'calculai' 
+                ? 'bg-orange-50 text-orange-600 font-bold' 
+                : 'text-gray-600 hover:bg-gray-100'
+           }`}
+            title="CalculAí"
+          >
+            <Calculator size={20} className="sm:mr-2" />
+            <span className="hidden md:inline font-medium">CalculAí</span>
           </button>
 
           {/* Novo botão de Contato */}
