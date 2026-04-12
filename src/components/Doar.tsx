@@ -25,21 +25,21 @@ export default function Doar({ onNavigate }: DoarProps) {
 
           <div className="space-y-8 text-gray-700">
             {/* Quem Somos */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Quem Somos?</h2>
-              <p className="leading-relaxed text-lg">
-                Olá! Meu nome é Lucas Zacaria, sou estudante de medicina e o criador deste projeto. O <strong>SUSsegado</strong> nasceu com o objetivo de transformar burocracia em facilidade. Por meio das ferramentas TemNoPosto? e o LaudAí, meu objetivo é democratizar o acesso à informação e simplificar a compreensão de exames e a busca por medicamentos, conectando as demandas do dia a dia às soluções digitais.
+            <section className="flex flex-col items-center">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2 text-center w-full sm:w-auto">Quem Somos?</h2>
+              <p className="leading-relaxed text-lg text-justify w-full">
+                Olá! Meu nome é Lucas Zacaria, sou estudante de medicina e o criador deste projeto. O <strong>SUSsegado.net</strong> nasceu com o objetivo de transformar burocracia em facilidade. Por meio das ferramentas TemNoPosto? e o LaudAí, meu objetivo é democratizar o acesso à informação e simplificar a compreensão de exames e a busca por medicamentos, conectando as demandas do dia a dia às soluções digitais.
               </p>
             </section>
 
             {/* Por que doar? */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Por que a sua doação é importante?</h2>
-              <p className="leading-relaxed text-lg">
-                Todas as ferramentas oferecidas aqui (como o <i>TemNoPosto?</i> e o <i>LaudAí</i>) são mantidas de forma <strong>100% gratuita</strong>. Porém, manter esse site funcionando envolve custos constantes com servidores de hospedagem, domínios, integração de dados e APIs de inteligência artificial utilizadas para os laudos médicos. 
+            <section className="flex flex-col items-center">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2 text-center w-full sm:w-auto">Por que a sua doação é importante?</h2>
+              <p className="leading-relaxed text-lg text-justify w-full">
+                Todas as ferramentas oferecidas aqui (como o <i>TemNoPosto?</i> e o <i>LaudAí</i>) são mantidas de forma <strong>100% gratuita</strong>. Porém, manter esse site funcionando envolve custos constantes com servidores de hospedagem, domínios e integração de dados.
               </p>
-              <p className="leading-relaxed text-lg mt-3">
-                Sua contribuição, de qualquer valor, ajuda a cobrir esses custos operacionais e me permite dedicar mais tempo ao desenvolvimento de novas funcionalidades para ajudar pacientes e profissionais de saúde.
+              <p className="leading-relaxed text-lg text-justify w-full mt-3">
+                Sua contribuição, de qualquer valor, ajuda a manter o site no ar e me permite dedicar mais tempo ao desenvolvimento de novas funcionalidades para ajudar pacientes e profissionais de saúde.
               </p>
             </section>
 
