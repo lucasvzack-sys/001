@@ -528,7 +528,6 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   ];
 
   const calculatorsList = [
-    const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator },
     { id: 'clcr', title: 'Clearance de Creatinina', category: 'Geral', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity },
     { id: 'chads', title: 'CHA₂DS₂-VASc', category: 'Cardiologia', desc: 'Risco de AVC em pacientes com Fibrilação Atrial', icon: Heart },
@@ -558,9 +557,6 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       case 'nihss': return <CalcNIHSS />;
       case 'phq9': return <CalcPHQ9 />;
       case 'meem': return <CalcMEEM />;
-      default: return <p className="text-center py-10">Calculadora em desenvolvimento.</p>;
-    }
-  };
       default: return <p className="text-center py-10">Calculadora em desenvolvimento.</p>;
     }
   };
