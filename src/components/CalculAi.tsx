@@ -458,24 +458,24 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
               <button onClick={() => setSelectedCalc(null)} className="flex items-center text-gray-500 hover:text-orange-600 transition-colors font-medium">
                 <ArrowLeft size={20} className="mr-2" /> Voltar
               </button>
-              <div className="flex items-center bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100">
-                {/* Logo aumentada na página da calculadora */}
-                <img src="/calculai.png" alt="Logo" className="w-12 h-36 mr-3 object-contain" />
-                <h2 className="text-xl font-bold text-gray-800">{currentCalcData?.title}</h2>
+             <div className="flex items-center bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100">
+              {/* Logo aumentada na página da calculadora */}
+              <img src="/calculai.png" alt="Logo" className="w-24 md:w-32 h-auto mr-4 object-contain" />
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800">{currentCalcData?.title}</h2>
               </div>
             </div>
             {renderCalculatorContent()}
           </div>
         ) : (
           <>
-            <header className="mb-8 flex items-center">
-              {/* Logo gigante na página principal do CalculAí */}
-              <img src="/calculai.png" alt="CalculAí" className="w-20 h-56 mr-4 object-contain" />
-              <div>
-                <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
-                <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
-              </div>
-            </header>
+          <header className="mb-8 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
+            {/* Logo gigante na página principal do CalculAí */}
+            <img src="/calculai.png" alt="CalculAí" className="w-48 md:w-64 h-auto object-contain" />
+            <div className="md:mt-4">
+              <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
+              <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
+            </div>
+          </header>
 
             <div className="flex space-x-3 mb-10 overflow-x-auto pb-4 scrollbar-hide">
               {categories.map((cat) => (
