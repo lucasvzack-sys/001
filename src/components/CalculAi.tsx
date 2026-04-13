@@ -12,7 +12,7 @@ interface CalculAiProps {
   onNavigate: (view: View) => void;
 }
 
-type Category = 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Obstetrícia' | 'Pediatria';
+type Category = 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Ginecologia e Obstetrícia' | 'Pediatria';
 
 // ==========================================
 // COMPONENTE AUXILIAR COMPARTILHADO
@@ -636,18 +636,156 @@ const CalcMEEM = () => {
 // COMPONENTE PRINCIPAL
 // ==========================================
 
+const CalcKupperman = () => {
+  const [sintomas, setSintomas] = useState({
+    fogachos: 0, sudorese: 0, insonia: 0, nervosismo: 0, 
+    melancolia: 0, vertigem: 0, fraqueza: 0, artralgia: 0, 
+    cefaleia: 0, palpitacao: 0, formigamento: 0
+  });
+
+  const score = useMemo(() => {
+    return (sintomas.fogachos * 4) + (sintomas.sudorese * 2) + 
+           (sintomas.insonia * 2) + (sintomas.nervosismo * 2) + 
+           sintomas.melancolia + sintomas.vertigem + sintomas.fraqueza + 
+           sintomas.artralgia + sintomas.cefaleia + sintomas.palpitacao + sintomas.formigamento;
+  }, [sintomas]);
+
+  const intensidades = [{v:0, l:'Ausente'}, {v:1, l:'Leve'}, {v:2, l:'Moderado'}, {v:3, l:'Intenso'}];
+
+  const itens = [
+    { key: 'fogachos', label: 'Ondas de calor (Fogachos) [Peso x4]' },
+    { key: 'sudorese', label: 'Sudorese [Peso x2]' },
+    { key: 'insonia', label: 'Insônia [Peso x2]' },
+    { key: 'nervosismo', label: 'Nervosismo / Irritabilidade [Peso x2]' },
+    { key: 'melancolia', label: 'Melancolia / Depressão [Peso x1]' },
+    { key: 'vertigem', label: 'Vertigem / Tontura [Peso x1]' },
+    { key: 'fraqueza', label: 'Fraqueza / Fadiga [Peso x1]' },
+    { key: 'artralgia', label: 'Artralgia / Mialgia [Peso x1]' },
+    { key: 'cefaleia', label: 'Cefaleia [Peso x1]' },
+    { key: 'palpitacao', label: 'Palpitações [Peso x1]' },
+    { key: 'formigamento', label: 'Formigamento (Parestesia) [Peso x1]' }
+  ];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        {itens.map(({ key, label }) => (
+          <div key={key} className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-gray-100">
+            <span className="text-sm font-bold text-gray-700 pr-4 mb-3 md:mb-0 md:w-1/2">{label}</span>
+            <div className="flex gap-2 w-full md:w-1/2 justify-between">
+              {intensidades.map(opt => (
+                <button key={opt.v} onClick={() => setSintomas({...sintomas, [key]: opt.v})} className={`flex-1 py-2 px-1 text-xs sm:text-sm rounded-lg border transition-all ${sintomas[key as keyof typeof sintomas] === opt.v ? 'bg-pink-100 border-pink-500 text-pink-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
+                  {opt.l}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+        
+        <div className="mt-8 p-6 bg-pink-50 rounded-2xl text-center">
+          <span className="text-sm text-pink-800 block uppercase font-bold tracking-wider mb-2">Índice de Kupperman-Blatt</span>
+          <span className="text-6xl font-black text-pink-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-pink-900">
+            {score <= 14 ? 'Sintomas Leves' : score <= 20 ? 'Sintomas Moderados' : score <= 35 ? 'Sintomas Intensos' : 'Sintomas Graves'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcMELD = () => {
+  const [data, setData] = useState({ bili: '', inr: '', cr: '', dialise: false });
+  
+  const score = useMemo(() => {
+    let b = parseFloat(data.bili);
+    let i = parseFloat(data.inr);
+    let c = parseFloat(data.cr);
+    
+    if (b > 0 && i > 0 && c > 0) {
+      if (b < 1) b = 1;
+      if (i < 1) i = 1;
+      if (c < 1) c = 1;
+      if (c > 4 || data.dialise) c = 4;
+      
+      const meld = 3.78 * Math.log(b) + 11.2 * Math.log(i) + 9.57 * Math.log(c) + 6.43;
+      return Math.round(meld);
+    }
+    return null;
+  }, [data]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Bilirrubina Total (mg/dL)</label>
+          <input type="number" step="0.1" value={data.bili} onChange={(e) => setData({...data, bili: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 2.1" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">INR</label>
+          <input type="number" step="0.1" value={data.inr} onChange={(e) => setData({...data, inr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 1.5" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Creatinina Sérica (mg/dL)</label>
+          <input type="number" step="0.1" value={data.cr} onChange={(e) => setData({...data, cr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 1.2" />
+        </div>
+        
+        <CheckboxItem label="Paciente realizou 2 ou mais sessões de diálise na última semana" checked={data.dialise} onChange={(c) => setData({...data, dialise: c})} />
+        
+        {score !== null && (
+          <div className="mt-8 p-6 bg-yellow-50 rounded-2xl text-center">
+            <span className="text-sm text-yellow-800 block uppercase font-bold tracking-wider mb-2">Escore MELD (Clássico)</span>
+            <span className="text-6xl font-black text-yellow-600">{score}</span>
+            <p className="text-sm mt-3 font-medium text-yellow-900">
+              Mortalidade em 3 meses estimada em aproximadamente {score <= 9 ? '1.9%' : score <= 19 ? '6.0%' : score <= 29 ? '19.6%' : score <= 39 ? '52.6%' : '71.3%'}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const CalcTIMI = () => {
+  const [timi, setTimi] = useState({ idade: false, farc: false, dac: false, aas: false, angina: false, ecg: false, mrc: false });
+  const score = useMemo(() => Object.values(timi).filter(Boolean).length, [timi]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <CheckboxItem label="Idade ≥ 65 anos (+1)" checked={timi.idade} onChange={(c) => setTimi({...timi, idade: c})} />
+        <CheckboxItem label="Presença de ≥ 3 fatores de risco DAC (HAS, DM, DLP, Tabagismo, HF) (+1)" checked={timi.farc} onChange={(c) => setTimi({...timi, farc: c})} />
+        <CheckboxItem label="Doença Arterial Coronariana prévia conhecida (estenose ≥ 50%) (+1)" checked={timi.dac} onChange={(c) => setTimi({...timi, dac: c})} />
+        <CheckboxItem label="Uso de AAS nos últimos 7 dias (+1)" checked={timi.aas} onChange={(c) => setTimi({...timi, aas: c})} />
+        <CheckboxItem label="Angina severa (≥ 2 episódios nas últimas 24 horas) (+1)" checked={timi.angina} onChange={(c) => setTimi({...timi, angina: c})} />
+        <CheckboxItem label="Alteração de ST ≥ 0.5 mm no ECG (+1)" checked={timi.ecg} onChange={(c) => setTimi({...timi, ecg: c})} />
+        <CheckboxItem label="Marcadores de necrose miocárdica (Troponina) elevados (+1)" checked={timi.mrc} onChange={(c) => setTimi({...timi, mrc: c})} />
+        
+        <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+          <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Escore TIMI (SCA sem supra de ST)</span>
+          <span className="text-6xl font-black text-red-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-red-900">
+            {score <= 2 ? 'Baixo Risco' : score <= 4 ? 'Risco Intermediário' : 'Alto Risco'}
+          </p>
+          <p className="text-xs text-red-700 mt-2">Risco de mortalidade, IAM ou isquemia severa em 14 dias.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function CalculAi({ onNavigate }: CalculAiProps) {
   const [activeCategory, setActiveCategory] = useState<Category>('Geral');
   const [selectedCalc, setSelectedCalc] = useState<string | null>(null);
 
-const categories: { name: Category; icon: any }[] = [
+  const categories: { name: Category; icon: any }[] = [
     { name: 'Geral', icon: Stethoscope },
     { name: 'Cardiologia', icon: Heart },
-    { name: 'Gastroenterologia', icon: Stethoscope }, // <-- NOVA CATEGORIA AQUI
+    { name: 'Gastroenterologia', icon: Stethoscope },
     { name: 'Emergência e UTI', icon: Activity },
     { name: 'Neurologia', icon: Brain },
     { name: 'Psiquiatria', icon: Smile },
-    { name: 'Obstetrícia', icon: Baby },
+    { name: 'Ginecologia e Obstetrícia', icon: Baby }, // Nome atualizado aqui
     { name: 'Pediatria', icon: Baby },
   ];
 
@@ -655,24 +793,29 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator },
     { id: 'clcr', title: 'Clearance de Creatinina', category: 'Geral', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity },
     { id: 'childpugh', title: 'Classificação Child-Pugh', category: 'Gastroenterologia', desc: 'Prognóstico de cirrose e doença hepática crônica', icon: FileText },
+    { id: 'meld', title: 'Escore MELD', category: 'Gastroenterologia', desc: 'Gravidade e mortalidade em hepatopatias', icon: FileText },
     { id: 'centor', title: 'Escore de Centor', category: 'Geral', desc: 'Probabilidade de faringite estreptocócica', icon: Activity },
     { id: 'chads', title: 'CHA₂DS₂-VASc', category: 'Cardiologia', desc: 'Risco de AVC em pacientes com Fibrilação Atrial', icon: Heart },
+    { id: 'timi', title: 'Escore TIMI (SCA)', category: 'Cardiologia', desc: 'Risco na Síndrome Coronariana Aguda sem Supra de ST', icon: Activity },
     { id: 'glasgow', title: 'Escala de Glasgow', category: 'Emergência e UTI', desc: 'Avaliação neurológica e nível de consciência', icon: Activity },
     { id: 'curb65', title: 'Escore CURB-65', category: 'Emergência e UTI', desc: 'Estratificação de risco para Pneumonia', icon: Activity },
     { id: 'wells', title: 'Escore de Wells (TVP)', category: 'Emergência e UTI', desc: 'Probabilidade pré-teste de Trombose Venosa Profunda', icon: Stethoscope },
     { id: 'nihss', title: 'Escala NIHSS', category: 'Neurologia', desc: 'Déficit neurológico padronizado no AVC', icon: FileText },
     { id: 'meem', title: 'Mini-Mental (MEEM)', category: 'Neurologia', desc: 'Rastreio cognitivo com instruções detalhadas', icon: Brain },
     { id: 'phq9', title: 'Questionário PHQ-9', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de depressão', icon: Smile },
-    { id: 'ig', title: 'Idade Gestacional / DPP', category: 'Obstetrícia', desc: 'Cálculo a partir da DUM', icon: Calendar },
-    { id: 'dum_usg', title: 'Idade Gestacional pelo Ultrassom', category: 'Obstetrícia', desc: 'Estimativa via biometria fetal', icon: PlusSquare },
+    { id: 'ig', title: 'Idade Gestacional / DPP', category: 'Ginecologia e Obstetrícia', desc: 'Cálculo a partir da DUM', icon: Calendar },
+    { id: 'dum_usg', title: 'Idade Gestacional pelo Ultrassom', category: 'Ginecologia e Obstetrícia', desc: 'Estimativa via biometria fetal', icon: PlusSquare },
+    { id: 'kupperman', title: 'Índice de Kupperman', category: 'Ginecologia e Obstetrícia', desc: 'Avaliação da gravidade dos sintomas climatéricos', icon: Smile },
     { id: 'apgar', title: 'Índice de Apgar', category: 'Pediatria', desc: 'Avaliação rápida da vitalidade do recém-nascido', icon: Baby },
   ];
-
   const filteredCalculators = calculatorsList.filter(calc => calc.category === activeCategory);
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
 
 const renderCalculatorContent = () => {
     switch (selectedCalc) {
+      case 'meld': return <CalcMELD />;
+      case 'timi': return <CalcTIMI />;
+      case 'kupperman': return <CalcKupperman />;
       case 'imc': return <CalcIMC />;
       case 'clcr': return <CalcCockcroftGault />;
       case 'childpugh': return <CalcChildPugh />;
