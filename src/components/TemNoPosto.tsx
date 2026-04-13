@@ -167,7 +167,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
 
         {/* INÍCIO DA LEGENDA DO SUS */}
         <div className="mt-12 p-8 rounded-3xl border-2 border-gray-100 bg-white shadow-xl">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Entenda os Componentes do SUS</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Entenda os componentes do SUS</h3>
           <p className="text-gray-600 mb-6">Saiba onde deve retirar o seu medicamento:</p>
 
           <div className="space-y-4">
@@ -200,7 +200,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
               </span>
               <div>
                 <strong className="block text-gray-900">Serviços Específicos</strong>
-                <span className="text-sm text-gray-600">Programas de controlo (HIV, Tuberculose, etc).</span>
+                <span className="text-sm text-gray-600">Programas de controle (HIV, Tuberculose, etc).</span>
               </div>
             </div>
 
@@ -229,8 +229,8 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-gray-500 text-sm">
-            Os dados apresentados são informativos e baseados em planilhas públicas (última atualização - abril - 2026).
-            A disponibilidade real pode variar.
+            Os dados apresentados são informativos e baseados em planilhas públicas.
+            A disponibilidade real pode variar. (Última atualização - abril - 2026)
           </p>
         </div>
       </footer>
