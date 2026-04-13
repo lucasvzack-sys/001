@@ -722,10 +722,19 @@ const renderCalculatorContent = () => {
             </div>
           </header>
 
-            <div className="flex space-x-3 mb-10 overflow-x-auto pb-4 scrollbar-hide">
+            <div className="flex flex-wrap gap-3 mb-10 justify-center md:justify-start">
               {categories.map((cat) => (
-                <button key={cat.name} onClick={() => setActiveCategory(cat.name)} className={`flex items-center px-5 py-3 rounded-2xl whitespace-nowrap transition-all font-medium ${activeCategory === cat.name ? 'bg-orange-600 text-white shadow-lg shadow-orange-200' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}>
-                  <cat.icon size={18} className="mr-2" /> {cat.name}
+                <button 
+                  key={cat.name} 
+                  onClick={() => setActiveCategory(cat.name)} 
+                  className={`flex items-center px-4 py-2.5 rounded-2xl transition-all font-medium text-sm sm:text-base ${
+                    activeCategory === cat.name 
+                      ? 'bg-orange-600 text-white shadow-lg shadow-orange-200' 
+                      : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <cat.icon size={18} className="mr-2" /> 
+                  {cat.name}
                 </button>
               ))}
             </div>
