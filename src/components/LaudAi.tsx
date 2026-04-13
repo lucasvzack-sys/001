@@ -261,8 +261,11 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           </div>
         </div>
 
-        <div className="mt-16 space-y-8">
+       {/* Substitua a div className="mt-16 space-y-8" final por esta: */}
+        <div className="mt-16 space-y-6">
+          <AdSpace />
           <CrossPromo target="temnoposto" onNavigate={onNavigate} />
+          <CrossPromo target="calculai" onNavigate={onNavigate} />
           <AdSpace />
         </div>
       </main>
