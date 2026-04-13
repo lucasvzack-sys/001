@@ -165,6 +165,65 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           </div>
         )}
 
+        {/* INÍCIO DA LEGENDA DO SUS */}
+        <div className="mt-12 p-8 rounded-3xl border-2 border-gray-100 bg-white shadow-xl">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Entenda os Componentes do SUS</h3>
+          <p className="text-gray-600 mb-6">Saiba onde deve retirar o seu medicamento:</p>
+
+          <div className="space-y-4">
+            {/* Componente Básico */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+              <span className="px-4 py-2 bg-green-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
+                Básico
+              </span>
+              <div>
+                <strong className="block text-gray-900">Postos de Saúde (UBS)</strong>
+                <span className="text-sm text-gray-600">Medicamentos do dia a dia (receita simples).</span>
+              </div>
+            </div>
+
+            {/* Componente Especializado */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+              <span className="px-4 py-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
+                Especializado
+              </span>
+              <div>
+                <strong className="block text-gray-900">Farmácia do Estado</strong>
+                <span className="text-sm text-gray-600">Alto custo ou uso contínuo (exige processo/LME).</span>
+              </div>
+            </div>
+
+            {/* Componente Estratégico */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+              <span className="px-4 py-2 bg-orange-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
+                Estratégico
+              </span>
+              <div>
+                <strong className="block text-gray-900">Serviços Específicos</strong>
+                <span className="text-sm text-gray-600">Programas de controlo (HIV, Tuberculose, etc).</span>
+              </div>
+            </div>
+
+            {/* Oncológico */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+              <span className="px-4 py-2 bg-purple-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
+                Oncológico
+              </span>
+              <div>
+                <strong className="block text-gray-900">Hospitais (CACON/UNACON)</strong>
+                <span className="text-sm text-gray-600">Tratamento oncológico direto no hospital.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* FIM DA LEGENDA DO SUS */}
+
+        <div className="mt-16 space-y-8">
+          <AdSpace /> {/* Mais um AdSpace acima do CrossPromo */}
+          <CrossPromo target="laudai" onNavigate={onNavigate} />
+          <AdSpace />
+        </div>
+
         <div className="mt-16 space-y-8">
           <AdSpace /> {/* Mais um AdSpace acima do CrossPromo */}
           <CrossPromo target="laudai" onNavigate={onNavigate} />
