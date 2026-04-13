@@ -470,7 +470,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
           <>
           <header className="mb-8 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
             {/* Logo gigante na página principal do CalculAí */}
-            <img src="/calculai.png" alt="CalculAí" className="w-48 md:w-64 h-auto object-contain" />
+            <img src="/calculai.png" alt="CalculAí" className="w-32 md:w-40 h-auto object-contain" />
             <div className="md:mt-4">
               <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
               <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
