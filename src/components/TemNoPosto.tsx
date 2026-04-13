@@ -217,16 +217,11 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           </div>
         </div>
         {/* FIM DA LEGENDA DO SUS */}
-
-        <div className="mt-16 space-y-8">
-          <AdSpace /> {/* Mais um AdSpace acima do CrossPromo */}
+        
+        <div className="mt-16 space-y-6">
+          <AdSpace /> 
           <CrossPromo target="laudai" onNavigate={onNavigate} />
-          <AdSpace />
-        </div>
-
-        <div className="mt-16 space-y-8">
-          <AdSpace /> {/* Mais um AdSpace acima do CrossPromo */}
-          <CrossPromo target="laudai" onNavigate={onNavigate} />
+          <CrossPromo target="calculai" onNavigate={onNavigate} />
           <AdSpace />
         </div>
       </main>
