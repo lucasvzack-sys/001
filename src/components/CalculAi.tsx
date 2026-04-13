@@ -293,32 +293,143 @@ const CalcIdadeGestacionalUSG = () => {
 };
 
 const CalcNIHSS = () => {
-  const [nihss, setNihss] = useState(new Array(11).fill(0));
+  const nihssItems = [
+    { label: "1a. Nível de Consciência", desc: "Avalie o estado de alerta. Tente acordar o paciente com estímulo verbal ou doloroso leve.", max: 3 },
+    { label: "1b. Perguntas (Mês/Idade)", desc: "Pergunte em que mês estamos e a idade do paciente. Não forneça dicas.", max: 2 },
+    { label: "1c. Comandos (Olhos/Mãos)", desc: "Peça para abrir e fechar os olhos, e depois abrir e fechar as mãos. Se o paciente não compreender ou tiver barreiras linguísticas, tente mímica.", max: 2 },
+    { label: "2. Olhar Conjugado", desc: "Teste os movimentos oculares horizontais pedindo para o paciente acompanhar seu dedo. Se não cooperar, observe o rastreio visual espontâneo.", max: 2 },
+    { label: "3. Campos Visuais", desc: "Teste a visão periférica por confrontação visual em todos os quadrantes visuais (contando dedos ou ameaça visual).", max: 3 },
+    { label: "4. Paralisia Facial", desc: "Peça para o paciente sorrir, mostrar os dentes ou fechar os olhos com força. Observe a simetria, especialmente no sulco nasolabial.", max: 3 },
+    { label: "5. Motor Braços", desc: "Sentado (90°) ou deitado (45°), peça para manter os braços esticados com as palmas para baixo por 10 segundos. Avalie um lado de cada vez.", max: 4 },
+    { label: "6. Motor Pernas", desc: "Com o paciente deitado, peça para elevar a perna a 30° e manter por 5 segundos. Avalie uma perna de cada vez.", max: 4 },
+    { label: "7. Ataxia de Membros", desc: "Realize o teste dedo-nariz e calcanhar-joelho de forma bilateral. O teste é positivo se a ataxia for desproporcional ao déficit motor.", max: 2 },
+    { label: "8. Sensibilidade", desc: "Teste a sensibilidade dolorosa com um alfinete (ou objeto pontiagudo) no rosto, braço, tronco e perna, comparando os dois lados.", max: 2 },
+    { label: "9. Linguagem/Afasia", desc: "Peça para o paciente descrever a cena de uma figura padrão, nomear objetos apontados e ler uma lista de frases curtas.", max: 3 },
+    { label: "10. Disartria", desc: "Peça para o paciente ler palavras isoladas de uma lista ou avalie a clareza da articulação das palavras durante a conversa.", max: 2 },
+    { label: "11. Extinção/Inatenção", desc: "Toque ambos os lados do corpo do paciente simultaneamente ou mova os dedos em ambos os campos visuais para avaliar heminegligência.", max: 2 }
+  ];
+
+  const [nihss, setNihss] = useState(new Array(nihssItems.length).fill(0));
   const scoreNihss = useMemo(() => nihss.reduce((a, b) => a + b, 0), [nihss]);
   
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-      <div className="space-y-3">
-        <div className="grid grid-cols-1 gap-3">
-          {[
-            "1a. Nível de Consciência", "1b. Perguntas (Mês/Idade)", "1c. Comandos (Olhos/Mãos)", 
-            "2. Olhar Conjugado", "3. Campos Visuais", "4. Paralisia Facial", 
-            "5. Motor Braços", "6. Motor Pernas", "7. Ataxia de Membros", "8. Sensibilidade", "9. Linguagem/Afasia"
-          ].map((label, idx) => (
-            <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 rounded-xl">
-              <span className="text-md text-gray-700 font-medium mb-2 sm:mb-0">{label}</span>
-              <input type="number" min="0" max="4" value={nihss[idx]} onChange={(e) => {
-                const newNihss = [...nihss];
-                newNihss[idx] = parseInt(e.target.value) || 0;
-                setNihss(newNihss);
-              }} className="w-20 p-2 border border-gray-300 rounded-lg text-center text-lg focus:ring-orange-500" />
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-4">
+          {nihssItems.map((item, idx) => (
+            <div key={idx} className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                <span className="text-md text-gray-800 font-bold">{item.label}</span>
+                <div className="flex items-center mt-2 sm:mt-0">
+                  <span className="text-xs text-gray-400 mr-2">Max: {item.max}</span>
+                  <input type="number" min="0" max={item.max} value={nihss[idx]} onChange={(e) => {
+                    const newNihss = [...nihss];
+                    newNihss[idx] = parseInt(e.target.value) || 0;
+                    if (newNihss[idx] > item.max) newNihss[idx] = item.max;
+                    setNihss(newNihss);
+                  }} className="w-16 p-2 bg-white border border-gray-300 rounded-lg text-center text-lg focus:ring-red-500 font-bold" />
+                </div>
+              </div>
+              <p className="text-sm text-gray-500 leading-relaxed bg-white p-3 rounded-lg border border-dashed border-gray-200">
+                <span className="font-semibold text-gray-600">Como testar: </span>
+                {item.desc}
+              </p>
             </div>
           ))}
         </div>
-        <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+        <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center border border-red-100">
           <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Score NIHSS Total</span>
-          <span className="text-6xl font-black text-red-600">{scoreNihss}</span>
+          <span className="text-6xl font-black text-red-600">{scoreNihss} <span className="text-2xl font-normal text-red-800">pts</span></span>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcApgar = () => {
+  const [apgar, setApgar] = useState({ aparencia: 0, pulso: 0, gesticulacao: 0, atividade: 0, respiracao: 0 });
+  const score = useMemo(() => Object.values(apgar).reduce((a, b) => a + b, 0), [apgar]);
+
+  const criterios = [
+    { key: 'aparencia', label: 'Aparência (Cor)', options: [{v:0, l:'Cianose/Palidez total'}, {v:1, l:'Acrocianose (Corpo rosado, extremidades azuis)'}, {v:2, l:'Totalmente rosado'}] },
+    { key: 'pulso', label: 'Pulso (Frequência Cardíaca)', options: [{v:0, l:'Ausente'}, {v:1, l:'< 100 bpm'}, {v:2, l:'> 100 bpm'}] },
+    { key: 'gesticulacao', label: 'Gesticulação (Reflexos)', options: [{v:0, l:'Sem resposta'}, {v:1, l:'Alguma flexão ou careta'}, {v:2, l:'Espirro, tosse ou choro vigoroso'}] },
+    { key: 'atividade', label: 'Atividade (Tônus Muscular)', options: [{v:0, l:'Flácido'}, {v:1, l:'Alguma flexão de braços/pernas'}, {v:2, l:'Movimento ativo / Bem fletido'}] },
+    { key: 'respiracao', label: 'Respiração', options: [{v:0, l:'Ausente'}, {v:1, l:'Lenta, irregular ou fraca'}, {v:2, l:'Regular, choro forte'}] },
+  ];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        {criterios.map(({ key, label, options }) => (
+          <div key={key} className="bg-gray-50 p-4 rounded-xl">
+            <label className="block text-sm font-bold text-gray-800 mb-3">{label}</label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {options.map(opt => (
+                <button key={opt.v} onClick={() => setApgar({...apgar, [key]: opt.v})} className={`p-3 rounded-lg text-sm transition-all border ${apgar[key as keyof typeof apgar] === opt.v ? 'bg-teal-100 border-teal-500 text-teal-800 font-bold' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-100'}`}>
+                  {opt.v} pts - {opt.l}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div className="mt-8 p-6 bg-teal-50 rounded-2xl text-center">
+          <span className="text-sm text-teal-800 block uppercase font-bold tracking-wider mb-2">Índice de Apgar</span>
+          <span className="text-6xl font-black text-teal-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-teal-900">
+            {score >= 7 ? 'Boa vitalidade (Normal)' : score >= 4 ? 'Asfixia moderada' : 'Asfixia grave'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcCockcroftGault = () => {
+  const [data, setData] = useState({ idade: '', peso: '', cr: '', sexo: 'M' });
+  const result = useMemo(() => {
+    const i = parseFloat(data.idade);
+    const p = parseFloat(data.peso);
+    const c = parseFloat(data.cr);
+    if (i > 0 && p > 0 && c > 0) {
+      let clcr = ((140 - i) * p) / (72 * c);
+      if (data.sexo === 'F') clcr *= 0.85;
+      return clcr.toFixed(1);
+    }
+    return null;
+  }, [data]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Idade (anos)</label>
+            <input type="number" value={data.idade} onChange={(e) => setData({...data, idade: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 65" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Peso (kg)</label>
+            <input type="number" value={data.peso} onChange={(e) => setData({...data, peso: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 70" />
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Creatinina Sérica (mg/dL)</label>
+          <input type="number" step="0.1" value={data.cr} onChange={(e) => setData({...data, cr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 1.2" />
+        </div>
+        <div className="pt-2">
+          <label className="block text-sm font-medium text-gray-700 mb-3">Sexo biológico</label>
+          <div className="grid grid-cols-2 gap-3">
+            <button onClick={() => setData({...data, sexo: 'M'})} className={`p-3 rounded-xl text-md border transition-all ${data.sexo === 'M' ? 'bg-blue-100 border-blue-500 text-blue-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Masculino</button>
+            <button onClick={() => setData({...data, sexo: 'F'})} className={`p-3 rounded-xl text-md border transition-all ${data.sexo === 'F' ? 'bg-pink-100 border-pink-500 text-pink-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Feminino (-15%)</button>
+          </div>
+        </div>
+        
+        {result && (
+          <div className="mt-8 p-6 bg-orange-50 rounded-2xl text-center">
+            <span className="text-sm text-orange-800 block uppercase font-bold tracking-wider mb-2">Taxa de Filtração Glomerular Estimada</span>
+            <span className="text-5xl font-black text-orange-600">{result} <span className="text-xl font-normal text-orange-800">mL/min</span></span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -417,7 +528,9 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   ];
 
   const calculatorsList = [
+    const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator },
+    { id: 'clcr', title: 'Clearance de Creatinina', category: 'Geral', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity },
     { id: 'chads', title: 'CHA₂DS₂-VASc', category: 'Cardiologia', desc: 'Risco de AVC em pacientes com Fibrilação Atrial', icon: Heart },
     { id: 'glasgow', title: 'Escala de Glasgow', category: 'Emergência e UTI', desc: 'Avaliação neurológica e nível de consciência', icon: Activity },
     { id: 'curb65', title: 'Escore CURB-65', category: 'Emergência e UTI', desc: 'Estratificação de risco para Pneumonia', icon: Activity },
@@ -426,6 +539,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     { id: 'phq9', title: 'Questionário PHQ-9', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de depressão', icon: Smile },
     { id: 'ig', title: 'Idade Gestacional / DPP', category: 'Obstetrícia', desc: 'Cálculo a partir da DUM', icon: Calendar },
     { id: 'dum_usg', title: 'Idade Gestacional pelo Ultrassom', category: 'Obstetrícia', desc: 'Estimativa via biometria fetal', icon: PlusSquare },
+    { id: 'apgar', title: 'Índice de Apgar', category: 'Pediatria', desc: 'Avaliação rápida da vitalidade do recém-nascido', icon: Baby },
   ];
 
   const filteredCalculators = calculatorsList.filter(calc => calc.category === activeCategory);
@@ -434,14 +548,19 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   const renderCalculatorContent = () => {
     switch (selectedCalc) {
       case 'imc': return <CalcIMC />;
+      case 'clcr': return <CalcCockcroftGault />;
       case 'glasgow': return <CalcGlasgow />;
       case 'curb65': return <CalcCURB65 />;
       case 'chads': return <CalcCHADS />;
       case 'ig': return <CalcIdadeGestacional />;
       case 'dum_usg': return <CalcIdadeGestacionalUSG />;
+      case 'apgar': return <CalcApgar />;
       case 'nihss': return <CalcNIHSS />;
       case 'phq9': return <CalcPHQ9 />;
       case 'meem': return <CalcMEEM />;
+      default: return <p className="text-center py-10">Calculadora em desenvolvimento.</p>;
+    }
+  };
       default: return <p className="text-center py-10">Calculadora em desenvolvimento.</p>;
     }
   };
