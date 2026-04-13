@@ -516,7 +516,3 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     </div>
   );
 }
-      </main>
-    </div>
-  );
-}
