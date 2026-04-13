@@ -435,13 +435,136 @@ const CalcCockcroftGault = () => {
   );
 };
 
+const CalcChildPugh = () => {
+  const [child, setChild] = useState({ bili: 1, alb: 1, rni: 1, ascite: 1, enc: 1 });
+  const score = useMemo(() => Object.values(child).reduce((a, b) => a + b, 0), [child]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        {[
+          { key: 'bili', label: 'Bilirrubina Total (mg/dL)', options: [{v:1, l:'< 2.0'}, {v:2, l:'2.0 a 3.0'}, {v:3, l:'> 3.0'}] },
+          { key: 'alb', label: 'Albumina (g/dL)', options: [{v:1, l:'> 3.5'}, {v:2, l:'2.8 a 3.5'}, {v:3, l:'< 2.8'}] },
+          { key: 'rni', label: 'RNI (ou TAP)', options: [{v:1, l:'< 1.7'}, {v:2, l:'1.7 a 2.20'}, {v:3, l:'> 2.20'}] },
+          { key: 'ascite', label: 'Ascite', options: [{v:1, l:'Ausente'}, {v:2, l:'Leve / Controlada'}, {v:3, l:'Moderada a Grave / Refratária'}] },
+          { key: 'enc', label: 'Encefalopatia Hepática', options: [{v:1, l:'Ausente'}, {v:2, l:'Graus I a II'}, {v:3, l:'Graus III a IV'}] },
+        ].map(({ key, label, options }) => (
+          <div key={key} className="bg-gray-50 p-4 rounded-xl">
+            <label className="block text-sm font-bold text-gray-800 mb-3">{label}</label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {options.map(opt => (
+                <button key={opt.v} onClick={() => setChild({...child, [key]: opt.v})} className={`p-3 rounded-lg text-sm transition-all border ${child[key as keyof typeof child] === opt.v ? 'bg-yellow-100 border-yellow-500 text-yellow-800 font-bold' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-100'}`}>
+                  {opt.l}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div className="mt-8 p-6 bg-yellow-50 rounded-2xl text-center">
+          <span className="text-sm text-yellow-800 block uppercase font-bold tracking-wider mb-2">Classificação Child-Pugh</span>
+          <span className="text-6xl font-black text-yellow-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-yellow-900">
+            {score <= 6 ? 'Classe A (Sobrevida 1 ano: 100%)' : score <= 9 ? 'Classe B (Sobrevida 1 ano: ~80%)' : 'Classe C (Sobrevida 1 ano: ~45%)'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcCentor = () => {
+  const [centor, setCentor] = useState({ febre: false, tosse: false, linfonodo: false, exsudato: false, idade: '15-44' });
+  const score = useMemo(() => {
+    let pts = 0;
+    if (centor.febre) pts += 1;
+    if (centor.tosse) pts += 1; // Ausência de tosse
+    if (centor.linfonodo) pts += 1;
+    if (centor.exsudato) pts += 1;
+    if (centor.idade === '3-14') pts += 1;
+    if (centor.idade === '>44') pts -= 1;
+    return pts;
+  }, [centor]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <CheckboxItem label="Febre > 38°C" checked={centor.febre} onChange={(c) => setCentor({...centor, febre: c})} />
+        <CheckboxItem label="Ausência de tosse" checked={centor.tosse} onChange={(c) => setCentor({...centor, tosse: c})} />
+        <CheckboxItem label="Linfonodos cervicais anteriores dolorosos/aumentados" checked={centor.linfonodo} onChange={(c) => setCentor({...centor, linfonodo: c})} />
+        <CheckboxItem label="Exsudato ou hipertrofia amigdaliana" checked={centor.exsudato} onChange={(c) => setCentor({...centor, exsudato: c})} />
+        
+        <div className="pt-4">
+          <label className="block text-sm font-medium text-gray-700 mb-3">Idade</label>
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { id: '3-14', label: '3 a 14 anos (+1)' },
+              { id: '15-44', label: '15 a 44 anos (0)' },
+              { id: '>44', label: '> 44 anos (-1)' }
+            ].map((age) => (
+              <button key={age.id} onClick={() => setCentor({...centor, idade: age.id})} className={`p-3 rounded-xl text-sm border transition-all ${centor.idade === age.id ? 'bg-indigo-100 border-indigo-500 text-indigo-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
+                {age.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 p-6 bg-indigo-50 rounded-2xl text-center">
+          <span className="text-sm text-indigo-800 block uppercase font-bold tracking-wider mb-2">Escore de Centor Modificado</span>
+          <span className="text-6xl font-black text-indigo-600">{score}</span>
+          <p className="text-md mt-4 text-indigo-900 font-medium leading-relaxed">
+            {score <= 0 ? 'Risco < 2%. Sem necessidade de teste ou ATB.' : 
+             score === 1 ? 'Risco ~5-10%. Geralmente sem teste/ATB.' : 
+             score <= 3 ? 'Risco ~15-35%. Considerar teste rápido.' : 
+             'Risco ~50%. Considerar teste rápido e/ou ATB empírico.'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcWellsTVP = () => {
+  const [wells, setWells] = useState({ cancer: false, paralisia: false, acamado: false, dor: false, edemaToda: false, edemaPanturrilha: false, edemaDepressivel: false, veias: false, altMaisProvavel: false });
+  const score = useMemo(() => {
+    let pts = Object.values(wells).filter(Boolean).length;
+    if (wells.altMaisProvavel) pts -= 3; // +1 boolean true in array, but needs to be -2 mathematically (-3 compensates the +1 from the filter)
+    return pts;
+  }, [wells]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <CheckboxItem label="Câncer ativo (tratamento nos últimos 6 meses ou paliativo) (+1)" checked={wells.cancer} onChange={(c) => setWells({...wells, cancer: c})} />
+        <CheckboxItem label="Paralisia, paresia ou imobilização recente das pernas (+1)" checked={wells.paralisia} onChange={(c) => setWells({...wells, paralisia: c})} />
+        <CheckboxItem label="Acamado > 3 dias ou cirurgia de grande porte nas últimas 4 semanas (+1)" checked={wells.acamado} onChange={(c) => setWells({...wells, acamado: c})} />
+        <CheckboxItem label="Dor/sensibilidade localizada no trajeto venoso profundo (+1)" checked={wells.dor} onChange={(c) => setWells({...wells, dor: c})} />
+        <CheckboxItem label="Edema em toda a perna (+1)" checked={wells.edemaToda} onChange={(c) => setWells({...wells, edemaToda: c})} />
+        <CheckboxItem label="Edema da panturrilha > 3 cm comparado à perna assintomática (+1)" checked={wells.edemaPanturrilha} onChange={(c) => setWells({...wells, edemaPanturrilha: c})} />
+        <CheckboxItem label="Edema depressível (cacifo) confinado à perna sintomática (+1)" checked={wells.edemaDepressivel} onChange={(c) => setWells({...wells, edemaDepressivel: c})} />
+        <CheckboxItem label="Veias superficiais colaterais (não varicosas) (+1)" checked={wells.veias} onChange={(c) => setWells({...wells, veias: c})} />
+        <div className="mt-4 pt-4 border-t border-gray-100">
+          <CheckboxItem label="Diagnóstico alternativo mais provável que TVP (-2)" checked={wells.altMaisProvavel} onChange={(c) => setWells({...wells, altMaisProvavel: c})} />
+        </div>
+        
+        <div className="mt-8 p-6 bg-blue-50 rounded-2xl text-center">
+          <span className="text-sm text-blue-800 block uppercase font-bold tracking-wider mb-2">Escore de Wells (TVP)</span>
+          <span className="text-6xl font-black text-blue-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-blue-900">
+            {score >= 2 ? 'Provável (TVP Provável)' : 'Improvável (TVP Improvável - D-Dímero indicado)'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const CalcPHQ9 = () => {
   const [phq9, setPhq9] = useState(new Array(9).fill(0));
   const scorePhq9 = useMemo(() => phq9.reduce((a, b) => a + b, 0), [phq9]);
 
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-      <p className="text-sm text-gray-500 mb-6">Frequência dos sintomas nas últimas 2 semanas: 0=Nunca, 3=Quase todos os dias.</p>
+      <p className="text-sm text-gray-500 mb-6">Frequência dos sintomas nas últimas 2 semanas: 0=Nunca, 1= Alguns dias, 2= mais da metade dos dias, 3=Quase todos os dias.</p>
       <div className="space-y-4">
         {[
           "Pouco interesse ou prazer em fazer as coisas", "Sentir-se 'para baixo', deprimido ou sem perspectiva", 
@@ -530,9 +653,12 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator },
     { id: 'clcr', title: 'Clearance de Creatinina', category: 'Geral', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity },
+    { id: 'childpugh', title: 'Classificação Child-Pugh', category: 'Geral', desc: 'Prognóstico de cirrose e doença hepática crônica', icon: FileText },
+    { id: 'centor', title: 'Escore de Centor', category: 'Geral', desc: 'Probabilidade de faringite estreptocócica', icon: Activity },
     { id: 'chads', title: 'CHA₂DS₂-VASc', category: 'Cardiologia', desc: 'Risco de AVC em pacientes com Fibrilação Atrial', icon: Heart },
     { id: 'glasgow', title: 'Escala de Glasgow', category: 'Emergência e UTI', desc: 'Avaliação neurológica e nível de consciência', icon: Activity },
     { id: 'curb65', title: 'Escore CURB-65', category: 'Emergência e UTI', desc: 'Estratificação de risco para Pneumonia', icon: Activity },
+    { id: 'wells', title: 'Escore de Wells (TVP)', category: 'Emergência e UTI', desc: 'Probabilidade pré-teste de Trombose Venosa Profunda', icon: Stethoscope },
     { id: 'nihss', title: 'Escala NIHSS', category: 'Neurologia', desc: 'Déficit neurológico padronizado no AVC', icon: FileText },
     { id: 'meem', title: 'Mini-Mental (MEEM)', category: 'Neurologia', desc: 'Rastreio cognitivo com instruções detalhadas', icon: Brain },
     { id: 'phq9', title: 'Questionário PHQ-9', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de depressão', icon: Smile },
@@ -544,12 +670,15 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   const filteredCalculators = calculatorsList.filter(calc => calc.category === activeCategory);
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
 
-  const renderCalculatorContent = () => {
+const renderCalculatorContent = () => {
     switch (selectedCalc) {
       case 'imc': return <CalcIMC />;
       case 'clcr': return <CalcCockcroftGault />;
+      case 'childpugh': return <CalcChildPugh />;
+      case 'centor': return <CalcCentor />;
       case 'glasgow': return <CalcGlasgow />;
       case 'curb65': return <CalcCURB65 />;
+      case 'wells': return <CalcWellsTVP />;
       case 'chads': return <CalcCHADS />;
       case 'ig': return <CalcIdadeGestacional />;
       case 'dum_usg': return <CalcIdadeGestacionalUSG />;
