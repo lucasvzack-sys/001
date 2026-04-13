@@ -148,7 +148,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
                       <div className="flex items-start">
                         <Info className="text-green-600 mr-3 mt-1 shrink-0" size={20} />
                         <p className="text-green-800 leading-relaxed">
-                          Procure a Unidade de Saúde mais próxima com sua <span className="font-bold">receita atualizada</span> e <span className="font-bold">documento com foto</span>.
+                          Procure o serviço de Saúde mais adequado com sua <span className="font-bold">receita atualizada</span> e <span className="font-bold">documento com foto</span>.
                         </p>
                       </div>
                     </div>
@@ -234,7 +234,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-gray-500 text-sm">
-            Os dados apresentados são informativos e baseados em planilhas públicas.
+            Os dados apresentados são informativos e baseados em planilhas públicas (última atualização - abril - 2026).
             A disponibilidade real pode variar.
           </p>
         </div>
