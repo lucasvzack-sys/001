@@ -12,7 +12,7 @@ interface CalculAiProps {
   onNavigate: (view: View) => void;
 }
 
-type Category = 'Geral' | 'Cardiologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Obstetrícia' | 'Pediatria';
+type Category = 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Obstetrícia' | 'Pediatria';
 
 // ==========================================
 // COMPONENTE AUXILIAR COMPARTILHADO
@@ -640,9 +640,10 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   const [activeCategory, setActiveCategory] = useState<Category>('Geral');
   const [selectedCalc, setSelectedCalc] = useState<string | null>(null);
 
-  const categories: { name: Category; icon: any }[] = [
+const categories: { name: Category; icon: any }[] = [
     { name: 'Geral', icon: Stethoscope },
     { name: 'Cardiologia', icon: Heart },
+    { name: 'Gastroenterologia', icon: Stethoscope }, // <-- NOVA CATEGORIA AQUI
     { name: 'Emergência e UTI', icon: Activity },
     { name: 'Neurologia', icon: Brain },
     { name: 'Psiquiatria', icon: Smile },
@@ -653,7 +654,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator },
     { id: 'clcr', title: 'Clearance de Creatinina', category: 'Geral', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity },
-    { id: 'childpugh', title: 'Classificação Child-Pugh', category: 'Geral', desc: 'Prognóstico de cirrose e doença hepática crônica', icon: FileText },
+    { id: 'childpugh', title: 'Classificação Child-Pugh', category: 'Gastroenterologia', desc: 'Prognóstico de cirrose e doença hepática crônica', icon: FileText },
     { id: 'centor', title: 'Escore de Centor', category: 'Geral', desc: 'Probabilidade de faringite estreptocócica', icon: Activity },
     { id: 'chads', title: 'CHA₂DS₂-VASc', category: 'Cardiologia', desc: 'Risco de AVC em pacientes com Fibrilação Atrial', icon: Heart },
     { id: 'glasgow', title: 'Escala de Glasgow', category: 'Emergência e UTI', desc: 'Avaliação neurológica e nível de consciência', icon: Activity },
