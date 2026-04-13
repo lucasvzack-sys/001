@@ -5,6 +5,8 @@ import {
 } from 'lucide-react';
 import { View } from '../types';
 import Navbar from './Navbar';
+import CrossPromo from './CrossPromo';
+import AdSpace from './AdSpace';
 
 interface CalculAiProps {
   onNavigate: (view: View) => void;
@@ -503,6 +505,17 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
             )}
           </>
         )}
+        <div className="mt-16 space-y-6">
+          <AdSpace />
+          <div className="grid md:grid-cols-2 gap-6">
+            <CrossPromo target="temnoposto" onNavigate={onNavigate} />
+            <CrossPromo target="laudai" onNavigate={onNavigate} />
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
       </main>
     </div>
   );
