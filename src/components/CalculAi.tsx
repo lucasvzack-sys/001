@@ -746,6 +746,115 @@ const CalcMELD = () => {
   );
 };
 
+const CalcJones = () => {
+  const [criteria, setCriteria] = useState({
+    strep: false,
+    cardite: false,
+    artrite: false,
+    coreia: false,
+    eritema: false,
+    nodulos: false,
+    artralgia: false,
+    febre: false,
+    vhs: false,
+    pr: false
+  });
+
+  const result = useMemo(() => {
+    let major = 0;
+    if (criteria.cardite) major++;
+    if (criteria.artrite) major++;
+    if (criteria.coreia) major++;
+    if (criteria.eritema) major++;
+    if (criteria.nodulos) major++;
+
+    let minor = 0;
+    if (criteria.artralgia) minor++;
+    if (criteria.febre) minor++;
+    if (criteria.vhs) minor++;
+    if (criteria.pr) minor++;
+
+    const hasStrep = criteria.strep;
+
+    let status = '';
+    let colorClass = '';
+
+    if (!hasStrep) {
+      status = 'Falta evidência de infeção estreptocócica. Diagnóstico improvável.';
+      colorClass = 'text-gray-700 bg-gray-50 border-gray-300';
+    } else if (major >= 2 || (major >= 1 && minor >= 2)) {
+      status = 'Alta probabilidade de Febre Reumática Aguda (Critérios preenchidos).';
+      colorClass = 'text-red-800 bg-red-50 border-red-500';
+    } else {
+      status = 'Critérios insuficientes para o diagnóstico de Febre Reumática Aguda.';
+      colorClass = 'text-orange-800 bg-orange-50 border-orange-400';
+    }
+
+    return { major, minor, status, colorClass };
+  }, [criteria]);
+
+  const toggle = (key: keyof typeof criteria) => setCriteria({...criteria, [key]: !criteria[key]});
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+
+        {/* Requisito Obrigatório */}
+        <div className="p-5 bg-purple-50 rounded-2xl border border-purple-200 shadow-sm">
+          <label className="flex items-start space-x-3 cursor-pointer">
+            <input type="checkbox" checked={criteria.strep} onChange={() => toggle('strep')} className="w-5 h-5 mt-0.5 text-purple-600 rounded border-gray-300 focus:ring-purple-500" />
+            <span className="text-purple-900 font-bold text-lg">Evidência de infeção por Estreptococo do Grupo A (Obrigatório)</span>
+          </label>
+          <p className="text-sm text-purple-700 ml-8 mt-1">Cultura de orofaringe positiva, teste rápido positivo ou título de ASLO (antiestreptolisina O) elevado.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+          {/* Critérios Maiores */}
+          <div>
+            <h3 className="text-md font-bold text-red-800 mb-3 border-b border-red-100 pb-2 flex items-center">
+              Critérios Maiores
+              <span className="ml-auto bg-red-100 text-red-700 py-0.5 px-2 rounded-full text-xs">{result.major}</span>
+            </h3>
+            <div className="space-y-3">
+              <CheckboxItem label="Cardite (clínica ou subclínica/ecocardiográfica)" checked={criteria.cardite} onChange={() => toggle('cardite')} />
+              <CheckboxItem label="Poliartrite (ou monoartrite/poliartralgia em alto risco)" checked={criteria.artrite} onChange={() => toggle('artrite')} />
+              <CheckboxItem label="Coreia de Sydenham" checked={criteria.coreia} onChange={() => toggle('coreia')} />
+              <CheckboxItem label="Eritema marginado" checked={criteria.eritema} onChange={() => toggle('eritema')} />
+              <CheckboxItem label="Nódulos subcutâneos" checked={criteria.nodulos} onChange={() => toggle('nodulos')} />
+            </div>
+          </div>
+
+          {/* Critérios Menores */}
+          <div>
+            <h3 className="text-md font-bold text-orange-800 mb-3 border-b border-orange-100 pb-2 flex items-center">
+              Critérios Menores
+              <span className="ml-auto bg-orange-100 text-orange-700 py-0.5 px-2 rounded-full text-xs">{result.minor}</span>
+            </h3>
+            <div className="space-y-3">
+              <CheckboxItem label="Poliartralgia (não usar se poliartrite for critério maior)" checked={criteria.artralgia} onChange={() => toggle('artralgia')} />
+              <CheckboxItem label="Febre (≥ 38,5°C ou ≥ 38°C em populações de alto risco)" checked={criteria.febre} onChange={() => toggle('febre')} />
+              <CheckboxItem label="Provas inflamatórias: VHS ≥ 60 mm/h ou PCR ≥ 3,0 mg/dL" checked={criteria.vhs} onChange={() => toggle('vhs')} />
+              <CheckboxItem label="Aumento do intervalo PR no ECG (não usar se cardite for critério maior)" checked={criteria.pr} onChange={() => toggle('pr')} />
+            </div>
+          </div>
+        </div>
+
+        {/* Resultado */}
+        <div className={`mt-8 p-6 rounded-2xl text-center border-2 transition-colors ${result.colorClass}`}>
+          <span className="text-sm block uppercase font-bold tracking-wider mb-2 opacity-80">Interpretação Diagnóstica</span>
+          <p className="text-xl md:text-2xl font-black">{result.status}</p>
+          {criteria.strep && (
+            <p className="text-sm mt-3 opacity-90 font-medium">
+              Diagnóstico = 2 Critérios Maiores OU 1 Maior + 2 Menores.
+            </p>
+          )}
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
 const CalcTIMI = () => {
   const [timi, setTimi] = useState({ idade: false, farc: false, dac: false, aas: false, angina: false, ecg: false, mrc: false });
   const score = useMemo(() => Object.values(timi).filter(Boolean).length, [timi]);
@@ -806,6 +915,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     { id: 'ig', title: 'Idade Gestacional / DPP', category: 'Ginecologia e Obstetrícia', desc: 'Cálculo a partir da DUM', icon: Calendar },
     { id: 'dum_usg', title: 'Idade Gestacional pelo Ultrassom', category: 'Ginecologia e Obstetrícia', desc: 'Estimativa via biometria fetal', icon: PlusSquare },
     { id: 'kupperman', title: 'Índice de Kupperman', category: 'Ginecologia e Obstetrícia', desc: 'Avaliação da gravidade dos sintomas climatéricos', icon: Smile },
+    { id: 'jones', title: 'Critérios de Jones', category: 'Pediatria', desc: 'Diagnóstico de Febre Reumática Aguda', icon: Heart },
     { id: 'apgar', title: 'Índice de Apgar', category: 'Pediatria', desc: 'Avaliação rápida da vitalidade do recém-nascido', icon: Baby },
   ];
   const filteredCalculators = calculatorsList.filter(calc => calc.category === activeCategory);
@@ -816,6 +926,7 @@ const renderCalculatorContent = () => {
       case 'meld': return <CalcMELD />;
       case 'timi': return <CalcTIMI />;
       case 'kupperman': return <CalcKupperman />;
+      case 'jones': return <CalcJones />;
       case 'imc': return <CalcIMC />;
       case 'clcr': return <CalcCockcroftGault />;
       case 'childpugh': return <CalcChildPugh />;
