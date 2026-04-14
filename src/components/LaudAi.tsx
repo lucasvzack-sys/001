@@ -81,7 +81,8 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
       }
 
       // Escolhe o modelo: Vision para imagens, Versatile para texto puro
-      const selectedModel = image ? "llama-3.2-11b-vision-preview" : "llama-3.3-70b-versatile";
+     // Depois:
+      const selectedModel = image ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.3-70b-versatile";
 
       const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
