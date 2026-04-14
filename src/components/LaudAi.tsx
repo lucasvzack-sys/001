@@ -249,7 +249,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
                 {isProcessing && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 backdrop-blur-sm">
                     <Loader2 className="animate-spin text-medical-blue mb-4" size={48} />
-                    <p className="text-medical-blue font-bold animate-pulse">Analisando dados médicos no Groq...</p>
+                    <p className="text-medical-blue font-bold animate-pulse">LaudAí está analisando os dados médicos...</p>
                   </div>
                 )}
 
