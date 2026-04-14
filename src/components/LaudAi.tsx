@@ -20,32 +20,49 @@ interface LaudAiProps {
 
 export default function LaudAi({ onNavigate }: LaudAiProps) {
   const [inputText, setInputText] = useState('');
-  const [image, setImage] = useState<string | null>(null);
+  // PASSO 1: Agora é um Array (lista) de imagens, começa vazio []
+  const [images, setImages] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState('');
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Nova função para ler múltiplas imagens de uma vez
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+    const files = e.target.files;
+    if (!files) return;
+
+    const newImagesArray: string[] = [];
+    
+    // Transforma a lista de arquivos em um array iterável e lê cada um
+    Array.from(files).forEach(file => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result as string);
+        newImagesArray.push(reader.result as string);
+        // Quando terminar de ler todas as imagens que o usuário selecionou, atualiza a tela
+        if (newImagesArray.length === files.length) {
+          setImages(prev => [...prev, ...newImagesArray]);
+        }
       };
       reader.readAsDataURL(file);
-    }
+    });
+  };
+
+  // Função para remover uma imagem específica da lista antes de enviar
+  const removeImage = (indexToRemove: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setImages(prev => prev.filter((_, index) => index !== indexToRemove));
   };
 
   const handleProcess = async () => {
-    if (!inputText && !image) return;
+    // Verifica se tem texto ou pelo menos uma imagem
+    if (!inputText && images.length === 0) return;
 
     setIsProcessing(true);
     setError(null);
     
     try {
-      // No Vite, as variáveis de ambiente começam com VITE_ e são acessadas via import.meta.env
       const apiKey = import.meta.env.VITE_GROQ_API_KEY; 
       
       if (!apiKey) {
@@ -54,7 +71,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
 
       const prompt = `
         Você é um assistente médico especializado em transcrição de laudos para prontuários.
-        Sua tarefa é analisar o texto ou imagem fornecida e extrair as informações essenciais de forma resumida.
+        Sua tarefa é analisar o texto ou imagens fornecidas e extrair as informações essenciais de forma resumida.
         
         FORMATO DE SAÍDA OBRIGATÓRIO:
         (TIPO DE EXAME - DATA DO EXAME): EXAME 1: RESULTADO 1 | EXAME 2: RESULTADO 2 | ...
@@ -66,23 +83,24 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
         Seja conciso e use termos técnicos médicos adequados para prontuário.
       `;
 
-      // Prepara o conteúdo dinamicamente dependendo se tem imagem ou não
       const contentPayload: any[] = [{ type: "text", text: prompt }];
       
       if (inputText) {
         contentPayload.push({ type: "text", text: `Texto do laudo: ${inputText}` });
       }
       
-      if (image) {
-        contentPayload.push({
-          type: "image_url",
-          image_url: { url: image } // A imagem já está em Base64 Data URL
+      // PASSO 3: Faz um loop e adiciona TODAS as imagens selecionadas no pacote de envio
+      if (images.length > 0) {
+        images.forEach((img) => {
+          contentPayload.push({
+            type: "image_url",
+            image_url: { url: img }
+          });
         });
       }
 
-      // Escolhe o modelo: Vision para imagens, Versatile para texto puro
-     // Depois:
-      const selectedModel = image ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.3-70b-versatile";
+      // Escolhe o modelo: Llama 4 Scout para imagens, Versatile para texto puro
+      const selectedModel = images.length > 0 ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.3-70b-versatile";
 
       const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
@@ -98,14 +116,14 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
               content: contentPayload
             }
           ],
-          temperature: 0.2, // Temperatura baixa para respostas médicas precisas e sem invenções
+          temperature: 0.2,
         })
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Falha na comunicação com o GroqCloud.');
+        throw new Error(data.error?.message || 'Falha na comunicação com a IA.');
       }
 
       setResult(data.choices[0].message.content || 'Não foi possível processar o laudo.');
@@ -162,43 +180,61 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
               />
 
               <div 
-                onClick={() => fileInputRef.current?.click()}
-                className={`relative border-2 border-dashed rounded-2xl p-8 transition-all cursor-pointer flex flex-col items-center justify-center ${
-                  image ? 'border-medical-blue bg-blue-50' : 'border-gray-200 hover:border-medical-blue hover:bg-gray-50'
+                onClick={() => images.length === 0 && fileInputRef.current?.click()}
+                className={`relative border-2 border-dashed rounded-2xl p-6 transition-all ${
+                  images.length > 0 ? 'border-transparent' : 'border-gray-200 hover:border-medical-blue hover:bg-gray-50 cursor-pointer flex flex-col items-center justify-center'
                 }`}
               >
+                {/* PASSO 2: A tag "multiple" foi adicionada no input abaixo */}
                 <input 
                   type="file" 
                   ref={fileInputRef}
                   onChange={handleImageUpload}
                   accept="image/*"
+                  multiple 
                   className="hidden"
                 />
                 
-                {image ? (
-                  <div className="relative w-full aspect-video rounded-xl overflow-hidden">
-                    <img src={image} alt="Preview" className="w-full h-full object-cover" />
-                    <button 
-                      onClick={(e) => { e.stopPropagation(); setImage(null); }}
-                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600"
-                    >
-                      <Check size={16} className="rotate-45" />
-                    </button>
+                {images.length > 0 ? (
+                  <div className="w-full">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-sm font-bold text-medical-blue">{images.length} imagem(ns) adicionada(s)</span>
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+                        className="text-xs bg-blue-100 text-medical-blue px-3 py-1.5 rounded-full font-bold hover:bg-blue-200 transition-colors"
+                      >
+                        + Adicionar mais
+                      </button>
+                    </div>
+                    {/* Galeria em Grid para mostrar as múltiplas imagens */}
+                    <div className="grid grid-cols-3 gap-3">
+                      {images.map((img, index) => (
+                        <div key={index} className="relative w-full aspect-square rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                          <img src={img} alt={`Preview ${index}`} className="w-full h-full object-cover" />
+                          <button 
+                            onClick={(e) => removeImage(index, e)}
+                            className="absolute top-1 right-1 p-1.5 bg-red-500/90 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
+                          >
+                            <Check size={12} className="rotate-45" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ) : (
                   <>
                     <div className="p-4 bg-blue-100 text-medical-blue rounded-full mb-3">
                       <Upload size={24} />
                     </div>
-                    <p className="text-sm font-bold text-gray-700">Arraste ou clique para enviar imagem</p>
-                    <p className="text-xs text-gray-400 mt-1">Fotos de laudos, exames ou receitas</p>
+                    <p className="text-sm font-bold text-gray-700 text-center">Arraste ou clique para enviar imagens</p>
+                    <p className="text-xs text-gray-400 mt-1 text-center">Fotos de laudos, exames ou receitas (pode selecionar várias)</p>
                   </>
                 )}
               </div>
 
               <button 
                 onClick={handleProcess}
-                disabled={isProcessing || (!inputText && !image)}
+                disabled={isProcessing || (!inputText && images.length === 0)}
                 className="w-full mt-6 py-4 bg-medical-blue text-white rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {isProcessing ? (
@@ -248,7 +284,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
                 )}
                 
                 {isProcessing && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 backdrop-blur-sm">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 backdrop-blur-sm z-10">
                     <Loader2 className="animate-spin text-medical-blue mb-4" size={48} />
                     <p className="text-medical-blue font-bold animate-pulse">LaudAí está analisando os dados médicos...</p>
                   </div>
