@@ -885,8 +885,11 @@ const CalcTIMI = () => {
 };
 
 export default function CalculAi({ onNavigate }: CalculAiProps) {
+  const { calcId } = useParams(); // Lê o ID da URL
+  const navigate = useNavigate(); // Permite mudar a URL
+  
   const [activeCategory, setActiveCategory] = useState<Category>('Geral');
-  const [selectedCalc, setSelectedCalc] = useState<string | null>(null);
+  const selectedCalc = calcId || null; // Agora a calculadora selecionada vem da URL
 
   const categories: { name: Category; icon: any }[] = [
     { name: 'Geral', icon: Stethoscope },
@@ -923,27 +926,14 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
 
 const renderCalculatorContent = () => {
-    switch (selectedCalc) {
-      case 'meld': return <CalcMELD />;
-      case 'timi': return <CalcTIMI />;
-      case 'kupperman': return <CalcKupperman />;
-      case 'jones': return <CalcJones />;
-      case 'imc': return <CalcIMC />;
-      case 'clcr': return <CalcCockcroftGault />;
-      case 'childpugh': return <CalcChildPugh />;
-      case 'centor': return <CalcCentor />;
-      case 'glasgow': return <CalcGlasgow />;
-      case 'curb65': return <CalcCURB65 />;
-      case 'wells': return <CalcWellsTVP />;
-      case 'chads': return <CalcCHADS />;
-      case 'ig': return <CalcIdadeGestacional />;
-      case 'dum_usg': return <CalcIdadeGestacionalUSG />;
-      case 'apgar': return <CalcApgar />;
-      case 'nihss': return <CalcNIHSS />;
-      case 'phq9': return <CalcPHQ9 />;
-      case 'meem': return <CalcMEEM />;
-      default: return <p className="text-center py-10">Calculadora em desenvolvimento.</p>;
+    // Se a calculadora não for encontrada na URL ou ainda não tiver o "Component" associado
+    if (!currentCalcData || !currentCalcData.Component) {
+      return <p className="text-center py-10">Calculadora em desenvolvimento ou não encontrada.</p>;
     }
+    
+    // Puxa o componente diretamente da lista e o renderiza
+    const CalculadoraParaRenderizar = currentCalcData.Component;
+    return <CalculadoraParaRenderizar />;
   };
 
   return (
@@ -955,7 +945,7 @@ const renderCalculatorContent = () => {
         {selectedCalc ? (
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center justify-between mb-8">
-              <button onClick={() => setSelectedCalc(null)} className="flex items-center text-gray-500 hover:text-orange-600 transition-colors font-medium">
+              <button onClick={() => navigate('/calculai')} className="flex items-center text-gray-500 hover:text-orange-600 transition-colors font-medium">
                 <ArrowLeft size={20} className="mr-2" /> Voltar
               </button>
              <div className="flex items-center bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100">
@@ -997,7 +987,7 @@ const renderCalculatorContent = () => {
             {filteredCalculators.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredCalculators.map((calc) => (
-                  <div key={calc.id} onClick={() => setSelectedCalc(calc.id)} className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md hover:border-orange-200 hover:-translate-y-1 transition-all group">
+                  <div key={calc.id} onClick={() => navigate(`/calculai/${calc.id}`)} className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md hover:border-orange-200 hover:-translate-y-1 transition-all group">
                     <div className="bg-orange-50 w-12 h-12 flex items-center justify-center rounded-2xl mb-4 group-hover:bg-orange-100 transition-colors">
                       <calc.icon size={24} className="text-orange-600" />
                     </div>
