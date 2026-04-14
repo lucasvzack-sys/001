@@ -5,13 +5,10 @@ import {
   FileText, 
   Copy, 
   Check, 
-  ArrowLeft, 
   Sparkles, 
   AlertCircle,
-  Image as ImageIcon,
   Loader2
 } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
 import { View } from '../types';
 import AdSpace from './AdSpace';
 import CrossPromo from './CrossPromo';
@@ -48,8 +45,13 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
     setError(null);
     
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+      // No Vite, as variáveis de ambiente começam com VITE_ e são acessadas via import.meta.env
+      const apiKey = import.meta.env.VITE_GROQ_API_KEY; 
       
+      if (!apiKey) {
+        throw new Error('Chave da API do Groq não encontrada. Configure o .env');
+      }
+
       const prompt = `
         Você é um assistente médico especializado em transcrição de laudos para prontuários.
         Sua tarefa é analisar o texto ou imagem fornecida e extrair as informações essenciais de forma resumida.
@@ -64,31 +66,51 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
         Seja conciso e use termos técnicos médicos adequados para prontuário.
       `;
 
-      const contents: any[] = [{ text: prompt }];
+      // Prepara o conteúdo dinamicamente dependendo se tem imagem ou não
+      const contentPayload: any[] = [{ type: "text", text: prompt }];
       
       if (inputText) {
-        contents.push({ text: `Texto do laudo: ${inputText}` });
+        contentPayload.push({ type: "text", text: `Texto do laudo: ${inputText}` });
       }
       
       if (image) {
-        const base64Data = image.split(',')[1];
-        contents.push({
-          inlineData: {
-            mimeType: "image/png",
-            data: base64Data
-          }
+        contentPayload.push({
+          type: "image_url",
+          image_url: { url: image } // A imagem já está em Base64 Data URL
         });
       }
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: { parts: contents.map(c => typeof c === 'string' ? { text: c } : c) },
+      // Escolhe o modelo: Vision para imagens, Versatile para texto puro
+      const selectedModel = image ? "llama-3.2-11b-vision-preview" : "llama-3.3-70b-versatile";
+
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: [
+            {
+              role: "user",
+              content: contentPayload
+            }
+          ],
+          temperature: 0.2, // Temperatura baixa para respostas médicas precisas e sem invenções
+        })
       });
 
-      setResult(response.text || 'Não foi possível processar o laudo.');
-    } catch (err) {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error?.message || 'Falha na comunicação com o GroqCloud.');
+      }
+
+      setResult(data.choices[0].message.content || 'Não foi possível processar o laudo.');
+    } catch (err: any) {
       console.error(err);
-      setError('Ocorreu um erro ao processar o laudo. Verifique sua conexão ou tente novamente.');
+      setError(err.message || 'Ocorreu um erro ao processar o laudo. Verifique sua conexão ou tente novamente.');
     } finally {
       setIsProcessing(false);
     }
@@ -112,12 +134,11 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-10 flex flex-col items-center"
         >
-          {/* Logo adicionada aqui */}
           <img 
             src="/laudai.png" 
             alt="Logo LaudAí" 
             className="w-32 md:w-48 h-auto mb-6 object-contain" 
-        />
+          />
           <h2 className="text-3xl font-bold text-gray-900 mb-4">LaudAí</h2>
           <p className="text-gray-600 max-w-xl mx-auto">
             Transforme laudos complexos em resumos técnicos prontos para o prontuário médico.
@@ -228,7 +249,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
                 {isProcessing && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 backdrop-blur-sm">
                     <Loader2 className="animate-spin text-medical-blue mb-4" size={48} />
-                    <p className="text-medical-blue font-bold animate-pulse">Analisando dados médicos...</p>
+                    <p className="text-medical-blue font-bold animate-pulse">Analisando dados médicos no Groq...</p>
                   </div>
                 )}
 
@@ -261,7 +282,6 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           </div>
         </div>
 
-       {/* Substitua a div className="mt-16 space-y-8" final por esta: */}
         <div className="mt-16 space-y-6">
           <AdSpace />
           <CrossPromo target="temnoposto" onNavigate={onNavigate} />
