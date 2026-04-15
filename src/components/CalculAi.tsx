@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Activity, Heart, Brain, Baby, Stethoscope,
-  ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator
+  ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator, Search
 } from 'lucide-react';
 import { View } from '../types';
 import Navbar from './Navbar';
@@ -633,6 +633,126 @@ const CalcMEEM = () => {
   );
 };
 
+const CalcPREVENT = () => {
+  const [prevent, setPrevent] = useState({
+    idade: '', sexo: 'F', pas: '', hasTratada: false, ct: '', hdl: '',
+    dm: false, tabagista: false, estatina: false, egfr: '', imc: ''
+  });
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="mb-6 p-4 bg-blue-50 text-blue-800 rounded-xl text-sm leading-relaxed border border-blue-100">
+        <span className="font-bold">Aviso sobre o AHA PREVENT:</span> As equações PREVENT (2023) utilizam matrizes complexas de coeficientes que dependem de dezenas de variáveis interligadas para estimar o risco de DCV, Insuficiência Cardíaca e ASCVD em 10 e 30 anos. Esta é a interface de coleta padronizada. Em um ambiente de produção, este formulário deve ser conectado à API oficial da AHA ou a uma biblioteca validada com os coeficientes exatos.
+      </div>
+
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Idade (30-79 anos)</label>
+            <input type="number" value={prevent.idade} onChange={(e) => setPrevent({...prevent, idade: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 55" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">Sexo Biológico</label>
+            <div className="flex gap-2">
+              <button onClick={() => setPrevent({...prevent, sexo: 'M'})} className={`flex-1 py-3 rounded-xl text-sm font-bold border transition-all ${prevent.sexo === 'M' ? 'bg-blue-100 border-blue-500 text-blue-700' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Masculino</button>
+              <button onClick={() => setPrevent({...prevent, sexo: 'F'})} className={`flex-1 py-3 rounded-xl text-sm font-bold border transition-all ${prevent.sexo === 'F' ? 'bg-pink-100 border-pink-500 text-pink-700' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Feminino</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Pressão Sistólica (mmHg)</label>
+            <input type="number" value={prevent.pas} onChange={(e) => setPrevent({...prevent, pas: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 130" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Colesterol Total (mg/dL)</label>
+            <input type="number" value={prevent.ct} onChange={(e) => setPrevent({...prevent, ct: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 200" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">HDL (mg/dL)</label>
+            <input type="number" value={prevent.hdl} onChange={(e) => setPrevent({...prevent, hdl: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 50" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">eGFR (mL/min/1.73m²)</label>
+            <input type="number" value={prevent.egfr} onChange={(e) => setPrevent({...prevent, egfr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 90" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">IMC (kg/m²)</label>
+            <input type="number" value={prevent.imc} onChange={(e) => setPrevent({...prevent, imc: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 25" />
+          </div>
+        </div>
+
+        <div className="space-y-3 pt-4 border-t border-gray-100">
+          <CheckboxItem label="Paciente usa medicação para Hipertensão?" checked={prevent.hasTratada} onChange={(c) => setPrevent({...prevent, hasTratada: c})} />
+          <CheckboxItem label="Paciente possui Diabetes?" checked={prevent.dm} onChange={(c) => setPrevent({...prevent, dm: c})} />
+          <CheckboxItem label="Fumante atual?" checked={prevent.tabagista} onChange={(c) => setPrevent({...prevent, tabagista: c})} />
+          <CheckboxItem label="Em uso de Estatina?" checked={prevent.estatina} onChange={(c) => setPrevent({...prevent, estatina: c})} />
+        </div>
+
+        <div className="mt-8 p-6 bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl text-center">
+           <span className="text-gray-500 font-medium">Preencha todos os dados e integre o motor de cálculo da AHA para visualizar o risco em 10 e 30 anos.</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcHASBLED = () => {
+  const [hasbled, setHasbled] = useState({ has: false, renal: false, hep: false, avc: false, sang: false, inr: false, id: false, drogas: false, alc: false });
+  const score = useMemo(() => Object.values(hasbled).filter(Boolean).length, [hasbled]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <CheckboxItem label="H - Hipertensão não controlada (PAS > 160 mmHg)" checked={hasbled.has} onChange={(c) => setHasbled({...hasbled, has: c})} />
+        <CheckboxItem label="A - Função Renal anormal (Diálise, Tx ou Cr > 2.26)" checked={hasbled.renal} onChange={(c) => setHasbled({...hasbled, renal: c})} />
+        <CheckboxItem label="A - Função Hepática anormal (Cirrose, Bilirrubina 2x, TGO/TGP 3x)" checked={hasbled.hep} onChange={(c) => setHasbled({...hasbled, hep: c})} />
+        <CheckboxItem label="S - História de AVC prévio" checked={hasbled.avc} onChange={(c) => setHasbled({...hasbled, avc: c})} />
+        <CheckboxItem label="B - Sangramento prévio ou predisposição a sangramento" checked={hasbled.sang} onChange={(c) => setHasbled({...hasbled, sang: c})} />
+        <CheckboxItem label="L - INR Lábil (Instável, alto ou no alvo < 60% do tempo)" checked={hasbled.inr} onChange={(c) => setHasbled({...hasbled, inr: c})} />
+        <CheckboxItem label="E - Idoso (Idade > 65 anos)" checked={hasbled.id} onChange={(c) => setHasbled({...hasbled, id: c})} />
+        <CheckboxItem label="D - Uso de Drogas que aumentam sangramento (AINEs, antiplaquetários)" checked={hasbled.drogas} onChange={(c) => setHasbled({...hasbled, drogas: c})} />
+        <CheckboxItem label="D - Uso abusivo de Álcool (≥ 8 drinks/semana)" checked={hasbled.alc} onChange={(c) => setHasbled({...hasbled, alc: c})} />
+        
+        <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+          <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Escore HAS-BLED</span>
+          <span className="text-6xl font-black text-red-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-red-900">
+            {score >= 3 ? 'Alto Risco de Sangramento' : 'Baixo/Moderado Risco de Sangramento'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcQSOFA = () => {
+  const [qsofa, setQsofa] = useState({ pa: false, fr: false, mental: false });
+  const score = useMemo(() => Object.values(qsofa).filter(Boolean).length, [qsofa]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <CheckboxItem label="Hipotensão: Pressão Arterial Sistólica ≤ 100 mmHg" checked={qsofa.pa} onChange={(c) => setQsofa({...qsofa, pa: c})} />
+        <CheckboxItem label="Taquipneia: Frequência Respiratória ≥ 22 irpm" checked={qsofa.fr} onChange={(c) => setQsofa({...qsofa, fr: c})} />
+        <CheckboxItem label="Alteração do Estado Mental (Glasgow < 15)" checked={qsofa.mental} onChange={(c) => setQsofa({...qsofa, mental: c})} />
+        
+        <div className="mt-8 p-6 bg-orange-50 rounded-2xl text-center">
+          <span className="text-sm text-orange-800 block uppercase font-bold tracking-wider mb-2">Escore qSOFA</span>
+          <span className="text-6xl font-black text-orange-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-orange-900">
+            {score >= 2 ? 'Alto Risco de desfechos ruins (Avaliar sepse imediatamente)' : 'Baixo Risco (Continuar monitoramento)'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ==========================================
 // COMPONENTE PRINCIPAL
 // ==========================================
@@ -978,6 +1098,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   const navigate = useNavigate(); // Permite mudar a URL
   
   const [activeCategory, setActiveCategory] = useState<Category>('Geral');
+  const [searchTerm, setSearchTerm] = useState('');
   const selectedCalc = calcId || null; // Agora a calculadora selecionada vem da URL
 
   // ==========================================
@@ -1005,6 +1126,9 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       apgar: "Calculadora Índice de Apgar Online - Avaliação do Recém-Nascido",
       ldl: "Cálculo de LDL (Fórmula de Friedewald) Online",
       gad7: "Questionário GAD-7 Online - Rastreio de Ansiedade"
+      prevent: "Calculadora AHA PREVENT - Risco Cardiovascular",
+      hasbled: "Escore HAS-BLED - Risco de Sangramento",
+      qsofa: "Escore qSOFA - Triagem Rápida de Sepse"
     };
 
     if (selectedCalc && calcTitles[selectedCalc]) {
@@ -1045,8 +1169,16 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     { id: 'apgar', title: 'Índice de Apgar', category: 'Pediatria', desc: 'Avaliação rápida da vitalidade do recém-nascido', icon: Baby, Component: CalcApgar },
     { id: 'ldl', title: 'Cálculo de LDL', category: 'Cardiologia', desc: 'Fórmula de Friedewald via perfil lipídico', icon: Activity, Component: CalcLDL },
     { id: 'gad7', title: 'Questionário GAD-7', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de ansiedade generalizada', icon: Smile, Component: CalcGAD7 },
+    { id: 'prevent', title: 'AHA PREVENT (Risco CV)', category: 'Cardiologia', desc: 'Estimativa de risco cardiovascular (Atualização ASCVD)', icon: Heart, Component: CalcPREVENT },
+    { id: 'hasbled', title: 'Escore HAS-BLED', category: 'Cardiologia', desc: 'Risco de sangramento em pacientes com FA', icon: Heart, Component: CalcHASBLED },
+    { id: 'qsofa', title: 'Critério qSOFA', category: 'Emergência e UTI', desc: 'Triagem clínica rápida e suspeita de Sepse', icon: Activity, Component: CalcQSOFA },
   ];
-  const filteredCalculators = calculatorsList.filter(calc => calc.category === activeCategory);
+  const filteredCalculators = searchTerm.trim() !== ''
+    ? calculatorsList.filter(calc => 
+        calc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        calc.desc.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : calculatorsList.filter(calc => calc.category === activeCategory);
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
 
 const renderCalculatorContent = () => {
@@ -1091,11 +1223,50 @@ const renderCalculatorContent = () => {
             </div>
           </header>
 
+           <>
+          <header className="mb-8 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
+            {/* Logo gigante na página principal do CalculAí */}
+            <img src="/calculai.png" alt="CalculAí" className="w-32 md:w-40 h-auto object-contain" />
+            <div className="md:mt-4">
+              <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
+              <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
+            </div>
+          </header>
+
+            {/* BARRA DE BUSCA */}
+            <div className="mb-8 relative max-w-2xl mx-auto md:mx-0">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-6 w-6 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Buscar calculadora (ex: IMC, MELD, Glasgow, Risco...)"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="block w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent shadow-sm transition-all text-lg"
+              />
+            </div>
+
+            {/* BOTÕES DE CATEGORIA */}
             <div className="flex flex-wrap gap-3 mb-10 justify-center md:justify-start">
               {categories.map((cat) => (
                 <button 
                   key={cat.name} 
-                  onClick={() => setActiveCategory(cat.name)} 
+                  onClick={() => {
+                    setActiveCategory(cat.name);
+                    setSearchTerm(''); // Limpa a busca ao trocar de categoria
+                  }} 
+                  className={`flex items-center px-4 py-2.5 rounded-2xl transition-all font-medium text-sm sm:text-base ${
+                    (activeCategory === cat.name && searchTerm === '') 
+                      ? 'bg-orange-600 text-white shadow-lg shadow-orange-200' 
+                      : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <cat.icon size={18} className="mr-2" /> 
+                  {cat.name}
+                </button>
+              ))}
+            </div>
                   className={`flex items-center px-4 py-2.5 rounded-2xl transition-all font-medium text-sm sm:text-base ${
                     activeCategory === cat.name 
                       ? 'bg-orange-600 text-white shadow-lg shadow-orange-200' 
