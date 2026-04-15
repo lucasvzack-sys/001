@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Activity, Heart, Brain, Baby, Stethoscope,
   ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator
+  ShieldAlert
 } from 'lucide-react';
 import { View } from '../types';
 import Navbar from './Navbar';
@@ -1035,6 +1036,55 @@ const renderCalculatorContent = () => {
             )}
           </>
         )}
+            
+            {/* ==================================================== */}
+            {/* AVISO PERMANENTE DE RESPONSABILIDADE MÉDICA          */}
+            {/* ==================================================== */}
+            <div className="mt-16 mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm">
+              <div className="flex items-center gap-2 mb-4 text-slate-800 font-bold border-b border-slate-200 pb-2">
+                <ShieldAlert size={20} className="text-red-500" />
+                <span>Aviso de Responsabilidade Médica</span>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-600 leading-relaxed">
+                <div className="space-y-3">
+                  <p>
+                    As ferramentas e calculadoras clínicas do <strong>CalculAí</strong> são destinadas exclusivamente para fins educativos e de apoio à decisão clínica. 
+                    O conteúdo apresentado não substitui, em circunstância alguma, a avaliação, o diagnóstico ou o tratamento por um profissional de saúde qualificado.
+                  </p>
+                </div>
+                <div className="space-y-3 border-l border-slate-200 pl-6 hidden md:block">
+                  <p>
+                    A responsabilidade pela interpretação dos resultados e pelas decisões terapêuticas subsequentes recai inteiramente sobre o <strong>profissional assistente</strong>. 
+                    O projeto SUSsego.com.br não se responsabiliza por quaisquer danos ou erros decorrentes do uso das informações aqui contidas.
+                  </p>
+                  <p className="text-xs italic text-slate-500">
+                    Consulte sempre as diretrizes clínicas e bulas atualizadas antes de qualquer conduta.
+                  </p>
+                </div>
+              </div>
+
+              {/* Versão mobile do segundo bloco */}
+              <div className="mt-4 md:hidden text-sm text-slate-600 space-y-3">
+                <p>
+                  A responsabilidade pelas decisões clínicas recai inteiramente sobre o profissional assistente. 
+                  O SUSsego.com.br não se responsabiliza pelo uso indevido destas ferramentas.
+                </p>
+              </div>
+            </div>
+            {/* ==================================================== */}
+
+            <div className="mt-16 space-y-6">
+              <AdSpace />
+              <div className="grid md:grid-cols-2 gap-6">
+                <CrossPromo target="temnoposto" onNavigate={onNavigate} />
+                <CrossPromo target="laudai" onNavigate={onNavigate} />
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
         <div className="mt-16 space-y-6">
           <AdSpace />
           <div className="grid md:grid-cols-2 gap-6">
