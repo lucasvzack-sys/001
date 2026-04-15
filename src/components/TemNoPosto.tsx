@@ -26,6 +26,10 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
     e.preventDefault();
     if (!municipio || !searchTerm) return;
 
+  const isListaNacional = municipio === 'RENAME - BRASIL';
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+
     // Modificado para usar filter() e retornar todos os correspondentes
     const found = medicinesData.filter(m => 
       m.municipio === municipio && 
@@ -167,6 +171,10 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
         )}
 
         {/* INÍCIO DA LEGENDA DO SUS */}
+      {isListaNacional && (
+        <div className="mt-12 p-8 rounded-3xl border-2 border-gray-100 bg-white shadow-xl">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Entenda os componentes do SUS</h3>
+          {/* ... todo o conteúdo da legenda que já existe no seu arquivo ... */}
         <div className="mt-12 p-8 rounded-3xl border-2 border-gray-100 bg-white shadow-xl">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">Entenda os componentes do SUS</h3>
           <p className="text-gray-600 mb-6">Saiba onde deve retirar o seu medicamento:</p>
@@ -216,7 +224,8 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
               </div>
             </div>
           </div>
-        </div>
+         </div>
+        )}
         {/* FIM DA LEGENDA DO SUS */}
         
         <div className="mt-16 space-y-6">
