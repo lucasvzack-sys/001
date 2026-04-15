@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Activity, Heart, Brain, Baby, Stethoscope,
-  ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator
+  ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator,
   ShieldAlert
 } from 'lucide-react';
 import { View } from '../types';
