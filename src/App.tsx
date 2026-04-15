@@ -7,6 +7,7 @@ import LaudAi from './components/LaudAi';
 import Doar from './components/Doar';
 import CalculAi from './components/CalculAi';
 import Footer from './components/Footer';
+import AntiAdBlock from './components/AntiAdBlock';
 import { View } from './types';
 
 export default function App() {
@@ -42,6 +43,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-sans flex flex-col">
+      {/* 2. INSERIR O COMPONENTE AQUI */}
+      <AntiAdBlock /> 
+      
+      <div className="flex-grow">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
       <div className="flex-grow">
         {/* Passamos o location e a key para a animação saber quando a rota muda */}
         <AnimatePresence mode="wait">
