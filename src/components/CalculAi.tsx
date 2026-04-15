@@ -1047,7 +1047,6 @@ const renderCalculatorContent = () => {
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
           <p className="text-gray-400 text-sm leading-relaxed">
-            Aviso de Responsabilidade Médica
             As ferramentas são destinadas exclusivamente para fins educativos e de apoio à decisão clínica. 
             O conteúdo apresentado não substitui, em circunstância alguma, a avaliação, o diagnóstico ou o tratamento por um profissional de saúde qualificado. A responsabilidade pelas decisões clínicas recai inteiramente sobre o profissional assistente. 
             O SUSsego não se responsabiliza pelo uso indevido destas ferramentas. A responsabilidade final pela informação médica é do profissional assistente.
