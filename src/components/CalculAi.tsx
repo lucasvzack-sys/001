@@ -1035,8 +1035,7 @@ const renderCalculatorContent = () => {
               </div>
             )}
           </>
-        )} 
-           )}
+        )}
             
             {/* ==================================================== */}
             {/* Aviso Permanente de Responsabilidade Médica            */}
@@ -1070,7 +1069,6 @@ const renderCalculatorContent = () => {
                 <CrossPromo target="laudai" onNavigate={onNavigate} />
               </div>
             </div>
-          </div>
         </main>
       </div>
     );
