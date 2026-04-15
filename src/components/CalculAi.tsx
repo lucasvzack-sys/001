@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
-  Activity, Heart, Brain, Baby, Stethoscope, 
+  Activity, Heart, Brain, Baby, Stethoscope,
   ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator
 } from 'lucide-react';
 import { View } from '../types';
@@ -890,6 +890,37 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   
   const [activeCategory, setActiveCategory] = useState<Category>('Geral');
   const selectedCalc = calcId || null; // Agora a calculadora selecionada vem da URL
+
+  // ==========================================
+  // TÍTULOS DAS URLs
+  // ==========================================
+  useEffect(() => {
+    const calcTitles: Record<string, string> = {
+      imc: "Calculadora de IMC e Peso Ideal - Adulto e Infantil",
+      clcr: "Calculadora de Clearance de Creatinina (Cockcroft-Gault) Online",
+      childpugh: "Calculadora Escore Child-Pugh - Cirrose Hepática",
+      meld: "Calculadora Escore MELD - Prognóstico de Doença Hepática",
+      centor: "Calculadora Escore de Centor Modificado - Faringite",
+      chads: "Calculadora Escore CHA₂DS₂-VASc - Risco de AVC",
+      timi: "Calculadora Escore TIMI - Síndrome Coronariana Aguda",
+      glasgow: "Calculadora Escala de Coma de Glasgow Online",
+      curb65: "Calculadora Escore CURB-65 - Risco de Pneumonia",
+      wells: "Calculadora Escore de Wells - Trombose Venosa Profunda (TVP)",
+      nihss: "Calculadora Escala NIHSS Online - Avaliação de AVC",
+      meem: "Calculadora Mini-Mental (MEEM) - Avaliação Cognitiva Online",
+      phq9: "Questionário PHQ-9 Online - Rastreio de Depressão",
+      ig: "Calculadora de Idade Gestacional e DPP (Data Provável do Parto)",
+      dum_usg: "Calculadora de Idade Gestacional pelo Ultrassom (USG)",
+      kupperman: "Calculadora Índice de Kupperman - Sintomas de Menopausa",
+      jones: "Critérios de Jones - Diagnóstico de Febre Reumática Aguda",
+      apgar: "Calculadora Índice de Apgar Online - Avaliação do Recém-Nascido"
+    };
+
+    if (selectedCalc && calcTitles[selectedCalc]) {
+      document.title = `${calcTitles[selectedCalc]} | CalculAí SUSsego`;
+    }
+  }, [selectedCalc]);
+  // ==========================================
 
   const categories: { name: Category; icon: any }[] = [
     { name: 'Geral', icon: Stethoscope },
