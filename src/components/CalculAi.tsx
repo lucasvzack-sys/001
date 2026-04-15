@@ -884,6 +884,95 @@ const CalcTIMI = () => {
   );
 };
 
+const CalcLDL = () => {
+  const [lipidograma, setLipidograma] = useState({ ct: '', hdl: '', tg: '' });
+  const resultado = useMemo(() => {
+    const ct = parseFloat(lipidograma.ct);
+    const hdl = parseFloat(lipidograma.hdl);
+    const tg = parseFloat(lipidograma.tg);
+    if (ct > 0 && hdl > 0 && tg > 0) {
+      if (tg > 400) return { erro: 'A Fórmula de Friedewald é inválida para Triglicerídeos > 400 mg/dL.' };
+      const ldl = ct - hdl - (tg / 5);
+      return { ldl: ldl.toFixed(1) };
+    }
+    return null;
+  }, [lipidograma]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Colesterol Total</label>
+            <input type="number" value={lipidograma.ct} onChange={(e) => setLipidograma({...lipidograma, ct: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="mg/dL" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">HDL</label>
+            <input type="number" value={lipidograma.hdl} onChange={(e) => setLipidograma({...lipidograma, hdl: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="mg/dL" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Triglicerídeos</label>
+            <input type="number" value={lipidograma.tg} onChange={(e) => setLipidograma({...lipidograma, tg: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="mg/dL" />
+          </div>
+        </div>
+        {resultado?.erro && (
+          <div className="mt-4 p-4 bg-red-50 text-red-800 rounded-xl text-center font-medium">
+            {resultado.erro}
+          </div>
+        )}
+        {resultado?.ldl && (
+          <div className="mt-8 p-6 bg-blue-50 rounded-2xl text-center">
+            <span className="text-sm text-blue-800 block uppercase font-bold tracking-wider mb-2">LDL Calculado (Friedewald)</span>
+            <span className="text-6xl font-black text-blue-600">{resultado.ldl} <span className="text-2xl font-normal text-blue-800">mg/dL</span></span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const CalcGAD7 = () => {
+  const [gad7, setGad7] = useState(new Array(7).fill(0));
+  const score = useMemo(() => gad7.reduce((a, b) => a + b, 0), [gad7]);
+  
+  const perguntas = [
+    "Sentir-se nervoso, ansioso ou muito tenso?",
+    "Não ser capaz de parar de se preocupar ou de controlar as preocupações?",
+    "Preocupar-se muito com diversas coisas?",
+    "Dificuldade para relaxar?",
+    "Sentir-se tão inquieto que é difícil ficar sentado?",
+    "Tornar-se facilmente irritável ou aborrecido?",
+    "Sentir medo, como se algo horrível fosse acontecer?"
+  ];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <p className="text-sm text-gray-500 mb-6">Frequência dos sintomas nas últimas 2 semanas: 0=Nenhuma vez, 1=Vários dias, 2=Mais da metade dos dias, 3=Quase todos os dias.</p>
+      <div className="space-y-4">
+        {perguntas.map((q, idx) => (
+          <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100">
+            <span className="text-sm text-gray-700 pr-4 mb-2 sm:mb-0 flex-1">{idx+1}. {q}</span>
+            <select value={gad7[idx]} onChange={(e) => {
+              const newGad = [...gad7];
+              newGad[idx] = parseInt(e.target.value);
+              setGad7(newGad);
+            }} className="p-2 bg-gray-50 border border-gray-200 rounded-lg text-md min-w-[80px]">
+              <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
+            </select>
+          </div>
+        ))}
+        <div className="mt-8 p-6 bg-purple-50 rounded-2xl text-center">
+          <span className="text-sm text-purple-800 block uppercase font-bold tracking-wider mb-2">Escore GAD-7</span>
+          <span className="text-5xl font-black text-purple-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-purple-900">
+            {score >= 15 ? 'Ansiedade Grave' : score >= 10 ? 'Ansiedade Moderada' : score >= 5 ? 'Ansiedade Leve' : 'Ansiedade Mínima'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function CalculAi({ onNavigate }: CalculAiProps) {
   const { calcId } = useParams(); // Lê o ID da URL
   const navigate = useNavigate(); // Permite mudar a URL
@@ -914,6 +1003,8 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       kupperman: "Calculadora Índice de Kupperman - Sintomas de Menopausa",
       jones: "Critérios de Jones - Diagnóstico de Febre Reumática Aguda",
       apgar: "Calculadora Índice de Apgar Online - Avaliação do Recém-Nascido"
+      ldl: "Cálculo de LDL (Fórmula de Friedewald) Online",
+      gad7: "Questionário GAD-7 Online - Rastreio de Ansiedade"
     };
 
     if (selectedCalc && calcTitles[selectedCalc]) {
@@ -952,6 +1043,8 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     { id: 'kupperman', title: 'Índice de Kupperman', category: 'Ginecologia e Obstetrícia', desc: 'Avaliação da gravidade dos sintomas climatéricos', icon: Smile, Component: CalcKupperman },
     { id: 'jones', title: 'Critérios de Jones', category: 'Pediatria', desc: 'Diagnóstico de Febre Reumática Aguda', icon: Heart, Component: CalcJones },
     { id: 'apgar', title: 'Índice de Apgar', category: 'Pediatria', desc: 'Avaliação rápida da vitalidade do recém-nascido', icon: Baby, Component: CalcApgar },
+    { id: 'ldl', title: 'Cálculo de LDL', category: 'Cardiologia', desc: 'Fórmula de Friedewald via perfil lipídico', icon: Activity, Component: CalcLDL },
+    { id: 'gad7', title: 'Questionário GAD-7', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de ansiedade generalizada', icon: Smile, Component: CalcGAD7 },
   ];
   const filteredCalculators = calculatorsList.filter(calc => calc.category === activeCategory);
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
