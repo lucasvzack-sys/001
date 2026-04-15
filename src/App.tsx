@@ -28,9 +28,7 @@ export default function App() {
       document.title = "LaudAí - SUSsego.com.br - resuma exames para o seu prontuário";
     } else if (path.includes('/doar')) {
       document.title = "Apoie o SUSsego.com.br - ajude a manter o site no ar!";
-    } else if (path === '/calculai') {
-      document.title = "CalculAí - SUSsego.com.br - calculadoras médicas";
-    } else if (path === '/calculai') {
+    } else if (path.includes('/calculai')) {
       document.title = "CalculAí - SUSsego.com.br - calculadoras médicas";
     } else if (path === '/privacidade') {
       document.title = "Política de Privacidade - SUSsego.com.br";
@@ -38,9 +36,7 @@ export default function App() {
       document.title = "Contato - SUSsego.com.br";
     }
   }, [location.pathname]);
-  // ==========================================
 
-  // Adaptamos o seu handleNavigate antigo para alterar a URL
   const handleNavigate = (view: View | string) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (view === 'portal') {
@@ -52,7 +48,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-sans flex flex-col">
-      {/* 2. INSERIR O COMPONENTE AQUI */}
       <AntiAdBlock /> 
       <CookieBanner />
       
@@ -60,7 +55,29 @@ export default function App() {
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             
-            {/* ... rotas existentes ... */}
+            <Route path="/" element={
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                <Portal onNavigate={handleNavigate} />
+              </motion.div>
+            } />
+
+            <Route path="/temnoposto" element={
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                <TemNoPosto onNavigate={handleNavigate} />
+              </motion.div>
+            } />
+
+            <Route path="/laudai" element={
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                <LaudAi onNavigate={handleNavigate} />
+              </motion.div>
+            } />
+
+            <Route path="/doar" element={
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                <Doar onNavigate={handleNavigate} />
+              </motion.div>
+            } />
 
             <Route path="/calculai/:calcId?" element={
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
@@ -68,7 +85,6 @@ export default function App() {
               </motion.div>
             } />
 
-            {/* ADICIONE AS DUAS NOVAS ROTAS AQUI: */}
             <Route path="/privacidade" element={
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 <PrivacyPolicy onNavigate={handleNavigate} />
@@ -78,55 +94,6 @@ export default function App() {
             <Route path="/contato" element={
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 <Contact onNavigate={handleNavigate} />
-              </motion.div>
-            } />
-
-          </Routes>
-        </AnimatePresence>
-      </div>
-      
-      <div className="flex-grow">
-        {/* Passamos o location e a key para a animação saber quando a rota muda */}
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            
-            <Route path="/" element={
-              <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
-              >
-                <Portal onNavigate={handleNavigate} />
-              </motion.div>
-            } />
-
-            <Route path="/temnoposto" element={
-              <motion.div
-                initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}
-              >
-                <TemNoPosto onNavigate={handleNavigate} />
-              </motion.div>
-            } />
-
-            <Route path="/laudai" element={
-              <motion.div
-                initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}
-              >
-                <LaudAi onNavigate={handleNavigate} />
-              </motion.div>
-            } />
-
-            <Route path="/doar" element={
-              <motion.div
-                initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}
-              >
-                <Doar onNavigate={handleNavigate} />
-              </motion.div>
-            } />
-
-            <Route path="/calculai/:calcId?" element={
-              <motion.div
-                initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}
-              >
-                <CalculAi onNavigate={handleNavigate} />
               </motion.div>
             } />
 
