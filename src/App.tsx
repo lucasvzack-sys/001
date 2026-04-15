@@ -47,9 +47,6 @@ export default function App() {
       <AntiAdBlock /> 
       
       <div className="flex-grow">
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-      <div className="flex-grow">
         {/* Passamos o location e a key para a animação saber quando a rota muda */}
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
