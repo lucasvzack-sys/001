@@ -333,7 +333,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           <p className="text-gray-400 text-sm leading-relaxed">
             Este sistema não armazena dados. Use apenas para auxílio na redação.
             Revise sempre antes de salvar no prontuário oficial.
-            A responsabilidade final pela informação médica é do profissional assistente.
+            As ferramentas são destinadas exclusivamente para fins educativos e de apoio à decisão clínica. O conteúdo apresentado não substitui, em circunstância alguma, a avaliação, o diagnóstico ou o tratamento por um profissional de saúde qualificado. A responsabilidade pelas decisões clínicas recai inteiramente sobre o profissional assistente. O SUSsego não se responsabiliza pelo uso indevido destas ferramentas. A responsabilidade final pela informação médica é do profissional assistente.
           </p>
         </div>
       </footer>
