@@ -8,6 +8,9 @@ import Doar from './components/Doar';
 import CalculAi from './components/CalculAi';
 import Footer from './components/Footer';
 import AntiAdBlock from './components/AntiAdBlock';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import Contact from './components/Contact';
+import CookieBanner from './components/CookieBanner';
 import { View } from './types';
 
 export default function App() {
@@ -27,6 +30,12 @@ export default function App() {
       document.title = "Apoie o SUSsego.com.br - ajude a manter o site no ar!";
     } else if (path === '/calculai') {
       document.title = "CalculAí - SUSsego.com.br - calculadoras médicas";
+    } else if (path === '/calculai') {
+      document.title = "CalculAí - SUSsego.com.br - calculadoras médicas";
+    } else if (path === '/privacidade') {
+      document.title = "Política de Privacidade - SUSsego.com.br";
+    } else if (path === '/contato') {
+      document.title = "Contato - SUSsego.com.br";
     }
   }, [location.pathname]);
   // ==========================================
@@ -45,6 +54,36 @@ export default function App() {
     <div className="min-h-screen font-sans flex flex-col">
       {/* 2. INSERIR O COMPONENTE AQUI */}
       <AntiAdBlock /> 
+      <CookieBanner />
+      
+      <div className="flex-grow">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            
+            {/* ... rotas existentes ... */}
+
+            <Route path="/calculai/:calcId?" element={
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                <CalculAi onNavigate={handleNavigate} />
+              </motion.div>
+            } />
+
+            {/* ADICIONE AS DUAS NOVAS ROTAS AQUI: */}
+            <Route path="/privacidade" element={
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                <PrivacyPolicy onNavigate={handleNavigate} />
+              </motion.div>
+            } />
+
+            <Route path="/contato" element={
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                <Contact onNavigate={handleNavigate} />
+              </motion.div>
+            } />
+
+          </Routes>
+        </AnimatePresence>
+      </div>
       
       <div className="flex-grow">
         {/* Passamos o location e a key para a animação saber quando a rota muda */}
