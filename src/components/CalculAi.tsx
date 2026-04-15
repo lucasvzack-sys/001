@@ -1208,7 +1208,7 @@ const renderCalculatorContent = () => {
                 <ArrowLeft size={20} className="mr-2" /> Voltar
               </button>
              <div className="flex items-center bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100">
-              <img src="/calculai.png" alt="Logo" className="w-24 md:w-32 h-auto mr-4 object-contain" />
+                <img src="/calculai.png" alt="Logo" className="w-24 md:w-32 h-auto mr-4 object-contain" />
                 <h2 className="text-xl md:text-2xl font-bold text-gray-800">{currentCalcData?.title}</h2>
               </div>
             </div>
@@ -1245,7 +1245,7 @@ const renderCalculatorContent = () => {
                   key={cat.name} 
                   onClick={() => {
                     setActiveCategory(cat.name);
-                    setSearchTerm(''); // Limpa a busca ao trocar de categoria
+                    setSearchTerm('');
                   }} 
                   className={`flex items-center px-4 py-2.5 rounded-2xl transition-all font-medium text-sm sm:text-base ${
                     (activeCategory === cat.name && searchTerm === '') 
@@ -1274,7 +1274,7 @@ const renderCalculatorContent = () => {
               </div>
             ) : (
               <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 border-dashed">
-                <Baby size={48} className="mx-auto text-gray-300 mb-4" />
+                <Calculator size={48} className="mx-auto text-gray-300 mb-4" />
                 <p className="text-gray-500 font-medium">Nenhuma calculadora encontrada na busca.</p>
               </div>
             )}
@@ -1290,16 +1290,16 @@ const renderCalculatorContent = () => {
         </div>
       </main>
       
-      <footer className="bg-white py-12 px-4 border-t border-gray-200">
+      {/* AVISO LEGAL ESPECÍFICO DO CALCULAI */}
+      <div className="bg-white py-12 px-4 border-t border-gray-200">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
           <p className="text-gray-400 text-sm leading-relaxed">
             As ferramentas são destinadas exclusivamente para fins educativos e de apoio à decisão clínica. 
             O conteúdo apresentado não substitui, em circunstância alguma, a avaliação, o diagnóstico ou o tratamento por um profissional de saúde qualificado. A responsabilidade pelas decisões clínicas recai inteiramente sobre o profissional assistente. 
-            O SUSsego não se responsabiliza pelo uso indevido destas ferramentas. A responsabilidade final pela informação médica é do profissional assistente.
           </p>
         </div>
-      </footer>
+      </div>
     </div>
   );
 }
