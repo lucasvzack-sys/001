@@ -1002,7 +1002,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       dum_usg: "Calculadora de Idade Gestacional pelo Ultrassom (USG)",
       kupperman: "Calculadora Índice de Kupperman - Sintomas de Menopausa",
       jones: "Critérios de Jones - Diagnóstico de Febre Reumática Aguda",
-      apgar: "Calculadora Índice de Apgar Online - Avaliação do Recém-Nascido"
+      apgar: "Calculadora Índice de Apgar Online - Avaliação do Recém-Nascido",
       ldl: "Cálculo de LDL (Fórmula de Friedewald) Online",
       gad7: "Questionário GAD-7 Online - Rastreio de Ansiedade"
     };
