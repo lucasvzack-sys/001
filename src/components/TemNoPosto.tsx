@@ -229,7 +229,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-gray-500 text-sm">
-            Os dados apresentados são informativos e baseados em planilhas públicas.
+            Os dados apresentados são informativos e baseados em planilhas públicas. As ferramentas são destinadas exclusivamente para fins educativos e de apoio à decisão clínica. O conteúdo apresentado não substitui, em circunstância alguma, a avaliação, o diagnóstico ou o tratamento por um profissional de saúde qualificado. A responsabilidade pelas decisões clínicas recai inteiramente sobre o profissional assistente. O SUSsego não se responsabiliza pelo uso indevido destas ferramentas. A responsabilidade final pela informação médica é do profissional assistente.
             A disponibilidade real pode variar. (Última atualização - abril - 2026)
           </p>
         </div>
