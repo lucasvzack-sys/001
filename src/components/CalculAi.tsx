@@ -13,7 +13,7 @@ interface CalculAiProps {
   onNavigate: (view: View) => void;
 }
 
-type Category = 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Ginecologia e Obstetrícia' | 'Pediatria';
+type Category = 'Todas' | 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Ginecologia e Obstetrícia' | 'Pediatria';
 
 // ==========================================
 // COMPONENTE AUXILIAR COMPARTILHADO
@@ -1138,6 +1138,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   // ==========================================
 
   const categories: { name: Category; icon: any }[] = [
+    { name: 'Todas', icon: Calculator },
     { name: 'Geral', icon: Stethoscope },
     { name: 'Cardiologia', icon: Heart },
     { name: 'Gastroenterologia', icon: Stethoscope },
@@ -1178,7 +1179,9 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
         calc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
         calc.desc.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    : calculatorsList.filter(calc => calc.category === activeCategory);
+    : activeCategory === 'Todas' 
+      ? calculatorsList 
+      : calculatorsList.filter(calc => calc.category === activeCategory);
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
 
 const renderCalculatorContent = () => {
