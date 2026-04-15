@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import Portal from './components/Portal';
@@ -11,6 +12,23 @@ import { View } from './types';
 export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
+
+ useEffect(() => {
+    const path = location.pathname;
+
+    if (path === '/') {
+      document.title = "SUSsego.com.br";
+    } else if (path.includes('/temnoposto')) {
+      document.title = "TemNoPosto? - SUSsego.com.br - consulte disponibilidade de remédios grátis";
+    } else if (path.includes('/laudai')) {
+      document.title = "LaudAí - SUSsego.com.br - resuma exames para o seu prontuário";
+    } else if (path.includes('/doar')) {
+      document.title = "Apoie o SUSsego.com.br - ajude a manter o site no ar!";
+    } else if (path === '/calculai') {
+      document.title = "CalculAí - SUSsego.com.br - calculadoras médicas";
+    }
+  }, [location.pathname]);
+  // ==========================================
 
   // Adaptamos o seu handleNavigate antigo para alterar a URL
   const handleNavigate = (view: View | string) => {
