@@ -1043,6 +1043,16 @@ const renderCalculatorContent = () => {
           </div>
         </div>
       </main>
+      <footer className="bg-white py-12 px-4 border-t border-gray-200">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
+          <p className="text-gray-400 text-sm leading-relaxed">
+            Este sistema não armazena dados. Use apenas para auxílio na redação.
+            Revise sempre antes de salvar no prontuário oficial.
+            A responsabilidade final pela informação médica é do profissional assistente.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
