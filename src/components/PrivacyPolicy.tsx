@@ -20,7 +20,7 @@ export default function PrivacyPolicy({ onNavigate }: { onNavigate: (view: strin
         </div>
 
         <div className="space-y-6 text-gray-600 leading-relaxed">
-          <p>O <strong>SUSsego.com.br</strong> ("nós", "nosso", "site") respeita a sua privacidade e está comprometido em proteger os dados pessoais de seus usuários de acordo com a Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018).</p>
+          <p>O <strong>SUSsego.com.br</strong> respeita a sua privacidade e está comprometido em proteger os dados pessoais de seus usuários de acordo com a Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018).</p>
 
           <h2 className="text-xl font-bold text-gray-800 mt-8 mb-4">1. Coleta e Uso de Informações</h2>
           <p>Nosso site possui ferramentas como as calculadoras médicas e o sistema de busca de medicamentos que operam localmente no seu navegador. <strong>Não coletamos, não armazenamos em banco de dados e não vendemos</strong> as informações médicas ou de exames (como no LaudAí) que você digita em nossas ferramentas. O processamento é feito para fornecer o resultado imediato na tela.</p>
