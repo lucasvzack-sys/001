@@ -226,7 +226,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
                     <div className="p-4 bg-blue-100 text-medical-blue rounded-full mb-3">
                       <Upload size={24} />
                     </div>
-                    <p className="text-sm font-bold text-gray-700 text-center">Arraste ou clique para enviar imagens</p>
+                    <p className="text-sm font-bold text-gray-700 text-center">Clique para enviar imagens</p>
                     <p className="text-xs text-gray-400 mt-1 text-center">Fotos de laudos, exames ou receitas (pode selecionar várias)</p>
                   </>
                 )}
