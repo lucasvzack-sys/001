@@ -61,6 +61,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           />
           <h2 className="text-3xl font-bold text-gray-900 mb-4">TemNoPosto?</h2>
           <p className="text-gray-600">Verifique a disponibilidade gratuita na rede pública do seu município.</p>
+          <p className="text-gray-600">ATENÇÃO: Mesmo que um medicamento apareça na lista nacional (RENAME), cada prefeitura tem autonomia para decidir o que será padronizado localmente, por isso sempre confira sua cidade.</p>
         </motion.div>
 
         <form onSubmit={handleSearch} className="space-y-6 mb-8">
