@@ -1125,7 +1125,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       jones: "Critérios de Jones - Diagnóstico de Febre Reumática Aguda",
       apgar: "Calculadora Índice de Apgar Online - Avaliação do Recém-Nascido",
       ldl: "Cálculo de LDL (Fórmula de Friedewald) Online",
-      gad7: "Questionário GAD-7 Online - Rastreio de Ansiedade"
+      gad7: "Questionário GAD-7 Online - Rastreio de Ansiedade",
       prevent: "Calculadora AHA PREVENT - Risco Cardiovascular",
       hasbled: "Escore HAS-BLED - Risco de Sangramento",
       qsofa: "Escore qSOFA - Triagem Rápida de Sepse"
@@ -1205,7 +1205,6 @@ const renderCalculatorContent = () => {
                 <ArrowLeft size={20} className="mr-2" /> Voltar
               </button>
              <div className="flex items-center bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100">
-              {/* Logo aumentada na página da calculadora */}
               <img src="/calculai.png" alt="Logo" className="w-24 md:w-32 h-auto mr-4 object-contain" />
                 <h2 className="text-xl md:text-2xl font-bold text-gray-800">{currentCalcData?.title}</h2>
               </div>
@@ -1214,24 +1213,13 @@ const renderCalculatorContent = () => {
           </div>
         ) : (
           <>
-          <header className="mb-8 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
-            {/* Logo gigante na página principal do CalculAí */}
-            <img src="/calculai.png" alt="CalculAí" className="w-32 md:w-40 h-auto object-contain" />
-            <div className="md:mt-4">
-              <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
-              <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
-            </div>
-          </header>
-
-           <>
-          <header className="mb-8 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
-            {/* Logo gigante na página principal do CalculAí */}
-            <img src="/calculai.png" alt="CalculAí" className="w-32 md:w-40 h-auto object-contain" />
-            <div className="md:mt-4">
-              <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
-              <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
-            </div>
-          </header>
+            <header className="mb-8 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
+              <img src="/calculai.png" alt="CalculAí" className="w-32 md:w-40 h-auto object-contain" />
+              <div className="md:mt-4">
+                <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
+                <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
+              </div>
+            </header>
 
             {/* BARRA DE BUSCA */}
             <div className="mb-8 relative max-w-2xl mx-auto md:mx-0">
@@ -1267,18 +1255,8 @@ const renderCalculatorContent = () => {
                 </button>
               ))}
             </div>
-                  className={`flex items-center px-4 py-2.5 rounded-2xl transition-all font-medium text-sm sm:text-base ${
-                    activeCategory === cat.name 
-                      ? 'bg-orange-600 text-white shadow-lg shadow-orange-200' 
-                      : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
-                  }`}
-                >
-                  <cat.icon size={18} className="mr-2" /> 
-                  {cat.name}
-                </button>
-              ))}
-            </div>
 
+            {/* LISTA DE CALCULADORAS */}
             {filteredCalculators.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredCalculators.map((calc) => (
@@ -1294,11 +1272,12 @@ const renderCalculatorContent = () => {
             ) : (
               <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 border-dashed">
                 <Baby size={48} className="mx-auto text-gray-300 mb-4" />
-                <p className="text-gray-500 font-medium">Nenhuma calculadora disponível nesta categoria ainda.</p>
+                <p className="text-gray-500 font-medium">Nenhuma calculadora encontrada na busca.</p>
               </div>
             )}
           </>
         )}
+        
         <div className="mt-16 space-y-6">
           <AdSpace />
           <div className="grid md:grid-cols-2 gap-6">
@@ -1307,6 +1286,7 @@ const renderCalculatorContent = () => {
           </div>
         </div>
       </main>
+      
       <footer className="bg-white py-12 px-4 border-t border-gray-200">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
