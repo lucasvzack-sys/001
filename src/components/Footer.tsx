@@ -22,15 +22,33 @@ export default function Footer({ onNavigate }: FooterProps) {
           </ul>
         </div>
 
-        {/* Contato & Direitos */}
-        <div className="text-center md:text-right">
+        {/* Contato, QR Code & Direitos */}
+        <div className="text-center md:text-right flex flex-col items-center md:items-end">
           <h3 className="text-lg font-bold text-white mb-4">Contato</h3>
-          <p className="mb-2">
+          <p className="mb-4">
             <a href="mailto:lucasvzack@gmail.com" className="hover:text-white transition-colors">
               SUSsego.com.br
             </a>
           </p>
-          <p className="text-sm text-gray-500 mt-4">
+
+          {/* QR Code Discreto */}
+          <div 
+            className="flex flex-col items-center md:items-end mb-4 group cursor-pointer hidden sm:flex" 
+            title="Acesse pelo celular"
+          >
+            <div className="bg-white p-1 rounded-lg opacity-30 group-hover:opacity-100 transition-opacity duration-300 shadow-sm">
+              <img 
+                src="/qrcode.png" 
+                alt="QR Code para acesso mobile" 
+                className="w-14 h-14"
+              />
+            </div>
+            <span className="text-[10px] mt-1 text-gray-500 group-hover:text-gray-300 transition-colors">
+              Versão Mobile
+            </span>
+          </div>
+
+          <p className="text-sm text-gray-500 mt-2">
             © {new Date().getFullYear()} SUSsego.com.br - Todos os direitos reservados.
           </p>
         </div>
