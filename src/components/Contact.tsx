@@ -21,7 +21,6 @@ export default function Contact({ onNavigate }: { onNavigate: (view: string) => 
         <div className="bg-gray-50 p-8 rounded-2xl max-w-md mx-auto border border-gray-100 flex flex-col items-center">
           <Mail size={32} className="text-gray-400 mb-4" />
           <h2 className="text-xl font-bold text-gray-700 mb-2">E-mail de Contato</h2>
-          <p className="text-gray-500 mb-6 text-sm">Respondemos geralmente em até 48 horas úteis.</p>
           <a 
             href="mailto:contato@sussego.com.br" 
             className="bg-gray-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-md w-full"
