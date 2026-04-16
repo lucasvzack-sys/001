@@ -7,7 +7,6 @@ import LaudAi from './components/LaudAi';
 import Doar from './components/Doar';
 import CalculAi from './components/CalculAi';
 import Footer from './components/Footer';
-import AntiAdBlock from './components/AntiAdBlock';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Contact from './components/Contact';
 import CookieBanner from './components/CookieBanner';
@@ -48,7 +47,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-sans flex flex-col">
-      <AntiAdBlock /> 
       <CookieBanner />
       
       <div className="flex-grow">
