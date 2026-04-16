@@ -1309,6 +1309,9 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
               </div>
             </header>
 
+            {/* Banner AdSense antes da busca */}
+            <AdSpace className="mb-8" />
+
             {/* BARRA DE BUSCA */}
             <div className="mb-8 relative max-w-2xl mx-auto md:mx-0">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
