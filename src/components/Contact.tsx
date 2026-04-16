@@ -30,7 +30,7 @@ export default function Contact({ onNavigate }: { onNavigate: (view: any) => voi
               href="mailto:lucasvzack@gmail.com" 
               className="bg-gray-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-md w-full"
             >
-              contato@sussego.com.br
+              lucasvzack@gmail.com
             </a>
           </div>
         </div>
