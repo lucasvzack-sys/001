@@ -63,8 +63,8 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           <p className="text-gray-600 mt-2">ATENÇÃO: Mesmo que um medicamento apareça na lista nacional (RENAME), cada prefeitura tem autonomia para decidir o que será padronizado localmente, por isso sempre confira sua cidade.</p>
         </motion.div>
 
-      {/* Sugestão 1: Antes da barra de busca de medicamentos */}
-        <AdSpace className="mb-8" />
+        {/* Sugestão 1: Antes da barra de busca de medicamentos */}
+        <AdSpace />
 
         <form onSubmit={handleSearch} className="space-y-6 mb-8">
           <div className="space-y-2">
