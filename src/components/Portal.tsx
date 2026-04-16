@@ -38,7 +38,7 @@ export default function Portal({ onNavigate }: PortalProps) {
             Bem-vindo ao <span className="text-medical-blue">SUS</span>sego.com.br
           </h1>
           <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Sua central de ferramentas para facilitar o dia a dia na saúde.
+            Sua central de ferramentas médicas para facilitar o dia a dia na saúde.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">
