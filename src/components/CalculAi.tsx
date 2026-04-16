@@ -1279,11 +1279,6 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       </div>
     );
   };
-    
-    // Puxa o componente diretamente da lista e o renderiza
-    const CalculadoraParaRenderizar = currentCalcData.Component;
-    return <CalculadoraParaRenderizar />;
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
