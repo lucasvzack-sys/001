@@ -50,6 +50,8 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
 
       {/* ADICIONE A TAG MAIN AQUI */}
       <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
+
+        <AdSpace className="mb-8 max-w-2xl mx-auto" />
         
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
