@@ -48,9 +48,6 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
     <div className="min-h-screen bg-white flex flex-col">
       <Navbar currentView="temnoposto" onNavigate={onNavigate} />
 
-      <main className="flex-grow max-w-3xl mx-auto w-full px-4 py-8">
-        <AdSpace className="mb-8" />
-
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,6 +62,9 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           <p className="text-gray-600">Verifique a disponibilidade gratuita na rede pública do seu município.</p>
           <p className="text-gray-600 mt-2">ATENÇÃO: Mesmo que um medicamento apareça na lista nacional (RENAME), cada prefeitura tem autonomia para decidir o que será padronizado localmente, por isso sempre confira sua cidade.</p>
         </motion.div>
+
+      {/* Sugestão 1: Antes da barra de busca de medicamentos */}
+        <AdSpace className="mb-8" />
 
         <form onSubmit={handleSearch} className="space-y-6 mb-8">
           <div className="space-y-2">
