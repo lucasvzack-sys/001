@@ -1199,7 +1199,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       <p>O <em>Model for End-Stage Liver Disease</em> (MELD) estima a probabilidade de mortalidade aos 3 meses em doentes com doença hepática terminal. Constitui o critério padronizado e oficial para a priorização de doentes na lista de espera para transplante hepático a nível mundial.</p>
     ),
     centor: (
-      <p>O Escore de Centor Modificado (McIsaac) ajuda a estratificar a probabilidade pré-teste de faringite estreptocócica (Estreptococo do Grupo A). Escores baixos (≤1) permitem geralmente excluir o diagnóstico, evitando a colheita desnecessária de zaragatoa ou o uso irracional de antibióticos.</p>
+      <p>O Escore de Centor Modificado (McIsaac) ajuda a estratificar a probabilidade pré-teste de faringite estreptocócica (Estreptococo do Grupo A). Escores baixos (≤1) permitem geralmente excluir o diagnóstico, evitando o uso irracional de antibióticos.</p>
     ),
     chads: (
       <p>O escore CHA₂DS₂-VASc avalia o risco de tromboembolismo sistémico (como AVC) em doentes com Fibrilhação Auricular não-valvular. Pontuações ≥ 2 em homens ou ≥ 3 em mulheres estabelecem indicação formal para terapêutica com anticoagulação oral (preferencialmente DOACs).</p>
