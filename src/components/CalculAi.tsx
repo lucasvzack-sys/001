@@ -1184,11 +1184,101 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       : calculatorsList.filter(calc => calc.category === activeCategory);
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
 
-const renderCalculatorContent = () => {
-    // Se a calculadora não for encontrada na URL ou ainda não tiver o "Component" associado
-    if (!currentCalcData || !currentCalcData.Component) {
-      return <p className="text-center py-10">Calculadora em desenvolvimento ou não encontrada.</p>;
-    }
+  // DICIONÁRIO DE NOTAS CLÍNICAS (SEO PARA ADSENSE E UTILIDADE MÉDICA)
+  const calcDescriptions: Record<string, React.ReactNode> = {
+    imc: (
+      <p>O Índice de Massa Corporal (IMC) é a métrica padrão da OMS para rastreio populacional. <strong>Nota clínica:</strong> O IMC não diferencia massa magra de massa gorda. Atletas ou idosos com sarcopenia podem ter a classificação sobrestimada ou subestimada, devendo ser complementado com a avaliação da circunferência abdominal.</p>
+    ),
+    clcr: (
+      <p>A fórmula de Cockcroft-Gault estima a Taxa de Filtração Glomerular (TFG). Embora as fórmulas CKD-EPI sejam as preferidas para estadiar a Doença Renal Crónica, a maioria dos Resumos das Características dos Medicamentos (como antibióticos e DOACs) ainda baseia o ajuste posológico rigoroso na Cockcroft-Gault.</p>
+    ),
+    childpugh: (
+      <p>O escore de Child-Pugh avalia o prognóstico da cirrose hepática, estimando a sobrevida e a necessidade de transplante. É amplamente utilizado na prática clínica para orientar o ajuste de dose de fármacos com metabolização hepática e avaliar o risco cirúrgico.</p>
+    ),
+    meld: (
+      <p>O <em>Model for End-Stage Liver Disease</em> (MELD) estima a probabilidade de mortalidade aos 3 meses em doentes com doença hepática terminal. Constitui o critério padronizado e oficial para a priorização de doentes na lista de espera para transplante hepático a nível mundial.</p>
+    ),
+    centor: (
+      <p>O Escore de Centor Modificado (McIsaac) ajuda a estratificar a probabilidade pré-teste de faringite estreptocócica (Estreptococo do Grupo A). Escores baixos (≤1) permitem geralmente excluir o diagnóstico, evitando a colheita desnecessária de zaragatoa ou o uso irracional de antibióticos.</p>
+    ),
+    chads: (
+      <p>O escore CHA₂DS₂-VASc avalia o risco de tromboembolismo sistémico (como AVC) em doentes com Fibrilhação Auricular não-valvular. Pontuações ≥ 2 em homens ou ≥ 3 em mulheres estabelecem indicação formal para terapêutica com anticoagulação oral (preferencialmente DOACs).</p>
+    ),
+    timi: (
+      <p>O Escore TIMI para Síndrome Coronária Aguda sem supradesnivelamento de ST (SCA) avalia o risco de mortalidade ou isquemia severa em 14 dias. É uma ferramenta chave na Sala de Emergência para decidir se o doente beneficia de uma estratégia invasiva precoce (cateterismo cardíaco).</p>
+    ),
+    glasgow: (
+      <p>A Escala de Coma de Glasgow (ECG) é o padrão de ouro na avaliação do nível de consciência, sobretudo no contexto de neurotrauma. Atualmente preconiza-se a documentação da reatividade pupilar (ECG-P). Uma pontuação ≤ 8 constitui indicação clássica e mandatória para intubação orotraqueal.</p>
+    ),
+    curb65: (
+      <p>O escore CURB-65 prevê a mortalidade em 30 dias na pneumonia adquirida na comunidade (PAC). Fornece orientação vital para o local de tratamento: ambulatório (0-1), enfermaria (2) ou admissão em Unidade de Cuidados Intensivos (≥3), embora doentes idosos exijam sempre juízo clínico.</p>
+    ),
+    wells: (
+      <p>O Escore de Wells para Trombose Venosa Profunda (TVP) baliza a investigação. Doentes com risco "Improvável" devem ser avaliados laboratorialmente com D-Dímeros. Se o risco for estratificado como "Provável", solicita-se diretamente a ecografia Doppler venosa sem perda de tempo.</p>
+    ),
+    nihss: (
+      <p>A Escala do NIH (NIHSS) quantifica o défice neurológico no AVC isquémico. É o indicador primário para a indicação de trombólise endovenosa (tradicionalmente considerada em doentes com pontuações entre 4 e 25) e serve de baseline para monitorizar recaídas.</p>
+    ),
+    meem: (
+      <p>O Mini-Exame do Estado Mental (MEEM) é a ferramenta neurocognitiva de rastreio mais utilizada globalmente. A interpretação do declínio cognitivo deve sempre ser ajustada à escolaridade do doente, uma vez que a iliteracia penaliza o score base de forma fisiológica.</p>
+    ),
+    phq9: (
+      <p>O <em>Patient Health Questionnaire-9</em> (PHQ-9) traduz em perguntas rápidas os critérios do DSM-V para depressão major. Altamente validado, serve tanto para o rastreio ativo nos Cuidados de Saúde Primários como para a titulação objetiva da resposta à terapêutica antidepressiva.</p>
+    ),
+    ig: (
+      <p>O cálculo obstétrico da Idade Gestacional pela Data da Última Menstruação (DUM) assume ciclos menstruais regulares de 28 dias. A ecografia pélvica do 1º trimestre (baseada no Comprimento Crânio-Caudal - CCN) permanece como a metodologia mais rigorosa para datar a gestação de forma definitiva.</p>
+    ),
+    dum_usg: (
+      <p>Este cálculo retrospetivo estabelece uma "DUM ecográfica" ou "DUM corrigida" com base na biometria fetal. Permite ao obstetra uniformizar o registo pré-natal no software de saúde sempre que a DUM relatada pela utente for incerta ou flagrantemente incompatível com a ecografia precoce.</p>
+    ),
+    kupperman: (
+      <p>O Índice de Kupperman-Blatt é a escala clássica ginecológica para quantificar a gravidade da sintomatologia climatérica (menopausa). É determinante para sustentar a indicação de Terapêutica Hormonal de Substituição (THS) e para avaliar o sucesso clínico do tratamento dos fogachos.</p>
+    ),
+    jones: (
+      <p>Os Critérios de Jones suportam o diagnóstico de Febre Reumática Aguda. <strong>Nota clínica vital:</strong> A documentação laboratorial de infeção recente por Estreptococo do Grupo A (seja por zaragatoa orofaríngea, teste rápido ou elevação de ASLO) é um pré-requisito obrigatório para fechar o diagnóstico.</p>
+    ),
+    apgar: (
+      <p>O Índice de Apgar quantifica a vitalidade do recém-nascido de forma estandardizada no 1º e 5º minutos de vida. <strong>Atenção:</strong> Não deve ser o critério decisor para iniciar manobras de reanimação, mas sim o indicador de resposta às manobras já instituídas pelo pediatra.</p>
+    ),
+    ldl: (
+      <p>A Fórmula de Friedewald indireta o colesterol LDL (CT - HDL - TG/5). No entanto, o cálculo fica matematicamente inválido se os triglicerídeos ultrapassarem os 400 mg/dL. Nessas circunstâncias de dislipidemia mista severa, exige-se o doseamento analítico direto ou a utilização da fórmula de Martin-Hopkins.</p>
+    ),
+    gad7: (
+      <p>O <em>Generalized Anxiety Disorder-7</em> (GAD-7) é um questionário psicométrico pragmático. Pontuações ≥ 10 evidenciam excelente sensibilidade e especificidade clínica, sugerindo Transtorno de Ansiedade Generalizada e sinalizando a necessidade imperativa de intervenção psicológica ou psicofarmacológica.</p>
+    ),
+    prevent: (
+      <p>As calculadoras <strong>AHA PREVENT (2023)</strong> são as sucessoras das equações ASCVD Pooled Cohort. Ao omitirem a raça e integrarem a função renal (eGFR) no algoritmo, oferecem uma precisão superior na predição de risco a 10 e 30 anos, fundamentando de forma robusta o início da prescrição de estatinas.</p>
+    ),
+    hasbled: (
+      <p>O <strong>HAS-BLED</strong> estima o risco de hemorragia major em doentes com Fibrilhação Auricular. Pontuações elevadas (≥ 3) alertam o clínico para redobrar a vigilância e corrigir fatores de risco (ex: pressão arterial não controlada), não constituindo, só por si, contraindicação formal à anticoagulação.</p>
+    ),
+    qsofa: (
+      <p>O <strong>quick SOFA (qSOFA)</strong> é um sistema de alerta rápido (Early Warning Score) à beira-leito. Não diagnostica sépsis isoladamente; atua antes como sinalizador: doentes infetados com qSOFA ≥ 2 estão sob risco iminente de colapso, exigindo colheita urgente de lactatos, hemoculturas e reavaliação imediata.</p>
+    )
+  };
+  
+  const renderCalculatorContent = () => {
+    const calc = calculatorsList.find(c => c.id === selectedCalc);
+    if (!calc) return null;
+    
+    return (
+      <div className="space-y-6 animate-fade-in">
+        {/* Renderiza a calculadora em si */}
+        <calc.Component />
+        
+        {/* Renderiza a caixa de texto para o AdSense / Médico, se existir */}
+        {calcDescriptions[calc.id] && (
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-orange-100 text-sm text-gray-600 leading-relaxed">
+            <h3 className="font-bold text-gray-800 mb-2 flex items-center">
+              <FileText size={18} className="mr-2 text-orange-500" />
+              Lembrete Clínico
+            </h3>
+            {calcDescriptions[calc.id]}
+          </div>
+        )}
+      </div>
+    );
+  };
     
     // Puxa o componente diretamente da lista e o renderiza
     const CalculadoraParaRenderizar = currentCalcData.Component;
