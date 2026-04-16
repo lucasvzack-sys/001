@@ -44,10 +44,13 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
   // Verifica se o município selecionado contém "RENAME" (Lista Nacional)
   const isListaNacional = municipio.includes('RENAME');
 
-  return (
+   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Navbar currentView="temnoposto" onNavigate={onNavigate} />
 
+      {/* ADICIONE A TAG MAIN AQUI */}
+      <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
+        
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
