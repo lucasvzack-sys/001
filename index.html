@@ -16,41 +16,26 @@
     <link rel="icon" type="image/png" href="/susegado.png" />
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5745806143307154" crossorigin="anonymous"></script>
-    
-    <script>
-      (function() {
-        var ua = window.navigator.userAgent;
-        // Detecta Windows 7 (NT 6.1), Windows 8 (NT 6.2/6.3) e Internet Explorer
-        var isOldSystem = ua.indexOf('Windows NT 6.1') !== -1 || 
-                          ua.indexOf('Windows NT 6.2') !== -1 || 
-                          ua.indexOf('Windows NT 6.3') !== -1 ||
-                          ua.indexOf('MSIE ') !== -1 || 
-                          ua.indexOf('Trident/') !== -1;
-
-        if (isOldSystem) {
-          // Aguarda o HTML carregar para inserir a barra
-          document.addEventListener('DOMContentLoaded', function() {
-            var banner = document.createElement('div');
-            
-            // Usamos CSS inline puro aqui porque o Tailwind 4 não vai funcionar nesses navegadores
-            banner.style.backgroundColor = '#f9b233'; /* Sua cor sus-yellow */
-            banner.style.color = '#000000';
-            banner.style.padding = '12px 20px';
-            banner.style.textAlign = 'center';
-            banner.style.fontFamily = 'Arial, sans-serif';
-            banner.style.fontSize = '14px';
-            banner.style.fontWeight = 'bold';
-            banner.style.borderBottom = '2px solid #d99a29';
-            banner.innerHTML = '⚠️ Você está usando um sistema ou navegador desatualizado. Algumas funcionalidades e cores do site não vão carregar corretamente. Por favor, atualize para uma versão mais recente.';
-            
-            // Insere o banner no topo da página, fora da div do React
-            document.body.insertBefore(banner, document.body.firstChild);
-          });
-        }
-      })();
-    </script>
   </head>
   <body>
+    
+    <div id="aviso-sistema-antigo" style="display: none; background-color: #f9b233; color: #000000; padding: 12px 20px; text-align: center; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; border-bottom: 2px solid #d99a29;">
+      ⚠️ Você está usando um sistema ou navegador desatualizado. Algumas funcionalidades e cores do site não vão carregar corretamente. Por favor, atualize para uma versão mais recente.
+    </div>
+
+    <script>
+      var ua = window.navigator.userAgent;
+      var isOldSystem = ua.indexOf('Windows NT 6.1') !== -1 || // Windows 7
+                        ua.indexOf('Windows NT 6.2') !== -1 || // Windows 8
+                        ua.indexOf('Windows NT 6.3') !== -1 || // Windows 8.1
+                        ua.indexOf('MSIE ') !== -1 ||          // Internet Explorer antigo
+                        ua.indexOf('Trident/') !== -1;         // Internet Explorer 11
+      
+      if (isOldSystem) {
+        document.getElementById('aviso-sistema-antigo').style.display = 'block';
+      }
+    </script>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
