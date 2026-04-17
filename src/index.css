@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Suas cores atuais que já funcionam */
+  /* As suas cores atuais que já funcionam */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
@@ -11,12 +11,20 @@
   --color-sus-green: #2d8a4e;
   --color-sus-yellow: #f9b233;
 
-  /* Sobrescrevendo as cores do Tailwind com HEX para compatibilidade */
+  /* Cores cinzentas usadas na barra de cookies e fundo */
+  --color-gray-50: #f9fafb;
+  --color-gray-300: #d1d5db;
+  --color-gray-900: #111827;
+
+  /* Sobrescrevendo laranjas (incluindo o 400 do link e o 700 do hover) */
   --color-orange-50: #fff7ed;
   --color-orange-100: #ffedd5;
+  --color-orange-400: #fb923c;
   --color-orange-500: #f97316;
   --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
   
+  /* Sobrescrevendo vermelhos */
   --color-red-50: #fef2f2;
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
