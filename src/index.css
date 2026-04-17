@@ -16,7 +16,7 @@
   --color-gray-300: #d1d5db;
   --color-gray-900: #111827;
 
-  /* Sobrescrevendo laranjas (incluindo o 400 do link e o 700 do hover) */
+  /* Sobrescrevendo laranjas */
   --color-orange-50: #fff7ed;
   --color-orange-100: #ffedd5;
   --color-orange-400: #fb923c;
@@ -28,6 +28,12 @@
   --color-red-50: #fef2f2;
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
+
+  /* Sobrescrevendo os rosas do botão Doar e Navbar */
+  --color-pink-50: #fdf2f8;
+  --color-pink-100: #fce7f3;
+  --color-pink-600: #db2777;
+  --color-pink-700: #be185d;
 }
 
 body {
