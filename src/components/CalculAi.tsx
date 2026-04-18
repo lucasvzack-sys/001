@@ -633,70 +633,16 @@ const CalcMEEM = () => {
   );
 };
 
-const CalcPREVENT = () => {
-  const [prevent, setPrevent] = useState({
-    idade: '', sexo: 'F', pas: '', hasTratada: false, ct: '', hdl: '',
-    dm: false, tabagista: false, estatina: false, egfr: '', imc: ''
-  });
-
+const CalcPrevent = () => {
   return (
-    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-      <div className="mb-6 p-4 bg-blue-50 text-blue-800 rounded-xl text-sm leading-relaxed border border-blue-100">
-        <span className="font-bold">Aviso sobre o AHA PREVENT:</span> As equações PREVENT (2023) utilizam matrizes complexas de coeficientes que dependem de dezenas de variáveis interligadas para estimar o risco de DCV, Insuficiência Cardíaca e ASCVD em 10 e 30 anos. Esta é a interface de coleta padronizada. Em um ambiente de produção, este formulário deve ser conectado à API oficial da AHA ou a uma biblioteca validada com os coeficientes exatos.
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+      <div className="mb-6 p-4 bg-red-50 text-red-800 rounded-xl text-sm leading-relaxed border border-red-100">
+        <span className="font-bold">Aviso sobre o Escore PREVENT™:</span> O algoritmo AHA/ACC PREVENT™ (que substitui o antigo ASCVD Risk Estimator) é uma calculadora complexa e em constante atualização. Para garantir a máxima segurança e acurácia na estimativa do risco cardiovascular em 10 e 30 anos, recomendamos o uso da calculadora oficial.
       </div>
-
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Idade (30-79 anos)</label>
-            <input type="number" value={prevent.idade} onChange={(e) => setPrevent({...prevent, idade: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 55" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">Sexo Biológico</label>
-            <div className="flex gap-2">
-              <button onClick={() => setPrevent({...prevent, sexo: 'M'})} className={`flex-1 py-3 rounded-xl text-sm font-bold border transition-all ${prevent.sexo === 'M' ? 'bg-blue-100 border-blue-500 text-blue-700' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Masculino</button>
-              <button onClick={() => setPrevent({...prevent, sexo: 'F'})} className={`flex-1 py-3 rounded-xl text-sm font-bold border transition-all ${prevent.sexo === 'F' ? 'bg-pink-100 border-pink-500 text-pink-700' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Feminino</button>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Pressão Sistólica (mmHg)</label>
-            <input type="number" value={prevent.pas} onChange={(e) => setPrevent({...prevent, pas: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 130" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Colesterol Total (mg/dL)</label>
-            <input type="number" value={prevent.ct} onChange={(e) => setPrevent({...prevent, ct: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 200" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">HDL (mg/dL)</label>
-            <input type="number" value={prevent.hdl} onChange={(e) => setPrevent({...prevent, hdl: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 50" />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">eGFR (mL/min/1.73m²)</label>
-            <input type="number" value={prevent.egfr} onChange={(e) => setPrevent({...prevent, egfr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 90" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">IMC (kg/m²)</label>
-            <input type="number" value={prevent.imc} onChange={(e) => setPrevent({...prevent, imc: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 25" />
-          </div>
-        </div>
-
-        <div className="space-y-3 pt-4 border-t border-gray-100">
-          <CheckboxItem label="Paciente usa medicação para Hipertensão?" checked={prevent.hasTratada} onChange={(c) => setPrevent({...prevent, hasTratada: c})} />
-          <CheckboxItem label="Paciente possui Diabetes?" checked={prevent.dm} onChange={(c) => setPrevent({...prevent, dm: c})} />
-          <CheckboxItem label="Fumante atual?" checked={prevent.tabagista} onChange={(c) => setPrevent({...prevent, tabagista: c})} />
-          <CheckboxItem label="Em uso de Estatina?" checked={prevent.estatina} onChange={(c) => setPrevent({...prevent, estatina: c})} />
-        </div>
-
-        <div className="mt-8 p-6 bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl text-center">
-           <span className="text-gray-500 font-medium">Preencha todos os dados e integre o motor de cálculo da AHA para visualizar o risco em 10 e 30 anos.</span>
-        </div>
-      </div>
+      <p className="text-gray-600 mb-6">A ferramenta avalia: Idade, Sexo, Colesterol Total, HDL, Pressão Arterial Sistólica, Diabetes, Tabagismo, Uso de Estatinas/Anti-hipertensivos, Função Renal (eGFR) e IMC.</p>
+      <a href="https://professional.heart.org/en/guidelines-and-statements/prevent-calculator" target="_blank" rel="noopener noreferrer" className="inline-block bg-red-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-red-700 transition-colors shadow-sm">
+        Acessar Calculadora Oficial PREVENT™
+      </a>
     </div>
   );
 };
@@ -880,6 +826,18 @@ const CalcBallard = () => {
 
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      
+      {/* NOVA LEGENDA DE PONTUAÇÃO */}
+      <div className="mb-8 p-5 bg-purple-50 rounded-2xl border border-purple-100 text-sm text-purple-900 leading-relaxed">
+        <p className="font-bold mb-2 uppercase tracking-wide text-purple-700">O que significa a pontuação?</p>
+        <ul className="list-disc ml-5 space-y-1">
+          <li><strong>-1 e 0:</strong> Extrema imaturidade (Ex: hipotonia grave, pele gelatinosa/fina, sem lanugo ou cartilagem).</li>
+          <li><strong>1 e 2:</strong> Prematuridade intermediária (Ex: início de tônus fletor, pele fina, lanugo abundante).</li>
+          <li><strong>3 e 4:</strong> Maturidade de termo (Ex: hipertonia em flexão ativa, pele mais espessa/descamativa, cartilagem firme da orelha).</li>
+          <li><strong>5:</strong> Pós-termo (Ex: pele apergaminhada com fissuras profundas, ausência de lanugo, unhas longas).</li>
+        </ul>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-4">
           <h3 className="font-bold text-pink-700 border-b border-pink-100 pb-2">Maturidade Neuromuscular</h3>
@@ -909,7 +867,7 @@ const CalcBallard = () => {
       </div>
 
       <div className="mt-8 p-6 bg-pink-50 rounded-2xl text-center">
-        <span className="text-sm text-pink-800 block uppercase font-bold tracking-wider mb-2">Idade Gestacional Estimada (Ballard Score: {score})</span>
+        <span className="text-sm text-pink-800 block uppercase font-bold tracking-wider mb-2">Idade Gestacional Estimada (Ballard: {score})</span>
         <span className="text-6xl font-black text-pink-600">{Math.round(semanas)} <span className="text-2xl font-normal text-pink-800">semanas</span></span>
       </div>
     </div>
@@ -1020,7 +978,8 @@ const CalcCaprini = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-4">
           <h4 className="font-bold text-gray-700 border-b pb-2">Fatores de Risco (1 ponto)</h4>
-          <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
+          {/* Barra de rolagem removida desta div abaixo */}
+          <div className="space-y-2 pr-2">
             {pts1.map((label, i) => <CheckboxItem key={i} label={label} checked={f1[i]} onChange={() => toggle(f1, setF1, i)} />)}
           </div>
           
@@ -1053,7 +1012,6 @@ const CalcCaprini = () => {
     </div>
   );
 };
-
 const CalcFerrimanGallwey = () => {
   const [fg, setFg] = useState(new Array(9).fill(0));
   const score = useMemo(() => fg.reduce((a, b) => a + b, 0), [fg]);
