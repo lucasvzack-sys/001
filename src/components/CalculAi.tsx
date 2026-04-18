@@ -757,6 +757,391 @@ const CalcQSOFA = () => {
 // COMPONENTE PRINCIPAL
 // ==========================================
 
+// ==========================================
+// NOVAS CALCULADORAS ADICIONADAS
+// ==========================================
+
+const CalcASPECTS = () => {
+  const [areas, setAreas] = useState({
+    c: false, l: false, ic: false, i: false, m1: false, m2: false, m3: false, m4: false, m5: false, m6: false
+  });
+  const score = useMemo(() => 10 - Object.values(areas).filter(Boolean).length, [areas]);
+
+  const toggle = (k: keyof typeof areas) => setAreas({ ...areas, [k]: !areas[k] });
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <p className="text-sm text-gray-500 mb-6">Marque as áreas supratentoriais irrigadas pela Artéria Cerebral Média (ACM) com sinais precoces de isquemia na TC sem contraste. Subtrai-se 1 ponto por área acometida (Total inicial: 10).</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-3">
+          <h4 className="font-bold text-gray-700 border-b pb-2">Estruturas Profundas</h4>
+          <CheckboxItem label="Caudato (C)" checked={areas.c} onChange={() => toggle('c')} />
+          <CheckboxItem label="Lentiforme (L)" checked={areas.l} onChange={() => toggle('l')} />
+          <CheckboxItem label="Cápsula Interna (IC)" checked={areas.ic} onChange={() => toggle('ic')} />
+          <CheckboxItem label="Ínsula (I)" checked={areas.i} onChange={() => toggle('i')} />
+        </div>
+        <div className="space-y-3">
+          <h4 className="font-bold text-gray-700 border-b pb-2">Território Cortical</h4>
+          <CheckboxItem label="Córtex Anterior da ACM (M1)" checked={areas.m1} onChange={() => toggle('m1')} />
+          <CheckboxItem label="Córtex Lateral ao M1 (M2)" checked={areas.m2} onChange={() => toggle('m2')} />
+          <CheckboxItem label="Córtex Posterior da ACM (M3)" checked={areas.m3} onChange={() => toggle('m3')} />
+          <CheckboxItem label="Anterior Superior (M4)" checked={areas.m4} onChange={() => toggle('m4')} />
+          <CheckboxItem label="Lateral Superior (M5)" checked={areas.m5} onChange={() => toggle('m5')} />
+          <CheckboxItem label="Posterior Superior (M6)" checked={areas.m6} onChange={() => toggle('m6')} />
+        </div>
+      </div>
+      <div className="mt-8 p-6 bg-indigo-50 rounded-2xl text-center">
+        <span className="text-sm text-indigo-800 block uppercase font-bold tracking-wider mb-2">Escore ASPECTS</span>
+        <span className="text-6xl font-black text-indigo-600">{score}</span>
+        <p className="text-md mt-3 font-medium text-indigo-900">
+          {score <= 7 ? 'Isquemia extensa (Pior prognóstico)' : 'Isquemia limitada (Bom candidato à reperfusão)'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const CalcAtlanta = () => {
+  const [atlanta, setAtlanta] = useState({ falhaOrgao: 'nenhuma', complicacao: false });
+
+  const gravidade = useMemo(() => {
+    if (atlanta.falhaOrgao === '>48h') return { nivel: 'Grave', cor: 'text-red-600', bg: 'bg-red-50' };
+    if (atlanta.falhaOrgao === '<48h' || atlanta.complicacao) return { nivel: 'Moderadamente Grave', cor: 'text-orange-600', bg: 'bg-orange-50' };
+    return { nivel: 'Leve', cor: 'text-green-600', bg: 'bg-green-50' };
+  }, [atlanta]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-bold text-gray-800 mb-3">Falência de Órgãos (Cardiovascular, Renal, Respiratório)</label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {[{v:'nenhuma', l:'Ausente'}, {v:'<48h', l:'Transitória (< 48h)'}, {v:'>48h', l:'Persistente (> 48h)'}].map(opt => (
+              <button key={opt.v} onClick={() => setAtlanta({...atlanta, falhaOrgao: opt.v})} className={`p-3 rounded-lg text-sm transition-all border ${atlanta.falhaOrgao === opt.v ? 'bg-blue-100 border-blue-500 text-blue-800 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
+                {opt.l}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="pt-2">
+          <CheckboxItem label="Presença de Complicação Local (ex: Necrose, Pseudocisto) ou Sistêmica (ex: exacerbação de DRC)" checked={atlanta.complicacao} onChange={(c) => setAtlanta({...atlanta, complicacao: c})} />
+        </div>
+        
+        <div className={`mt-8 p-6 rounded-2xl text-center ${gravidade.bg}`}>
+          <span className="text-sm block uppercase font-bold tracking-wider mb-2 opacity-80">Classificação de Atlanta (2012)</span>
+          <span className={`text-4xl font-black ${gravidade.cor}`}>{gravidade.nivel}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcFRAX = () => {
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+       <div className="mb-6 p-4 bg-orange-50 text-orange-800 rounded-xl text-sm leading-relaxed border border-orange-100">
+        <span className="font-bold">Aviso sobre o FRAX®:</span> O algoritmo do FRAX é proprietário (Universidade de Sheffield). Esta interface de coleta de dados deve ser preenchida diretamente no site oficial ou integrada via API licenciada para obter a probabilidade exata de fratura em 10 anos.
+      </div>
+      <p className="text-gray-600 mb-6">Fatores avaliados: Idade, Sexo, Peso, Altura, Fratura Prévia, Pais com Fratura de Quadril, Tabagismo Atual, Uso de Glicocorticoides, Artrite Reumatoide, Osteoporose Secundária, Consumo de Álcool (≥3 unidades/dia) e DMO do Colo Femoral.</p>
+      <a href="https://frax.shef.ac.uk/FRAX/tool.aspx?lang=po" target="_blank" rel="noopener noreferrer" className="inline-block bg-orange-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-orange-700 transition-colors">
+        Acessar Calculadora Oficial FRAX®
+      </a>
+    </div>
+  );
+};
+
+const CalcBallard = () => {
+  const [score, setScore] = useState('');
+  const semanas = useMemo(() => {
+    const s = parseInt(score);
+    if (isNaN(s) || s < -10 || s > 50) return null;
+    return ((s * 2) + 120) / 5; // Aproximação da fórmula de Ballard: Semanas = (Score * 2 + 120) / 5
+  }, [score]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <p className="text-sm text-gray-500">O Novo Escore de Ballard avalia a maturidade neuromuscular e física do recém-nascido (variando de -10 a 50 pontos).</p>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Pontuação Total (Neuromuscular + Física)</label>
+          <input type="number" value={score} onChange={(e) => setScore(e.target.value)} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 35" />
+        </div>
+        {semanas !== null && (
+          <div className="mt-8 p-6 bg-pink-50 rounded-2xl text-center">
+            <span className="text-sm text-pink-800 block uppercase font-bold tracking-wider mb-2">Idade Gestacional Estimada</span>
+            <span className="text-6xl font-black text-pink-600">{Math.round(semanas)} <span className="text-2xl font-normal text-pink-800">semanas</span></span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const CalcRanson = () => {
+  const [ranson, setRanson] = useState({
+    idade: false, leuco: false, glicose: false, ldh: false, ast: false, // Admissão
+    ht: false, ur: false, ca: false, pao2: false, db: false, fluid: false // 48h
+  });
+  const score = useMemo(() => Object.values(ranson).filter(Boolean).length, [ranson]);
+  const toggle = (k: keyof typeof ranson) => setRanson({ ...ranson, [k]: !ranson[k] });
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-3">
+          <h4 className="font-bold text-gray-700 border-b pb-2">Na Admissão</h4>
+          <CheckboxItem label="Idade > 55 anos" checked={ranson.idade} onChange={() => toggle('idade')} />
+          <CheckboxItem label="Leucócitos > 16.000/mm³" checked={ranson.leuco} onChange={() => toggle('leuco')} />
+          <CheckboxItem label="Glicose > 200 mg/dL" checked={ranson.glicose} onChange={() => toggle('glicose')} />
+          <CheckboxItem label="LDH > 350 UI/L" checked={ranson.ldh} onChange={() => toggle('ldh')} />
+          <CheckboxItem label="AST (TGO) > 250 UI/L" checked={ranson.ast} onChange={() => toggle('ast')} />
+        </div>
+        <div className="space-y-3">
+          <h4 className="font-bold text-gray-700 border-b pb-2">Nas primeiras 48h</h4>
+          <CheckboxItem label="Queda do Hematócrito > 10%" checked={ranson.ht} onChange={() => toggle('ht')} />
+          <CheckboxItem label="Aumento de Ureia > 5 mg/dL" checked={ranson.ur} onChange={() => toggle('ur')} />
+          <CheckboxItem label="Cálcio Sérico < 8 mg/dL" checked={ranson.ca} onChange={() => toggle('ca')} />
+          <CheckboxItem label="PaO2 < 60 mmHg" checked={ranson.pao2} onChange={() => toggle('pao2')} />
+          <CheckboxItem label="Déficit de Base > 4 mEq/L" checked={ranson.db} onChange={() => toggle('db')} />
+          <CheckboxItem label="Sequestro Hídrico > 6 Litros" checked={ranson.fluid} onChange={() => toggle('fluid')} />
+        </div>
+      </div>
+      <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+        <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Escore de Ranson Total</span>
+        <span className="text-6xl font-black text-red-600">{score}</span>
+        <p className="text-md mt-3 font-medium text-red-900">
+          Mortalidade Estimada: {score <= 2 ? '0-3% (Pancreatite Leve)' : score <= 5 ? '11-15%' : score <= 7 ? '40%' : 'Quase 100%'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const CalcIPSS = () => {
+  const [ipss, setIpss] = useState(new Array(7).fill(0));
+  const [qol, setQol] = useState(0);
+  const score = useMemo(() => ipss.reduce((a, b) => a + b, 0), [ipss]);
+  
+  const perguntas = [
+    "Sensação de esvaziamento incompleto", "Frequência (ter que urinar menos de 2h após ter urinado)",
+    "Intermitência (parar e recomeçar a urinar)", "Urgência (dificuldade em adiar a micção)",
+    "Jato fraco", "Esforço para começar a urinar", "Noctúria (vezes que acorda à noite para urinar)"
+  ];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <p className="text-sm text-gray-500 mb-4">Baseado no último mês. 0 = Nenhuma vez, 5 = Quase sempre.</p>
+      <div className="space-y-4">
+        {perguntas.map((q, idx) => (
+          <div key={idx} className="flex flex-col sm:flex-row justify-between pb-3 border-b border-gray-100">
+            <span className="text-sm text-gray-700 flex-1">{idx+1}. {q}</span>
+            <select value={ipss[idx]} onChange={(e) => { const n = [...ipss]; n[idx] = parseInt(e.target.value); setIpss(n); }} className="p-2 bg-gray-50 border border-gray-200 rounded-lg">
+              {[0,1,2,3,4,5].map(v => <option key={v} value={v}>{v}</option>)}
+            </select>
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 p-6 bg-blue-50 rounded-2xl text-center">
+        <span className="text-sm text-blue-800 block uppercase font-bold tracking-wider mb-2">Escore IPSS (Sintomas)</span>
+        <span className="text-5xl font-black text-blue-600">{score}</span>
+        <p className="text-lg mt-2 font-medium text-blue-900">
+          {score <= 7 ? 'Sintomas Leves' : score <= 19 ? 'Sintomas Moderados' : 'Sintomas Graves'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const CalcCaprini = () => {
+  const [score, setScore] = useState(0);
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+      <div className="mb-6 p-4 bg-teal-50 text-teal-800 rounded-xl text-sm leading-relaxed border border-teal-100">
+        O Escore de Caprini avalia o risco de Tromboembolismo Venoso (TEV) em pacientes cirúrgicos baseado em múltiplos fatores de 1, 2, 3 e 5 pontos. Devido à sua vasta extensão de fatores, recomendamos integrá-lo via questionário sistêmico na admissão hospitalar.
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Soma Manual dos Fatores Caprini</label>
+        <input type="number" value={score} onChange={(e) => setScore(parseInt(e.target.value)||0)} className="block w-full max-w-xs mx-auto rounded-xl border-gray-300 bg-gray-50 p-4 text-center text-2xl font-bold" />
+      </div>
+      <div className="mt-8">
+        <p className="text-lg font-bold text-teal-900">
+          Risco Estimado: {score <= 1 ? 'Baixo Risco' : score <= 4 ? 'Risco Moderado' : score <= 8 ? 'Alto Risco' : 'Altíssimo Risco'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const CalcFerrimanGallwey = () => {
+  const [fg, setFg] = useState(new Array(9).fill(0));
+  const score = useMemo(() => fg.reduce((a, b) => a + b, 0), [fg]);
+  const areas = ["Buço (Lábio superior)", "Queixo", "Tórax", "Dorso superior", "Dorso inferior", "Abdome superior", "Abdome inferior", "Braços", "Coxas"];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <p className="text-sm text-gray-500 mb-6">Atribua de 0 (ausência de pelos terminais) a 4 (crescimento capilar tipicamente masculino) para cada área.</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {areas.map((area, idx) => (
+          <div key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl">
+            <span className="text-sm font-medium text-gray-700">{area}</span>
+            <select value={fg[idx]} onChange={(e) => { const n = [...fg]; n[idx] = parseInt(e.target.value); setFg(n); }} className="p-2 border border-gray-200 rounded-lg">
+              {[0,1,2,3,4].map(v => <option key={v} value={v}>{v}</option>)}
+            </select>
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 p-6 bg-pink-50 rounded-2xl text-center">
+        <span className="text-sm text-pink-800 block uppercase font-bold tracking-wider mb-2">Escore de Ferriman-Gallwey Modificado</span>
+        <span className="text-6xl font-black text-pink-600">{score}</span>
+        <p className="text-md mt-3 font-medium text-pink-900">
+          {score >= 8 ? 'Sugestivo de Hirsutismo' : 'Padrão Normal de Pelificação'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const CalcMMRC = () => {
+  const [mmrc, setMmrc] = useState(0);
+  const opcoes = [
+    "0 - Falta de ar apenas em exercício intenso.",
+    "1 - Falta de ar ao apressar o passo no plano ou subir ladeiras leves.",
+    "2 - Anda mais devagar que pessoas da mesma idade ou precisa parar para respirar andando no próprio passo.",
+    "3 - Para para respirar após andar 100 metros ou alguns minutos no plano.",
+    "4 - Falta de ar impede sair de casa ou ao vestir-se/despir-se."
+  ];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-3">
+        {opcoes.map((opt, idx) => (
+          <button key={idx} onClick={() => setMmrc(idx)} className={`w-full text-left p-4 rounded-xl text-sm transition-all border ${mmrc === idx ? 'bg-blue-100 border-blue-500 text-blue-800 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
+            {opt}
+          </button>
+        ))}
+      </div>
+      <div className="mt-8 p-6 bg-blue-50 rounded-2xl text-center">
+        <span className="text-sm text-blue-800 block uppercase font-bold tracking-wider mb-2">Grau mMRC</span>
+        <span className="text-6xl font-black text-blue-600">{mmrc}</span>
+      </div>
+    </div>
+  );
+};
+
+const CalcCAT = () => {
+  const [cat, setCat] = useState(new Array(8).fill(0));
+  const score = useMemo(() => cat.reduce((a, b) => a + b, 0), [cat]);
+  const parametros = [
+    "Tosse", "Catarro no peito", "Aperto no peito", "Falta de ar ao subir ladeiras/escadas",
+    "Limitação de atividades em casa", "Confiança para sair de casa", "Sono profundo", "Energia"
+  ];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <p className="text-sm text-gray-500 mb-6">Classifique de 0 (Nenhum impacto) a 5 (Impacto máximo) para cada item sobre como a DPOC afeta o paciente.</p>
+      <div className="space-y-4">
+        {parametros.map((p, idx) => (
+          <div key={idx} className="flex justify-between items-center border-b pb-3 border-gray-100">
+            <span className="text-sm text-gray-700">{p}</span>
+            <input type="range" min="0" max="5" value={cat[idx]} onChange={(e) => { const n = [...cat]; n[idx] = parseInt(e.target.value); setCat(n); }} className="w-32" />
+            <span className="ml-3 font-bold text-gray-800 w-4 text-center">{cat[idx]}</span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 p-6 bg-orange-50 rounded-2xl text-center">
+        <span className="text-sm text-orange-800 block uppercase font-bold tracking-wider mb-2">Escore CAT Total</span>
+        <span className="text-5xl font-black text-orange-600">{score}</span>
+        <p className="text-md mt-2 font-medium text-orange-900">
+          {score < 10 ? 'Baixo impacto da DPOC' : score <= 20 ? 'Médio impacto' : score <= 30 ? 'Alto impacto' : 'Impacto muito alto'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const CalcPadua = () => {
+  const [padua, setPadua] = useState({ 
+    cancer: false, tev: false, mobilidade: false, trombofilia: false, // 3 pts
+    trauma: false, // 2 pts
+    idade: false, ic: false, iam: false, infeccao: false, obesidade: false, hormonio: false // 1 pt
+  });
+  const score = useMemo(() => {
+    let pts = 0;
+    if (padua.cancer) pts += 3; if (padua.tev) pts += 3; if (padua.mobilidade) pts += 3; if (padua.trombofilia) pts += 3;
+    if (padua.trauma) pts += 2;
+    if (padua.idade) pts += 1; if (padua.ic) pts += 1; if (padua.iam) pts += 1; if (padua.infeccao) pts += 1; if (padua.obesidade) pts += 1; if (padua.hormonio) pts += 1;
+    return pts;
+  }, [padua]);
+  const toggle = (k: keyof typeof padua) => setPadua({ ...padua, [k]: !padua[k] });
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <h4 className="font-bold text-red-700">Fatores de Alto Risco (3 pontos)</h4>
+        <CheckboxItem label="Câncer ativo" checked={padua.cancer} onChange={() => toggle('cancer')} />
+        <CheckboxItem label="TEV prévio" checked={padua.tev} onChange={() => toggle('tev')} />
+        <CheckboxItem label="Mobilidade reduzida (≥ 3 dias)" checked={padua.mobilidade} onChange={() => toggle('mobilidade')} />
+        <CheckboxItem label="Trombofilia conhecida" checked={padua.trombofilia} onChange={() => toggle('trombofilia')} />
+        
+        <h4 className="font-bold text-orange-700 mt-4">Risco Intermediário (2 pontos)</h4>
+        <CheckboxItem label="Trauma recente ou cirurgia (≤ 1 mês)" checked={padua.trauma} onChange={() => toggle('trauma')} />
+
+        <h4 className="font-bold text-yellow-700 mt-4">Fatores de Menor Risco (1 ponto)</h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <CheckboxItem label="Idade ≥ 70" checked={padua.idade} onChange={() => toggle('idade')} />
+          <CheckboxItem label="Insuf. Cardíaca/Resp" checked={padua.ic} onChange={() => toggle('ic')} />
+          <CheckboxItem label="IAM ou AVC agudo" checked={padua.iam} onChange={() => toggle('iam')} />
+          <CheckboxItem label="Infecção ag./Reumática" checked={padua.infeccao} onChange={() => toggle('infeccao')} />
+          <CheckboxItem label="Obesidade (IMC ≥ 30)" checked={padua.obesidade} onChange={() => toggle('obesidade')} />
+          <CheckboxItem label="Terapia Hormonal" checked={padua.hormonio} onChange={() => toggle('hormonio')} />
+        </div>
+      </div>
+      <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+        <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Escore de Pádua</span>
+        <span className="text-6xl font-black text-red-600">{score}</span>
+        <p className="text-md mt-2 font-medium text-red-900">
+          {score >= 4 ? 'Alto risco de TEV (Indicação de profilaxia farmacológica)' : 'Baixo risco de TEV'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const CalcBalthazar = () => {
+  const [balthazar, setBalthazar] = useState({ grau: 0, necrose: 0 });
+  const score = balthazar.grau + balthazar.necrose;
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-bold text-gray-800 mb-3">Grau de Inflamação na TC (A-E)</label>
+          <div className="space-y-2">
+            {[{v:0, l:'A: Pâncreas normal'}, {v:1, l:'B: Aumento pancreático local/difuso'}, {v:2, l:'C: Inflamação peripancreática'}, {v:3, l:'D: Uma coleção fluida'}, {v:4, l:'E: ≥2 coleções ou gás'}].map(opt => (
+              <button key={opt.v} onClick={() => setBalthazar({...balthazar, grau: opt.v})} className={`w-full text-left p-3 rounded-xl border ${balthazar.grau === opt.v ? 'bg-orange-100 border-orange-500 font-bold text-orange-800' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>{opt.l}</button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-gray-800 mb-3">Extensão da Necrose Pancreática</label>
+          <div className="space-y-2">
+            {[{v:0, l:'0% (0 pts)'}, {v:2, l:'< 30% (2 pts)'}, {v:4, l:'30-50% (4 pts)'}, {v:6, l:'> 50% (6 pts)'}].map(opt => (
+              <button key={opt.v} onClick={() => setBalthazar({...balthazar, necrose: opt.v})} className={`w-full text-left p-3 rounded-xl border ${balthazar.necrose === opt.v ? 'bg-red-100 border-red-500 font-bold text-red-800' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>{opt.l}</button>
+            ))}
+          </div>
+        </div>
+        <div className="mt-8 p-6 bg-yellow-50 rounded-2xl text-center">
+          <span className="text-sm text-yellow-800 block uppercase font-bold tracking-wider mb-2">Índice de Severidade na TC (ISTC)</span>
+          <span className="text-6xl font-black text-yellow-600">{score}</span>
+          <p className="text-md mt-2 font-medium text-yellow-900">
+            {score <= 3 ? 'Gravidade Leve (Mortalidade 3%)' : score <= 6 ? 'Gravidade Moderada (Mortalidade 6%)' : 'Gravidade Alta (Mortalidade 17%)'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const CalcKupperman = () => {
   const [sintomas, setSintomas] = useState({
     fogachos: 0, sudorese: 0, insonia: 0, nervosismo: 0, 
@@ -1424,7 +1809,19 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       fena: "Calculadora de Fração de Excreção de Sódio (FENa)",
       metavir: "Classificação METAVIR - Fibrose Hepática",
       alvarado: "Escore de Alvarado - Diagnóstico de Apendicite",
-      abcd2: "Escore ABCD² - Risco de AVC após AIT"
+      abcd2: "Escore ABCD² - Risco de AVC após AIT",
+      aspects: "Escore ASPECTS - Isquemia na TC de Crânio",
+      atlanta: "Classificação de Atlanta - Pancreatite Aguda",
+      frax: "Escore FRAX - Risco de Fratura",
+      ballard: "Novo Escore de Ballard - Idade Gestacional",
+      ranson: "Critérios de Ranson - Mortalidade na Pancreatite Aguda",
+      ipss: "Escore IPSS - Sintomas Prostáticos",
+      caprini: "Escore de Caprini - Risco de TEV Cirúrgico",
+      ferriman: "Escore de Ferriman-Gallwey - Hirsutismo",
+      mmrc: "Escala mMRC - Dispneia",
+      cat: "Escore CAT - Avaliação DPOC",
+      padua: "Escore de Pádua - Risco de TEV Clínico",
+      balthazar: "Escore de Balthazar - ISTC Pancreatite Aguda"
     };
 
     if (selectedCalc && calcTitles[selectedCalc]) {
@@ -1449,7 +1846,7 @@ const categories: { name: Category; icon: any }[] = [
 
   const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator, Component: CalcIMC },
-    { id: 'clcr', title: 'Clearance de Creatinina', category: 'Geral', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity, Component: CalcCockcroftGault },
+    { id: 'clcr', title: 'Clearance de Creatinina', category: 'Nefrologia', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity, Component: CalcCockcroftGault },
     { id: 'childpugh', title: 'Classificação Child-Pugh', category: 'Gastroenterologia', desc: 'Prognóstico de cirrose e doença hepática crônica', icon: FileText, Component: CalcChildPugh },
     { id: 'meld', title: 'Escore MELD', category: 'Gastroenterologia', desc: 'Gravidade e mortalidade em hepatopatias', icon: FileText, Component: CalcMELD },
     { id: 'centor', title: 'Escore de Centor', category: 'Geral', desc: 'Probabilidade de faringite estreptocócica', icon: Activity, Component: CalcCentor },
@@ -1477,7 +1874,20 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'metavir', title: 'Escore METAVIR', category: 'Gastroenterologia', desc: 'Classificação de biópsia hepática (Atividade e Fibrose)', icon: FileText, Component: CalcMETAVIR },
     { id: 'alvarado', title: 'Escore de Alvarado', category: 'Emergência e UTI', desc: 'Estratificação de risco para Apendicite Aguda', icon: Stethoscope, Component: CalcAlvarado },
     { id: 'abcd2', title: 'Escore ABCD²', category: 'Neurologia', desc: 'Risco de AVC isquêmico após Ataque Isquêmico Transitório (AIT)', icon: Brain, Component: CalcABCD2 },
+    { id: 'aspects', title: 'Escore ASPECTS', category: 'Neurologia', desc: 'Avaliação de isquemia em TC de crânio', icon: Brain, Component: CalcASPECTS },
+    { id: 'atlanta', title: 'Classificação de Atlanta', category: 'Gastroenterologia', desc: 'Gravidade na pancreatite aguda', icon: FileText, Component: CalcAtlanta },
+    { id: 'frax', title: 'Escore FRAX®', category: 'Ortopedia', desc: 'Risco de fratura osteoporótica', icon: PlusSquare, Component: CalcFRAX },
+    { id: 'ballard', title: 'Novo Escore de Ballard', category: 'Pediatria', desc: 'Idade Gestacional neonatal', icon: Baby, Component: CalcBallard },
+    { id: 'ranson', title: 'Critérios de Ranson', category: 'Emergência e UTI', desc: 'Mortalidade na pancreatite', icon: Activity, Component: CalcRanson },
+    { id: 'ipss', title: 'Escore IPSS', category: 'Nefrologia', desc: 'Avaliação de sintomas prostáticos (HBP)', icon: FileText, Component: CalcIPSS },
+    { id: 'caprini', title: 'Escore de Caprini', category: 'Emergência e UTI', desc: 'Risco de TEV cirúrgico', icon: Activity, Component: CalcCaprini },
+    { id: 'ferriman', title: 'Escore Ferriman-Gallwey', category: 'Ginecologia e Obstetrícia', desc: 'Grau de hirsutismo corporal', icon: Smile, Component: CalcFerrimanGallwey },
+    { id: 'mmrc', title: 'Escala mMRC', category: 'Emergência e UTI', desc: 'Grau de dispneia percebida', icon: Activity, Component: CalcMMRC },
+    { id: 'cat', title: 'Escore CAT', category: 'Geral', desc: 'Impacto global da DPOC', icon: FileText, Component: CalcCAT },
+    { id: 'padua', title: 'Escore de Pádua', category: 'Emergência e UTI', desc: 'Risco de TEV em pacientes clínicos', icon: Stethoscope, Component: CalcPadua },
+    { id: 'balthazar', title: 'Escore de Balthazar (ISTC)', category: 'Gastroenterologia', desc: 'Severidade de pancreatite na TC', icon: Activity, Component: CalcBalthazar }
   ];
+  
   const filteredCalculators = searchTerm.trim() !== ''
     ? calculatorsList.filter(calc => 
         calc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -1576,6 +1986,42 @@ const categories: { name: Category; icon: any }[] = [
     ),
     abcd2: (
       <p>O score ABCD² estratifica o risco de um doente com Ataque Isquémico Transitório (AIT) vir a sofrer um Acidente Vascular Cerebral (AVC) definitivo nas 48 horas seguintes, orientando a decisão de admissão hospitalar versus investigação em ambulatório.</p>
+    ),
+    aspects: (
+      <p>O <strong>ASPECTS</strong> quantifica os sinais precoces de isquemia no território da artéria cerebral média na TC sem contraste. Escores &gt; 7 indicam melhor prognóstico após terapias de reperfusão. Escores baixos denotam risco altíssimo de transformação hemorrágica.</p>
+    ),
+    atlanta: (
+      <p>A <strong>Classificação de Atlanta Modificada</strong> define a gravidade da pancreatite aguda baseada em falência orgânica sistêmica e complicações locais. Vital para definir a admissão em UCI.</p>
+    ),
+    frax: (
+      <p>A ferramenta <strong>FRAX®</strong> calcula a probabilidade em 10 anos de uma fratura maior osteoporótica. Por ser um algoritmo proprietário, use sempre o portal oficial certificado para decisões terapêuticas relativas à saúde óssea.</p>
+    ),
+    ballard: (
+      <p>O <strong>Novo Escore de Ballard</strong> correlaciona a maturidade física e neuromuscular fetal com a idade gestacional, auxiliando a equipa de neonatologia em recém-nascidos sem registos obstétricos fiáveis.</p>
+    ),
+    ranson: (
+      <p>Os <strong>Critérios de Ranson</strong> estimam a mortalidade e gravidade na Pancreatite Aguda. Diferenciam-se os parâmetros medidos à Admissão e às 48h. A hidratação agressiva inicial foca na contenção do sequestro hídrico previsto.</p>
+    ),
+    ipss: (
+      <p>O <strong>IPSS</strong> avalia os sintomas do trato urinário inferior (LUTS) tipicamente associados à Hiperplasia Benigna da Próstata (HBP). Score ≥ 8 justifica, via de regra, o início de tratamento farmacológico.</p>
+    ),
+    caprini: (
+      <p>O <strong>Escore de Caprini</strong> é fundamental para a profilaxia cirúrgica. Estratifica o risco de trombose peroperatória, justificando o uso de meias elásticas, compressão pneumática intermitente ou heparina de baixo peso molecular (HBPM).</p>
+    ),
+    ferriman: (
+      <p>O <strong>Escore de Ferriman-Gallwey</strong> quantifica objetivamente a gravidade do hirsutismo. Útil para o diagnóstico formal da Síndrome dos Ovários Policísticos (SOP) e para monitorizar a resposta ao tratamento antiandrogénico.</p>
+    ),
+    mmrc: (
+      <p>A escala de dispneia <strong>mMRC</strong> avalia o impacto da falta de ar no dia a dia. É essencial para cruzar com a gravidade espirométrica (GOLD) e a exacerbação na estratificação ABC/ABE da DPOC.</p>
+    ),
+    cat: (
+      <p>O questionário <strong>CAT</strong> providencia uma métrica abrangente de como a DPOC afeta a qualidade de vida do doente (sono, energia, sintomas basais). Útil para guiar o incremento de LABA/LAMA e ICS.</p>
+    ),
+    padua: (
+      <p>O <strong>Escore de Pádua</strong> determina quais doentes clínicos (não cirúrgicos) hospitalizados beneficiam de profilaxia antitrombótica (score ≥ 4). A maioria dos doentes acamados por quadros agudos atinge facilmente esta pontuação.</p>
+    ),
+    balthazar: (
+      <p>O <strong>Índice de Severidade Tomográfica (Escore de Balthazar)</strong> avalia a inflamação e a extensão da necrose no pâncreas. Essencial para predizer o risco de infeção local e disfunção multiorgânica nas fases tardias.</p>
     )
   };
   
