@@ -1053,6 +1053,7 @@ const CalcCaprini = () => {
     </div>
   );
 };
+
 const CalcFerrimanGallwey = () => {
   const [fg, setFg] = useState(new Array(9).fill(0));
   const score = useMemo(() => fg.reduce((a, b) => a + b, 0), [fg]);
@@ -1061,11 +1062,29 @@ const CalcFerrimanGallwey = () => {
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
       <p className="text-sm text-gray-500 mb-6">Atribua de 0 (ausência de pelos terminais) a 4 (crescimento capilar tipicamente masculino) para cada área.</p>
+      
+      {/* SEÇÃO DA IMAGEM ADICIONADA */}
+      <div className="mb-8 p-4 bg-pink-50 rounded-2xl border border-pink-100 flex flex-col items-center justify-center">
+        {/* ATENÇÃO: Coloque uma imagem chamada 'ferriman.png' na sua pasta 'public'
+          Se for jpg, mude o src abaixo para '/ferriman.jpg'
+        */}
+        <img 
+          src="/ferriman.png" 
+          alt="Referência Visual da Escala de Ferriman-Gallwey" 
+          className="max-h-80 w-auto object-contain rounded-lg mix-blend-multiply"
+          onError={(e) => {
+            (e.target as HTMLImageElement).style.display = 'none';
+            (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<p class="text-sm text-red-500 mt-2 font-medium">⚠️ Imagem não encontrada. Adicione o arquivo "ferriman.png" na pasta "public" do projeto.</p>');
+          }}
+        />
+        <span className="text-xs text-pink-700/70 mt-3 font-medium uppercase tracking-wider">Referência Visual das Áreas</span>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {areas.map((area, idx) => (
           <div key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl">
             <span className="text-sm font-medium text-gray-700">{area}</span>
-            <select value={fg[idx]} onChange={(e) => { const n = [...fg]; n[idx] = parseInt(e.target.value); setFg(n); }} className="p-2 border border-gray-200 rounded-lg">
+            <select value={fg[idx]} onChange={(e) => { const n = [...fg]; n[idx] = parseInt(e.target.value); setFg(n); }} className="p-2 border border-gray-200 rounded-lg outline-none focus:border-pink-400 bg-white">
               {[0,1,2,3,4].map(v => <option key={v} value={v}>{v}</option>)}
             </select>
           </div>
@@ -1849,6 +1868,53 @@ const CalcABCD2 = () => {
   );
 };
 
+const CalcPHQ2 = () => {
+  const [q1, setQ1] = useState(0);
+  const [q2, setQ2] = useState(0);
+  const score = q1 + q2;
+
+  const opcoes = [
+    { v: 0, l: "Nenhuma vez" },
+    { v: 1, l: "Vários dias" },
+    { v: 2, l: "Mais da metade dos dias" },
+    { v: 3, l: "Quase todos os dias" }
+  ];
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <p className="text-sm text-gray-500 mb-6">Nas últimas 2 semanas, com que frequência você foi incomodado(a) por qualquer um dos dois problemas abaixo?</p>
+      
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-bold text-gray-800 mb-3">1. Pouco interesse ou pouco prazer em fazer as coisas</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {opcoes.map(opt => (
+              <button key={opt.v} onClick={() => setQ1(opt.v)} className={`p-3 rounded-xl border text-sm transition-all ${q1 === opt.v ? 'bg-indigo-100 border-indigo-500 font-bold text-indigo-800' : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100'}`}>{opt.l} ({opt.v})</button>
+            ))}
+          </div>
+        </div>
+        
+        <div>
+          <label className="block text-sm font-bold text-gray-800 mb-3">2. Se sentir para baixo, deprimido(a) ou sem perspectiva</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {opcoes.map(opt => (
+              <button key={opt.v} onClick={() => setQ2(opt.v)} className={`p-3 rounded-xl border text-sm transition-all ${q2 === opt.v ? 'bg-indigo-100 border-indigo-500 font-bold text-indigo-800' : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100'}`}>{opt.l} ({opt.v})</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-8 p-6 bg-indigo-50 rounded-2xl text-center">
+        <span className="text-sm text-indigo-800 block uppercase font-bold tracking-wider mb-2">Escore PHQ-2 Total</span>
+        <span className="text-6xl font-black text-indigo-600">{score}</span>
+        <p className="text-md mt-3 font-medium text-indigo-900">
+          {score >= 3 ? 'Rastreio Positivo (Indicação de avaliar com PHQ-9 completo)' : 'Rastreio Negativo para Depressão Maior'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export default function CalculAi({ onNavigate }: CalculAiProps) {
   const { calcId } = useParams(); // Lê o ID da URL
   const navigate = useNavigate(); // Permite mudar a URL
@@ -1902,7 +1968,8 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       mmrc: "Escala mMRC - Dispneia",
       cat: "Escore CAT - Avaliação DPOC",
       padua: "Escore de Pádua - Risco de TEV Clínico",
-      balthazar: "Escore de Balthazar - ISTC Pancreatite Aguda"
+      balthazar: "Escore de Balthazar - ISTC Pancreatite Aguda",
+      phq2: "PHQ-2 - Rastreio de Depressão"
     };
 
     if (selectedCalc && calcTitles[selectedCalc]) {
@@ -1968,6 +2035,7 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'qsofa', title: 'Critério qSOFA', category: 'Geral', desc: 'Triagem clínica rápida e suspeita de Sepse', icon: Activity, Component: CalcQSOFA },
     { id: 'mmrc', title: 'Escala mMRC', category: 'Pneumologia', desc: 'Grau de dispneia percebida', icon: Activity, Component: CalcMMRC },
     { id: 'cat', title: 'Escore CAT', category: 'Pneumologia', desc: 'Impacto global da DPOC', icon: FileText, Component: CalcCAT },
+    { id: 'phq2', title: 'Escore PHQ-2', category: 'Psiquiatria', desc: 'Rastreio rápido de depressão', icon: Brain, Component: CalcPHQ2 }
   ];
   
   const filteredCalculators = searchTerm.trim() !== ''
@@ -2104,6 +2172,9 @@ const categories: { name: Category; icon: any }[] = [
     ),
     balthazar: (
       <p>O <strong>Índice de Severidade Tomográfica (Escore de Balthazar)</strong> avalia a inflamação e a extensão da necrose no pâncreas. Essencial para predizer o risco de infeção local e disfunção multiorgânica nas fases tardias.</p>
+    ),
+    phq2: (
+      <p>O <strong>PHQ-2</strong> (Patient Health Questionnaire-2) é um instrumento ultrarrápido de rastreio para depressão, focado nas duas dimensões principais do Transtorno Depressivo Maior: humor deprimido e anedonia. Um escore ≥ 3 possui boa sensibilidade e exige a aplicação do PHQ-9 completo ou avaliação clínica detalhada.</p>
     )
   };
   
