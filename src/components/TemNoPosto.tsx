@@ -51,7 +51,8 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
       {/* ADICIONE A TAG MAIN AQUI */}
       <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
 
-        <AdSpace className="mb-8 max-w-2xl mx-auto" />
+        {/* Anúncio 1: Topo da página (com limite de altura no celular para evitar punição SEO) */}
+        <AdSpace className="mb-8 max-w-2xl mx-auto max-h-[100px] md:max-h-none overflow-hidden" />
         
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
@@ -65,11 +66,13 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           />
           <h2 className="text-3xl font-bold text-gray-900 mb-4">TemNoPosto?</h2>
           <p className="text-gray-600">Verifique a disponibilidade gratuita na rede pública do seu município.</p>
-          <p className="text-gray-600 mt-2">ATENÇÃO: Mesmo que um medicamento apareça na lista nacional (RENAME), cada prefeitura tem autonomia para decidir o que será padronizado localmente, por isso sempre confira sua cidade.</p>
+          <p className="text-gray-600 mt-2 text-sm max-w-2xl">
+            ATENÇÃO: Mesmo que um medicamento apareça na lista nacional (RENAME), cada prefeitura tem autonomia para decidir o que será padronizado localmente, por isso sempre confira sua cidade.
+          </p>
         </motion.div>
 
-        {/* Sugestão 1: Antes da barra de busca de medicamentos */}
-        <AdSpace />
+        {/* Anúncio 2: Antes da barra de busca (também protegido para mobile) */}
+        <AdSpace className="mb-8 max-h-[100px] md:max-h-none overflow-hidden" />
 
         <form onSubmit={handleSearch} className="space-y-6 mb-8">
           <div className="space-y-2">
@@ -114,7 +117,8 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           </button>
         </form>
 
-        {hasSearched && <AdSpace className="mb-8" />}
+        {/* Anúncio 3: Aparece dinamicamente entre a busca e os resultados */}
+        {hasSearched && <AdSpace className="mb-8 max-h-[100px] md:max-h-none overflow-hidden" />}
 
         {hasSearched && results.length > 0 && (
           <div className="space-y-6">
