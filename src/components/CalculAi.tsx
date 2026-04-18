@@ -13,7 +13,7 @@ interface CalculAiProps {
   onNavigate: (view: View) => void;
 }
 
-type Category = 'Todas' | 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Ginecologia e Obstetrícia' | 'Pediatria' | 'Nefrologia' | 'Ortopedia';
+type Category = 'Todas' | 'Geral' | 'Cardiologia' | 'Pneumologia' | 'Gastroenterologia' | 'Neurologia' | 'Psiquiatria' | 'Ginecologia e Obstetrícia' | 'Pediatria' | 'Nefrologia' | 'Ortopedia';
 
 // ==========================================
 // COMPONENTE AUXILIAR COMPARTILHADO
@@ -851,27 +851,66 @@ const CalcFRAX = () => {
 };
 
 const CalcBallard = () => {
-  const [score, setScore] = useState('');
-  const semanas = useMemo(() => {
-    const s = parseInt(score);
-    if (isNaN(s) || s < -10 || s > 50) return null;
-    return ((s * 2) + 120) / 5; // Aproximação da fórmula de Ballard: Semanas = (Score * 2 + 120) / 5
-  }, [score]);
+  const [neuro, setNeuro] = useState(new Array(6).fill(0));
+  const [fisico, setFisico] = useState(new Array(6).fill(0));
+
+  const score = useMemo(() => {
+    return neuro.reduce((a, b) => a + b, 0) + fisico.reduce((a, b) => a + b, 0);
+  }, [neuro, fisico]);
+
+  const semanas = useMemo(() => ((score * 2) + 120) / 5, [score]);
+
+  const neuroParams = [
+    { label: "Postura", min: 0, max: 4 },
+    { label: "Janela Quadrada (Punho)", min: -1, max: 4 },
+    { label: "Recuo do Braço", min: 0, max: 4 },
+    { label: "Ângulo Poplíteo", min: -1, max: 5 },
+    { label: "Sinal do Xale", min: -1, max: 4 },
+    { label: "Calcanhar na Orelha", min: -1, max: 4 }
+  ];
+
+  const fisicoParams = [
+    { label: "Pele", min: -1, max: 5 },
+    { label: "Lanugo", min: -1, max: 4 },
+    { label: "Superfície Plantar", min: -1, max: 4 },
+    { label: "Mamas", min: -1, max: 4 },
+    { label: "Olho / Orelha", min: -1, max: 4 },
+    { label: "Genitália", min: -1, max: 4 }
+  ];
 
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-      <div className="space-y-6">
-        <p className="text-sm text-gray-500">O Novo Escore de Ballard avalia a maturidade neuromuscular e física do recém-nascido (variando de -10 a 50 pontos).</p>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Pontuação Total (Neuromuscular + Física)</label>
-          <input type="number" value={score} onChange={(e) => setScore(e.target.value)} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 35" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-4">
+          <h3 className="font-bold text-pink-700 border-b border-pink-100 pb-2">Maturidade Neuromuscular</h3>
+          {neuroParams.map((p, idx) => (
+            <div key={idx} className="flex justify-between items-center bg-gray-50 p-3 rounded-xl">
+              <span className="text-sm font-medium text-gray-700">{p.label}</span>
+              <div className="flex items-center space-x-2">
+                <input type="range" min={p.min} max={p.max} value={neuro[idx]} onChange={(e) => { const n = [...neuro]; n[idx] = parseInt(e.target.value); setNeuro(n); }} className="w-24 accent-pink-500" />
+                <span className="font-bold text-gray-800 w-6 text-center">{neuro[idx]}</span>
+              </div>
+            </div>
+          ))}
         </div>
-        {semanas !== null && (
-          <div className="mt-8 p-6 bg-pink-50 rounded-2xl text-center">
-            <span className="text-sm text-pink-800 block uppercase font-bold tracking-wider mb-2">Idade Gestacional Estimada</span>
-            <span className="text-6xl font-black text-pink-600">{Math.round(semanas)} <span className="text-2xl font-normal text-pink-800">semanas</span></span>
-          </div>
-        )}
+
+        <div className="space-y-4">
+          <h3 className="font-bold text-purple-700 border-b border-purple-100 pb-2">Maturidade Física</h3>
+          {fisicoParams.map((p, idx) => (
+            <div key={idx} className="flex justify-between items-center bg-gray-50 p-3 rounded-xl">
+              <span className="text-sm font-medium text-gray-700">{p.label}</span>
+              <div className="flex items-center space-x-2">
+                <input type="range" min={p.min} max={p.max} value={fisico[idx]} onChange={(e) => { const n = [...fisico]; n[idx] = parseInt(e.target.value); setFisico(n); }} className="w-24 accent-purple-500" />
+                <span className="font-bold text-gray-800 w-6 text-center">{fisico[idx]}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 p-6 bg-pink-50 rounded-2xl text-center">
+        <span className="text-sm text-pink-800 block uppercase font-bold tracking-wider mb-2">Idade Gestacional Estimada (Ballard Score: {score})</span>
+        <span className="text-6xl font-black text-pink-600">{Math.round(semanas)} <span className="text-2xl font-normal text-pink-800">semanas</span></span>
       </div>
     </div>
   );
@@ -953,25 +992,67 @@ const CalcIPSS = () => {
 };
 
 const CalcCaprini = () => {
-  const [score, setScore] = useState(0);
+  const [f1, setF1] = useState(new Array(15).fill(false)); // 1 pt
+  const [f2, setF2] = useState(new Array(6).fill(false)); // 2 pts
+  const [f3, setF3] = useState(new Array(6).fill(false)); // 3 pts
+  const [f5, setF5] = useState(new Array(5).fill(false)); // 5 pts
+
+  const score = useMemo(() => {
+    return f1.filter(Boolean).length * 1 +
+           f2.filter(Boolean).length * 2 +
+           f3.filter(Boolean).length * 3 +
+           f5.filter(Boolean).length * 5;
+  }, [f1, f2, f3, f5]);
+
+  const toggle = (arr: boolean[], setArr: any, idx: number) => {
+    const newArr = [...arr];
+    newArr[idx] = !newArr[idx];
+    setArr(newArr);
+  };
+
+  const pts1 = ["Idade 41-60 anos", "Cirurgia menor", "IMC > 25", "Edema em membros inferiores", "Veias varicosas", "Gravidez ou pós-parto (<1 mês)", "História de abortos inexplicáveis/repetição", "Uso de anticoncepcional oral ou THS", "Sepse (<1 mês)", "Pneumopatia grave (ex: DPOC)", "Função pulmonar anormal", "IAM prévio", "Insuficiência Cardíaca Congestiva", "Doença Inflamatória Intestinal", "Paciente acamado clínico"];
+  const pts2 = ["Idade 61-74 anos", "Cirurgia artroscópica", "Cirurgia aberta de grande porte (>45 min)", "Cirurgia laparoscópica (>45 min)", "Câncer prévio ou ativo", "Paciente confinado ao leito (>72h)"];
+  const pts3 = ["Idade ≥ 75 anos", "História pessoal de TEV (TVP/TEP)", "História familiar de TEV", "Mutação Fator V Leiden ou Protrombina", "Lúpus anticoagulante / Anticorpo anticardiolipina", "Outras trombofilias (congênitas ou adquiridas)"];
+  const pts5 = ["Artroplastia eletiva (Quadril/Joelho)", "Fratura de quadril, pelve ou perna (<1 mês)", "AVC (<1 mês)", "Trauma múltiplo (<1 mês)", "Lesão medular aguda (<1 mês)"];
+
   return (
-    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
-      <div className="mb-6 p-4 bg-teal-50 text-teal-800 rounded-xl text-sm leading-relaxed border border-teal-100">
-        O Escore de Caprini avalia o risco de Tromboembolismo Venoso (TEV) em pacientes cirúrgicos baseado em múltiplos fatores de 1, 2, 3 e 5 pontos. Devido à sua vasta extensão de fatores, recomendamos integrá-lo via questionário sistêmico na admissão hospitalar.
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-4">
+          <h4 className="font-bold text-gray-700 border-b pb-2">Fatores de Risco (1 ponto)</h4>
+          <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
+            {pts1.map((label, i) => <CheckboxItem key={i} label={label} checked={f1[i]} onChange={() => toggle(f1, setF1, i)} />)}
+          </div>
+          
+          <h4 className="font-bold text-orange-700 border-b pb-2 pt-4">Fatores de Risco (2 pontos)</h4>
+          <div className="space-y-2">
+            {pts2.map((label, i) => <CheckboxItem key={i} label={label} checked={f2[i]} onChange={() => toggle(f2, setF2, i)} />)}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h4 className="font-bold text-red-700 border-b pb-2">Fatores de Alto Risco (3 pontos)</h4>
+          <div className="space-y-2">
+            {pts3.map((label, i) => <CheckboxItem key={i} label={label} checked={f3[i]} onChange={() => toggle(f3, setF3, i)} />)}
+          </div>
+
+          <h4 className="font-bold text-purple-700 border-b pb-2 pt-4">Fatores de Altíssimo Risco (5 pontos)</h4>
+          <div className="space-y-2">
+            {pts5.map((label, i) => <CheckboxItem key={i} label={label} checked={f5[i]} onChange={() => toggle(f5, setF5, i)} />)}
+          </div>
+        </div>
       </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Soma Manual dos Fatores Caprini</label>
-        <input type="number" value={score} onChange={(e) => setScore(parseInt(e.target.value)||0)} className="block w-full max-w-xs mx-auto rounded-xl border-gray-300 bg-gray-50 p-4 text-center text-2xl font-bold" />
-      </div>
-      <div className="mt-8">
-        <p className="text-lg font-bold text-teal-900">
-          Risco Estimado: {score <= 1 ? 'Baixo Risco' : score <= 4 ? 'Risco Moderado' : score <= 8 ? 'Alto Risco' : 'Altíssimo Risco'}
+
+      <div className="mt-8 p-6 bg-teal-50 rounded-2xl text-center">
+        <span className="text-sm text-teal-800 block uppercase font-bold tracking-wider mb-2">Escore de Caprini Total</span>
+        <span className="text-6xl font-black text-teal-600">{score}</span>
+        <p className="text-lg mt-3 font-medium text-teal-900">
+          Risco de TEV: {score <= 1 ? 'Baixo Risco (Deambulação precoce)' : score <= 4 ? 'Risco Moderado (Profilaxia farmacológica ou mecânica)' : score <= 8 ? 'Alto Risco (Profilaxia combinada)' : 'Altíssimo Risco (Profilaxia estendida)'}
         </p>
       </div>
     </div>
   );
 };
-
 const CalcFerrimanGallwey = () => {
   const [fg, setFg] = useState(new Array(9).fill(0));
   const score = useMemo(() => fg.reduce((a, b) => a + b, 0), [fg]);
@@ -1831,18 +1912,18 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   // ==========================================
 
 const categories: { name: Category; icon: any }[] = [
-    { name: 'Todas', icon: Calculator },
-    { name: 'Geral', icon: Stethoscope },
-    { name: 'Cardiologia', icon: Heart },
-    { name: 'Gastroenterologia', icon: Stethoscope },
-    { name: 'Emergência e UTI', icon: Activity },
-    { name: 'Neurologia', icon: Brain },
-    { name: 'Psiquiatria', icon: Smile },
-    { name: 'Ginecologia e Obstetrícia', icon: Baby },
-    { name: 'Pediatria', icon: Baby },
-    { name: 'Nefrologia', icon: Activity },
-    { name: 'Ortopedia', icon: PlusSquare },
-  ];
+  { name: 'Todas', icon: Calculator },
+  { name: 'Geral', icon: Stethoscope },
+  { name: 'Cardiologia', icon: Heart },
+  { name: 'Pneumologia', icon: Activity },
+  { name: 'Gastroenterologia', icon: Stethoscope },
+  { name: 'Neurologia', icon: Brain },
+  { name: 'Psiquiatria', icon: Smile },
+  { name: 'Ginecologia e Obstetrícia', icon: Baby },
+  { name: 'Pediatria', icon: Baby },
+  { name: 'Nefrologia', icon: Activity },
+  { name: 'Ortopedia', icon: PlusSquare },
+];
 
   const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator, Component: CalcIMC },
@@ -1852,9 +1933,6 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'centor', title: 'Escore de Centor', category: 'Geral', desc: 'Probabilidade de faringite estreptocócica', icon: Activity, Component: CalcCentor },
     { id: 'chads', title: 'CHA₂DS₂-VASc', category: 'Cardiologia', desc: 'Risco de AVC em pacientes com Fibrilação Atrial', icon: Heart, Component: CalcCHADS },
     { id: 'timi', title: 'Escore TIMI (SCA)', category: 'Cardiologia', desc: 'Risco na Síndrome Coronariana Aguda sem Supra de ST', icon: Activity, Component: CalcTIMI },
-    { id: 'glasgow', title: 'Escala de Glasgow', category: 'Emergência e UTI', desc: 'Avaliação neurológica e nível de consciência', icon: Activity, Component: CalcGlasgow },
-    { id: 'curb65', title: 'Escore CURB-65', category: 'Emergência e UTI', desc: 'Estratificação de risco para Pneumonia', icon: Activity, Component: CalcCURB65 },
-    { id: 'wells', title: 'Escore de Wells (TVP)', category: 'Emergência e UTI', desc: 'Probabilidade pré-teste de Trombose Venosa Profunda', icon: Stethoscope, Component: CalcWellsTVP },
     { id: 'nihss', title: 'Escala NIHSS', category: 'Neurologia', desc: 'Déficit neurológico padronizado no AVC', icon: FileText, Component: CalcNIHSS },
     { id: 'meem', title: 'Mini-Mental (MEEM)', category: 'Neurologia', desc: 'Rastreio cognitivo com instruções detalhadas', icon: Brain, Component: CalcMEEM },
     { id: 'phq9', title: 'Questionário PHQ-9', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de depressão', icon: Smile, Component: CalcPHQ9 },
@@ -1867,12 +1945,10 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'gad7', title: 'Questionário GAD-7', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de ansiedade generalizada', icon: Smile, Component: CalcGAD7 },
     { id: 'prevent', title: 'AHA PREVENT (Risco CV)', category: 'Cardiologia', desc: 'Estimativa de risco cardiovascular (Atualização ASCVD)', icon: Heart, Component: CalcPREVENT },
     { id: 'hasbled', title: 'Escore HAS-BLED', category: 'Cardiologia', desc: 'Risco de sangramento em pacientes com FA', icon: Heart, Component: CalcHASBLED },
-    { id: 'qsofa', title: 'Critério qSOFA', category: 'Emergência e UTI', desc: 'Triagem clínica rápida e suspeita de Sepse', icon: Activity, Component: CalcQSOFA },
     { id: 'opas', title: 'Risco Cardiovascular HEARTS/OPAS', category: 'Cardiologia', desc: 'Estimativa de risco CV (Tabelas OMS/OPAS)', icon: Heart, Component: CalcOPAS },
     { id: 'ckdepi', title: 'TFG (CKD-EPI 2021)', category: 'Nefrologia', desc: 'Taxa de Filtração Glomerular sem correção de raça', icon: Activity, Component: CalcCKDEPI },
     { id: 'fena', title: 'Fração de Excreção de Sódio', category: 'Nefrologia', desc: 'Diferenciação de Lesão Renal Aguda Pré-Renal vs Intrínseca', icon: Activity, Component: CalcFENa },
     { id: 'metavir', title: 'Escore METAVIR', category: 'Gastroenterologia', desc: 'Classificação de biópsia hepática (Atividade e Fibrose)', icon: FileText, Component: CalcMETAVIR },
-    { id: 'alvarado', title: 'Escore de Alvarado', category: 'Emergência e UTI', desc: 'Estratificação de risco para Apendicite Aguda', icon: Stethoscope, Component: CalcAlvarado },
     { id: 'abcd2', title: 'Escore ABCD²', category: 'Neurologia', desc: 'Risco de AVC isquêmico após Ataque Isquêmico Transitório (AIT)', icon: Brain, Component: CalcABCD2 },
     { id: 'aspects', title: 'Escore ASPECTS', category: 'Neurologia', desc: 'Avaliação de isquemia em TC de crânio', icon: Brain, Component: CalcASPECTS },
     { id: 'atlanta', title: 'Classificação de Atlanta', category: 'Gastroenterologia', desc: 'Gravidade na pancreatite aguda', icon: FileText, Component: CalcAtlanta },
@@ -1880,12 +1956,18 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'ballard', title: 'Novo Escore de Ballard', category: 'Pediatria', desc: 'Idade Gestacional neonatal', icon: Baby, Component: CalcBallard },
     { id: 'ranson', title: 'Critérios de Ranson', category: 'Emergência e UTI', desc: 'Mortalidade na pancreatite', icon: Activity, Component: CalcRanson },
     { id: 'ipss', title: 'Escore IPSS', category: 'Nefrologia', desc: 'Avaliação de sintomas prostáticos (HBP)', icon: FileText, Component: CalcIPSS },
-    { id: 'caprini', title: 'Escore de Caprini', category: 'Emergência e UTI', desc: 'Risco de TEV cirúrgico', icon: Activity, Component: CalcCaprini },
     { id: 'ferriman', title: 'Escore Ferriman-Gallwey', category: 'Ginecologia e Obstetrícia', desc: 'Grau de hirsutismo corporal', icon: Smile, Component: CalcFerrimanGallwey },
-    { id: 'mmrc', title: 'Escala mMRC', category: 'Emergência e UTI', desc: 'Grau de dispneia percebida', icon: Activity, Component: CalcMMRC },
-    { id: 'cat', title: 'Escore CAT', category: 'Geral', desc: 'Impacto global da DPOC', icon: FileText, Component: CalcCAT },
-    { id: 'padua', title: 'Escore de Pádua', category: 'Emergência e UTI', desc: 'Risco de TEV em pacientes clínicos', icon: Stethoscope, Component: CalcPadua },
-    { id: 'balthazar', title: 'Escore de Balthazar (ISTC)', category: 'Gastroenterologia', desc: 'Severidade de pancreatite na TC', icon: Activity, Component: CalcBalthazar }
+    { id: 'balthazar', title: 'Escore de Balthazar (ISTC)', category: 'Gastroenterologia', desc: 'Severidade de pancreatite na TC', icon: Activity, Component: CalcBalthazar },
+    { id: 'glasgow', title: 'Escala de Glasgow', category: 'Neurologia', desc: 'Avaliação neurológica e nível de consciência', icon: Activity, Component: CalcGlasgow },
+    { id: 'curb65', title: 'Escore CURB-65', category: 'Pneumologia', desc: 'Estratificação de risco para Pneumonia', icon: Activity, Component: CalcCURB65 },
+    { id: 'wells', title: 'Escore de Wells (TVP)', category: 'Cardiologia', desc: 'Probabilidade pré-teste de Trombose Venosa Profunda', icon: Stethoscope, Component: CalcWellsTVP },
+    { id: 'ranson', title: 'Critérios de Ranson', category: 'Gastroenterologia', desc: 'Mortalidade na pancreatite', icon: Activity, Component: CalcRanson },
+    { id: 'caprini', title: 'Escore de Caprini', category: 'Geral', desc: 'Risco de TEV cirúrgico', icon: Activity, Component: CalcCaprini },
+    { id: 'padua', title: 'Escore de Pádua', category: 'Geral', desc: 'Risco de TEV em pacientes clínicos', icon: Stethoscope, Component: CalcPadua },
+    { id: 'alvarado', title: 'Escore de Alvarado', category: 'Gastroenterologia', desc: 'Estratificação de risco para Apendicite Aguda', icon: Stethoscope, Component: CalcAlvarado },
+    { id: 'qsofa', title: 'Critério qSOFA', category: 'Geral', desc: 'Triagem clínica rápida e suspeita de Sepse', icon: Activity, Component: CalcQSOFA },
+    { id: 'mmrc', title: 'Escala mMRC', category: 'Pneumologia', desc: 'Grau de dispneia percebida', icon: Activity, Component: CalcMMRC },
+    { id: 'cat', title: 'Escore CAT', category: 'Pneumologia', desc: 'Impacto global da DPOC', icon: FileText, Component: CalcCAT },
   ];
   
   const filteredCalculators = searchTerm.trim() !== ''
