@@ -1868,7 +1868,7 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'prevent', title: 'AHA PREVENT (Risco CV)', category: 'Cardiologia', desc: 'Estimativa de risco cardiovascular (Atualização ASCVD)', icon: Heart, Component: CalcPREVENT },
     { id: 'hasbled', title: 'Escore HAS-BLED', category: 'Cardiologia', desc: 'Risco de sangramento em pacientes com FA', icon: Heart, Component: CalcHASBLED },
     { id: 'qsofa', title: 'Critério qSOFA', category: 'Emergência e UTI', desc: 'Triagem clínica rápida e suspeita de Sepse', icon: Activity, Component: CalcQSOFA },
-    { id: 'opas', title: 'Risco Cardiovascular OPAS', category: 'Cardiologia', desc: 'Estimativa de risco CV (Tabelas OMS/OPAS)', icon: Heart, Component: CalcOPAS },
+    { id: 'opas', title: 'Risco Cardiovascular HEARTS/OPAS', category: 'Cardiologia', desc: 'Estimativa de risco CV (Tabelas OMS/OPAS)', icon: Heart, Component: CalcOPAS },
     { id: 'ckdepi', title: 'TFG (CKD-EPI 2021)', category: 'Nefrologia', desc: 'Taxa de Filtração Glomerular sem correção de raça', icon: Activity, Component: CalcCKDEPI },
     { id: 'fena', title: 'Fração de Excreção de Sódio', category: 'Nefrologia', desc: 'Diferenciação de Lesão Renal Aguda Pré-Renal vs Intrínseca', icon: Activity, Component: CalcFENa },
     { id: 'metavir', title: 'Escore METAVIR', category: 'Gastroenterologia', desc: 'Classificação de biópsia hepática (Atividade e Fibrose)', icon: FileText, Component: CalcMETAVIR },
