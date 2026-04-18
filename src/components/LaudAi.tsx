@@ -145,9 +145,6 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar currentView="laudai" onNavigate={onNavigate} />
 
-      <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
-        <AdSpace className="mb-8" />
-
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
