@@ -827,31 +827,34 @@ const CalcBallard = () => {
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
       
-      {/* IMAGENS DE REFERÊNCIA ADICIONADAS NO LUGAR DO TEXTO */}
-      <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-purple-50 rounded-2xl border border-purple-100">
-        <div className="flex flex-col items-center justify-center bg-white p-2 rounded-xl shadow-inner border border-purple-100">
+      {/* IMAGENS DE REFERÊNCIA STACKED (Uma abaixo da outra, grandes e visíveis) */}
+      <div className="mb-8 flex flex-col gap-6 p-4 bg-purple-50 rounded-2xl border border-purple-100 w-full">
+        {/* Imagem 1 - Maturidade Neuromuscular */}
+        <div className="flex flex-col items-center justify-center bg-white p-4 rounded-xl shadow-inner border border-purple-100 w-full">
           <img 
             src="/ballard1.png" 
             alt="Referência Visual Ballard 1 (Maturidade Neuromuscular)" 
-            className="max-h-80 w-auto object-contain rounded-lg"
+            className="max-h-[600px] w-full object-contain rounded-lg" // Aumentado max-h e definido w-full
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
               (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<p class="text-xs text-red-500 mt-2 font-medium">⚠️ Imagem "ballard1.png" não encontrada na pasta "public".</p>');
             }}
           />
-          <span className="text-xs text-purple-700/70 mt-2 font-medium uppercase tracking-wider">Maturidade Neuromuscular</span>
+          <span className="text-xs text-purple-700/70 mt-3 font-medium uppercase tracking-wider">Maturidade Neuromuscular</span>
         </div>
-        <div className="flex flex-col items-center justify-center bg-white p-2 rounded-xl shadow-inner border border-purple-100">
+
+        {/* Imagem 2 - Maturidade Física */}
+        <div className="flex flex-col items-center justify-center bg-white p-4 rounded-xl shadow-inner border border-purple-100 w-full">
           <img 
             src="/ballard2.png" 
             alt="Referência Visual Ballard 2 (Maturidade Física)" 
-            className="max-h-80 w-auto object-contain rounded-lg"
+            className="max-h-[600px] w-full object-contain rounded-lg" // Aumentado max-h e definido w-full
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
               (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<p class="text-xs text-red-500 mt-2 font-medium">⚠️ Imagem "ballard2.png" não encontrada na pasta "public".</p>');
             }}
           />
-          <span className="text-xs text-purple-700/70 mt-2 font-medium uppercase tracking-wider">Maturidade Física</span>
+          <span className="text-xs text-purple-700/70 mt-3 font-medium uppercase tracking-wider">Maturidade Física</span>
         </div>
       </div>
 
