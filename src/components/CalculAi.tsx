@@ -1950,7 +1950,7 @@ const categories: { name: Category; icon: any }[] = [
   { name: 'Ortopedia', icon: PlusSquare },
 ];
 
-  const calculatorsList = [
+ const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator, Component: CalcIMC },
     { id: 'clcr', title: 'Clearance de Creatinina', category: 'Nefrologia', desc: 'Estimativa da TFG pela fórmula de Cockcroft-Gault', icon: Activity, Component: CalcCockcroftGault },
     { id: 'childpugh', title: 'Classificação Child-Pugh', category: 'Gastroenterologia', desc: 'Prognóstico de cirrose e doença hepática crônica', icon: FileText, Component: CalcChildPugh },
@@ -1968,7 +1968,7 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'apgar', title: 'Índice de Apgar', category: 'Pediatria', desc: 'Avaliação rápida da vitalidade do recém-nascido', icon: Baby, Component: CalcApgar },
     { id: 'ldl', title: 'Cálculo de LDL', category: 'Cardiologia', desc: 'Fórmula de Friedewald via perfil lipídico', icon: Activity, Component: CalcLDL },
     { id: 'gad7', title: 'Questionário GAD-7', category: 'Psiquiatria', desc: 'Ferramenta de rastreio de ansiedade generalizada', icon: Smile, Component: CalcGAD7 },
-    { id: 'prevent', title: 'AHA PREVENT (Risco CV)', category: 'Cardiologia', desc: 'Estimativa de risco cardiovascular (Atualização ASCVD)', icon: Heart, Component: CalcPREVENT },
+    { id: 'prevent', title: 'AHA PREVENT (Risco CV)', category: 'Cardiologia', desc: 'Estimativa de risco cardiovascular', icon: Heart, Component: CalcPrevent },
     { id: 'hasbled', title: 'Escore HAS-BLED', category: 'Cardiologia', desc: 'Risco de sangramento em pacientes com FA', icon: Heart, Component: CalcHASBLED },
     { id: 'opas', title: 'Risco Cardiovascular HEARTS/OPAS', category: 'Cardiologia', desc: 'Estimativa de risco CV (Tabelas OMS/OPAS)', icon: Heart, Component: CalcOPAS },
     { id: 'ckdepi', title: 'TFG (CKD-EPI 2021)', category: 'Nefrologia', desc: 'Taxa de Filtração Glomerular sem correção de raça', icon: Activity, Component: CalcCKDEPI },
@@ -1979,14 +1979,13 @@ const categories: { name: Category; icon: any }[] = [
     { id: 'atlanta', title: 'Classificação de Atlanta', category: 'Gastroenterologia', desc: 'Gravidade na pancreatite aguda', icon: FileText, Component: CalcAtlanta },
     { id: 'frax', title: 'Escore FRAX®', category: 'Ortopedia', desc: 'Risco de fratura osteoporótica', icon: PlusSquare, Component: CalcFRAX },
     { id: 'ballard', title: 'Novo Escore de Ballard', category: 'Pediatria', desc: 'Idade Gestacional neonatal', icon: Baby, Component: CalcBallard },
-    { id: 'ranson', title: 'Critérios de Ranson', category: 'Emergência e UTI', desc: 'Mortalidade na pancreatite', icon: Activity, Component: CalcRanson },
+    { id: 'ranson', title: 'Critérios de Ranson', category: 'Gastroenterologia', desc: 'Mortalidade na pancreatite', icon: Activity, Component: CalcRanson },
     { id: 'ipss', title: 'Escore IPSS', category: 'Nefrologia', desc: 'Avaliação de sintomas prostáticos (HBP)', icon: FileText, Component: CalcIPSS },
     { id: 'ferriman', title: 'Escore Ferriman-Gallwey', category: 'Ginecologia e Obstetrícia', desc: 'Grau de hirsutismo corporal', icon: Smile, Component: CalcFerrimanGallwey },
     { id: 'balthazar', title: 'Escore de Balthazar (ISTC)', category: 'Gastroenterologia', desc: 'Severidade de pancreatite na TC', icon: Activity, Component: CalcBalthazar },
     { id: 'glasgow', title: 'Escala de Glasgow', category: 'Neurologia', desc: 'Avaliação neurológica e nível de consciência', icon: Activity, Component: CalcGlasgow },
     { id: 'curb65', title: 'Escore CURB-65', category: 'Pneumologia', desc: 'Estratificação de risco para Pneumonia', icon: Activity, Component: CalcCURB65 },
     { id: 'wells', title: 'Escore de Wells (TVP)', category: 'Cardiologia', desc: 'Probabilidade pré-teste de Trombose Venosa Profunda', icon: Stethoscope, Component: CalcWellsTVP },
-    { id: 'ranson', title: 'Critérios de Ranson', category: 'Gastroenterologia', desc: 'Mortalidade na pancreatite', icon: Activity, Component: CalcRanson },
     { id: 'caprini', title: 'Escore de Caprini', category: 'Geral', desc: 'Risco de TEV cirúrgico', icon: Activity, Component: CalcCaprini },
     { id: 'padua', title: 'Escore de Pádua', category: 'Geral', desc: 'Risco de TEV em pacientes clínicos', icon: Stethoscope, Component: CalcPadua },
     { id: 'alvarado', title: 'Escore de Alvarado', category: 'Gastroenterologia', desc: 'Estratificação de risco para Apendicite Aguda', icon: Stethoscope, Component: CalcAlvarado },
