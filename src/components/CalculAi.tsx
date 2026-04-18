@@ -1275,6 +1275,8 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
             </h3>
             {calcDescriptions[calc.id]}
           </div>
+        {/* 2º Anúncio: Abaixo do lembrete clínico */}
+        <AdSpace className="mt-8" />
         )}
       </div>
     );
