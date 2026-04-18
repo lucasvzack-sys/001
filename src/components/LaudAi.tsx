@@ -145,6 +145,8 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar currentView="laudai" onNavigate={onNavigate} />
 
+      {/* A tag <main> que havia sido apagada sem querer foi restaurada aqui */}
+      <main className="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,6 +163,8 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           </p>
         </motion.div>
 
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Input Section */}
         {/* Sugestão 1: Antes da entrada de texto */}
         <AdSpace className="mb-8" />
 
