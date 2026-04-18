@@ -1446,7 +1446,6 @@ const categories: { name: Category; icon: any }[] = [
     { name: 'Nefrologia', icon: Activity },
     { name: 'Ortopedia', icon: PlusSquare },
   ];
-  ];
 
   const calculatorsList = [
     { id: 'imc', title: 'Calculadora de IMC', category: 'Geral', desc: 'Cálculo com classificação nutricional completa', icon: Calculator, Component: CalcIMC },
