@@ -13,7 +13,7 @@ interface CalculAiProps {
   onNavigate: (view: View) => void;
 }
 
-type Category = 'Todas' | 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Ginecologia e Obstetrícia' | 'Pediatria';
+type Category = 'Todas' | 'Geral' | 'Cardiologia' | 'Gastroenterologia' | 'Emergência e UTI' | 'Neurologia' | 'Psiquiatria' | 'Ginecologia e Obstetrícia' | 'Pediatria' | 'Nefrologia' | 'Ortopedia';
 
 // ==========================================
 // COMPONENTE AUXILIAR COMPARTILHADO
@@ -1093,6 +1093,296 @@ const CalcGAD7 = () => {
   );
 };
 
+const CalcOPAS = () => {
+  const [opas, setOpas] = useState({
+    idade: '', sexo: 'M', pas: '', tabagista: false, dm: false, ct: ''
+  });
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="mb-6 p-4 bg-blue-50 text-blue-800 rounded-xl text-sm leading-relaxed border border-blue-100">
+        <span className="font-bold">Nota sobre as Tabelas da OMS/OPAS:</span> O risco cardiovascular em 10 anos é determinado utilizando as tabelas específicas da região (ex: Região das Américas) que cruzam os dados abaixo. Este formulário coleta as variáveis necessárias para integração com a matriz de risco.
+      </div>
+
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Idade (40-79 anos)</label>
+            <input type="number" value={opas.idade} onChange={(e) => setOpas({...opas, idade: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 55" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">Sexo Biológico</label>
+            <div className="flex gap-2">
+              <button onClick={() => setOpas({...opas, sexo: 'M'})} className={`flex-1 py-3 rounded-xl text-sm font-bold border transition-all ${opas.sexo === 'M' ? 'bg-blue-100 border-blue-500 text-blue-700' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Masculino</button>
+              <button onClick={() => setOpas({...opas, sexo: 'F'})} className={`flex-1 py-3 rounded-xl text-sm font-bold border transition-all ${opas.sexo === 'F' ? 'bg-pink-100 border-pink-500 text-pink-700' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Feminino</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Pressão Sistólica (mmHg)</label>
+            <input type="number" value={opas.pas} onChange={(e) => setOpas({...opas, pas: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 140" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Colesterol Total (mmol/L ou mg/dL)</label>
+            <input type="number" value={opas.ct} onChange={(e) => setOpas({...opas, ct: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 200" />
+          </div>
+        </div>
+
+        <div className="space-y-3 pt-4 border-t border-gray-100">
+          <CheckboxItem label="Fumante atual?" checked={opas.tabagista} onChange={(c) => setOpas({...opas, tabagista: c})} />
+          <CheckboxItem label="Paciente possui Diabetes Mellitus?" checked={opas.dm} onChange={(c) => setOpas({...opas, dm: c})} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcCKDEPI = () => {
+  const [data, setData] = useState({ idade: '', cr: '', sexo: 'M' });
+  
+  const result = useMemo(() => {
+    const age = parseFloat(data.idade);
+    const cr = parseFloat(data.cr);
+    
+    // Fórmula CKD-EPI 2021 (sem a variável raça)
+    if (age > 0 && cr > 0) {
+      const k = data.sexo === 'F' ? 0.7 : 0.9;
+      const alpha = data.sexo === 'F' ? -0.241 : -0.302;
+      const min = Math.min(cr / k, 1);
+      const max = Math.max(cr / k, 1);
+      
+      let egfr = 142 * Math.pow(min, alpha) * Math.pow(max, -1.200) * Math.pow(0.9938, age);
+      if (data.sexo === 'F') egfr *= 1.012;
+      
+      return egfr.toFixed(1);
+    }
+    return null;
+  }, [data]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Idade (anos)</label>
+            <input type="number" value={data.idade} onChange={(e) => setData({...data, idade: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 60" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Creatinina Sérica (mg/dL)</label>
+            <input type="number" step="0.1" value={data.cr} onChange={(e) => setData({...data, cr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 1.2" />
+          </div>
+        </div>
+        
+        <div className="pt-2">
+          <label className="block text-sm font-medium text-gray-700 mb-3">Sexo biológico</label>
+          <div className="grid grid-cols-2 gap-3">
+            <button onClick={() => setData({...data, sexo: 'M'})} className={`p-3 rounded-xl text-md border transition-all ${data.sexo === 'M' ? 'bg-blue-100 border-blue-500 text-blue-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Masculino</button>
+            <button onClick={() => setData({...data, sexo: 'F'})} className={`p-3 rounded-xl text-md border transition-all ${data.sexo === 'F' ? 'bg-pink-100 border-pink-500 text-pink-700 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>Feminino</button>
+          </div>
+        </div>
+        
+        {result && (
+          <div className="mt-8 p-6 bg-teal-50 rounded-2xl text-center">
+            <span className="text-sm text-teal-800 block uppercase font-bold tracking-wider mb-2">TFG Estimada (CKD-EPI 2021)</span>
+            <span className="text-5xl font-black text-teal-600">{result} <span className="text-xl font-normal text-teal-800">mL/min/1.73m²</span></span>
+            <p className="text-sm text-teal-900 mt-2 font-medium">Esta equação de 2021 não utiliza o fator de correção para raça negra.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const CalcFENa = () => {
+  const [data, setData] = useState({ pna: '', una: '', pcr: '', ucr: '' });
+
+  const result = useMemo(() => {
+    const pna = parseFloat(data.pna);
+    const una = parseFloat(data.una);
+    const pcr = parseFloat(data.pcr);
+    const ucr = parseFloat(data.ucr);
+
+    if (pna > 0 && una > 0 && pcr > 0 && ucr > 0) {
+      const fena = ((una * pcr) / (pna * ucr)) * 100;
+      return fena.toFixed(2);
+    }
+    return null;
+  }, [data]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Sódio Plasmático (mEq/L)</label>
+            <input type="number" value={data.pna} onChange={(e) => setData({...data, pna: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 140" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Sódio Urinário (mEq/L)</label>
+            <input type="number" value={data.una} onChange={(e) => setData({...data, una: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 20" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Creatinina Plasmática (mg/dL)</label>
+            <input type="number" step="0.1" value={data.pcr} onChange={(e) => setData({...data, pcr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 1.5" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Creatinina Urinária (mg/dL)</label>
+            <input type="number" value={data.ucr} onChange={(e) => setData({...data, ucr: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-lg" placeholder="Ex: 150" />
+          </div>
+        </div>
+
+        {result && (
+          <div className="mt-8 p-6 bg-indigo-50 rounded-2xl text-center">
+            <span className="text-sm text-indigo-800 block uppercase font-bold tracking-wider mb-2">Fração de Excreção de Sódio (FENa)</span>
+            <span className="text-6xl font-black text-indigo-600">{result}%</span>
+            <p className="text-lg mt-3 font-medium text-indigo-900">
+              {parseFloat(result) < 1 ? 'Sugestivo de Lesão Pré-Renal (Hipovolemia)' : 'Sugestivo de Lesão Renal Intrínseca (NTA)'}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const CalcMETAVIR = () => {
+  const [atividade, setAtividade] = useState('A0');
+  const [fibrose, setFibrose] = useState('F0');
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-bold text-gray-800 mb-3">Atividade Necroinflamatória (A)</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {['A0 - Nenhuma', 'A1 - Leve', 'A2 - Moderada', 'A3 - Intensa'].map(opt => {
+              const val = opt.substring(0, 2);
+              return (
+                <button key={val} onClick={() => setAtividade(val)} className={`p-3 rounded-lg text-sm transition-all border ${atividade === val ? 'bg-orange-100 border-orange-500 text-orange-800 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
+                  {opt}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-bold text-gray-800 mb-3">Estágio de Fibrose (F)</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {['F0 - Sem Fibrose', 'F1 - Fibrose Portal (sem septos)', 'F2 - Fibrose Portal (poucos septos)', 'F3 - Numerosos Septos (sem cirrose)', 'F4 - Cirrose'].map(opt => {
+              const val = opt.substring(0, 2);
+              return (
+                <button key={val} onClick={() => setFibrose(val)} className={`p-3 rounded-lg text-sm transition-all border ${fibrose === val ? 'bg-red-100 border-red-500 text-red-800 font-bold' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
+                  {opt}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="mt-8 p-6 bg-gray-800 rounded-2xl text-center">
+          <span className="text-sm text-gray-300 block uppercase font-bold tracking-wider mb-2">Classificação METAVIR</span>
+          <span className="text-6xl font-black text-white">{atividade}{fibrose}</span>
+          <p className="text-md mt-3 text-gray-400">Padrão utilizado na biópsia hepática para hepatites crônicas.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcAlvarado = () => {
+  const [alvarado, setAlvarado] = useState({ migracao: false, anorexia: false, nausea: false, defesa: false, descompressao: false, febre: false, leucocitose: false, desvio: false });
+  const score = useMemo(() => {
+    let pts = 0;
+    if (alvarado.migracao) pts += 1;
+    if (alvarado.anorexia) pts += 1;
+    if (alvarado.nausea) pts += 1;
+    if (alvarado.defesa) pts += 2;
+    if (alvarado.descompressao) pts += 1;
+    if (alvarado.febre) pts += 1;
+    if (alvarado.leucocitose) pts += 2;
+    if (alvarado.desvio) pts += 1;
+    return pts;
+  }, [alvarado]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <CheckboxItem label="Dor que migra para o Quadrante Inferior Direito (QID) (+1)" checked={alvarado.migracao} onChange={(c) => setAlvarado({...alvarado, migracao: c})} />
+        <CheckboxItem label="Anorexia (+1)" checked={alvarado.anorexia} onChange={(c) => setAlvarado({...alvarado, anorexia: c})} />
+        <CheckboxItem label="Náusea ou Vômitos (+1)" checked={alvarado.nausea} onChange={(c) => setAlvarado({...alvarado, nausea: c})} />
+        <CheckboxItem label="Defesa / Dor à palpação no QID (+2)" checked={alvarado.defesa} onChange={(c) => setAlvarado({...alvarado, defesa: c})} />
+        <CheckboxItem label="Descompressão brusca dolorosa (Sinal de Blumberg) (+1)" checked={alvarado.descompressao} onChange={(c) => setAlvarado({...alvarado, descompressao: c})} />
+        <CheckboxItem label="Temperatura ≥ 37.3°C (+1)" checked={alvarado.febre} onChange={(c) => setAlvarado({...alvarado, febre: c})} />
+        <CheckboxItem label="Leucocitose ≥ 10.000 células/μL (+2)" checked={alvarado.leucocitose} onChange={(c) => setAlvarado({...alvarado, leucocitose: c})} />
+        <CheckboxItem label="Desvio à esquerda (>75% neutrófilos) (+1)" checked={alvarado.desvio} onChange={(c) => setAlvarado({...alvarado, desvio: c})} />
+        
+        <div className="mt-8 p-6 bg-red-50 rounded-2xl text-center">
+          <span className="text-sm text-red-800 block uppercase font-bold tracking-wider mb-2">Escore de Alvarado</span>
+          <span className="text-6xl font-black text-red-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-red-900">
+            {score <= 3 ? 'Baixa Probabilidade de Apendicite' : score <= 6 ? 'Probabilidade Moderada (Considerar Exames de Imagem)' : 'Alta Probabilidade (Avaliação Cirúrgica)'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CalcABCD2 = () => {
+  const [abcd, setAbcd] = useState({ idade: false, pa: false, dm: false, clinica: '0', duracao: '0' });
+  const score = useMemo(() => {
+    let pts = 0;
+    if (abcd.idade) pts += 1;
+    if (abcd.pa) pts += 1;
+    if (abcd.dm) pts += 1;
+    pts += parseInt(abcd.clinica);
+    pts += parseInt(abcd.duracao);
+    return pts;
+  }, [abcd]);
+
+  return (
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="space-y-4">
+        <CheckboxItem label="Idade ≥ 60 anos (+1)" checked={abcd.idade} onChange={(c) => setAbcd({...abcd, idade: c})} />
+        <CheckboxItem label="Pressão Arterial sistólica ≥ 140 ou diastólica ≥ 90 mmHg (+1)" checked={abcd.pa} onChange={(c) => setAbcd({...abcd, pa: c})} />
+        
+        <div className="pt-2">
+          <label className="block text-sm font-bold text-gray-800 mb-2">Apresentação Clínica</label>
+          <select value={abcd.clinica} onChange={(e) => setAbcd({...abcd, clinica: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-md">
+            <option value="0">Outros sintomas (0 pts)</option>
+            <option value="1">Alteração da fala sem fraqueza unilateral (+1 pt)</option>
+            <option value="2">Fraqueza unilateral (+2 pts)</option>
+          </select>
+        </div>
+
+        <div className="pt-2">
+          <label className="block text-sm font-bold text-gray-800 mb-2">Duração dos Sintomas</label>
+          <select value={abcd.duracao} onChange={(e) => setAbcd({...abcd, duracao: e.target.value})} className="block w-full rounded-xl border-gray-300 bg-gray-50 p-4 text-md">
+            <option value="0">Menos de 10 minutos (0 pts)</option>
+            <option value="1">Entre 10 e 59 minutos (+1 pt)</option>
+            <option value="2">60 minutos ou mais (+2 pts)</option>
+          </select>
+        </div>
+
+        <div className="pt-2">
+          <CheckboxItem label="Histórico de Diabetes Mellitus (+1)" checked={abcd.dm} onChange={(c) => setAbcd({...abcd, dm: c})} />
+        </div>
+
+        <div className="mt-8 p-6 bg-purple-50 rounded-2xl text-center">
+          <span className="text-sm text-purple-800 block uppercase font-bold tracking-wider mb-2">Escore ABCD²</span>
+          <span className="text-6xl font-black text-purple-600">{score}</span>
+          <p className="text-lg mt-3 font-medium text-purple-900">
+            Risco de AVC em 2 dias: {score <= 3 ? 'Baixo Risco (~1%)' : score <= 5 ? 'Risco Moderado (~4.1%)' : 'Alto Risco (~8.1%)'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function CalculAi({ onNavigate }: CalculAiProps) {
   const { calcId } = useParams(); // Lê o ID da URL
   const navigate = useNavigate(); // Permite mudar a URL
@@ -1128,7 +1418,13 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
       gad7: "Questionário GAD-7 Online - Rastreio de Ansiedade",
       prevent: "Calculadora AHA PREVENT - Risco Cardiovascular",
       hasbled: "Escore HAS-BLED - Risco de Sangramento",
-      qsofa: "Escore qSOFA - Triagem Rápida de Sepse"
+      qsofa: "Escore qSOFA - Triagem Rápida de Sepse",
+      opas: "Risco Cardiovascular OPAS/OMS Online",
+      ckdepi: "Calculadora de TFG CKD-EPI 2021",
+      fena: "Calculadora de Fração de Excreção de Sódio (FENa)",
+      metavir: "Classificação METAVIR - Fibrose Hepática",
+      alvarado: "Escore de Alvarado - Diagnóstico de Apendicite",
+      abcd2: "Escore ABCD² - Risco de AVC após AIT"
     };
 
     if (selectedCalc && calcTitles[selectedCalc]) {
@@ -1137,7 +1433,7 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
   }, [selectedCalc]);
   // ==========================================
 
-  const categories: { name: Category; icon: any }[] = [
+const categories: { name: Category; icon: any }[] = [
     { name: 'Todas', icon: Calculator },
     { name: 'Geral', icon: Stethoscope },
     { name: 'Cardiologia', icon: Heart },
@@ -1145,8 +1441,11 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     { name: 'Emergência e UTI', icon: Activity },
     { name: 'Neurologia', icon: Brain },
     { name: 'Psiquiatria', icon: Smile },
-    { name: 'Ginecologia e Obstetrícia', icon: Baby }, // Nome atualizado aqui
+    { name: 'Ginecologia e Obstetrícia', icon: Baby },
     { name: 'Pediatria', icon: Baby },
+    { name: 'Nefrologia', icon: Activity },
+    { name: 'Ortopedia', icon: PlusSquare },
+  ];
   ];
 
   const calculatorsList = [
@@ -1173,6 +1472,12 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     { id: 'prevent', title: 'AHA PREVENT (Risco CV)', category: 'Cardiologia', desc: 'Estimativa de risco cardiovascular (Atualização ASCVD)', icon: Heart, Component: CalcPREVENT },
     { id: 'hasbled', title: 'Escore HAS-BLED', category: 'Cardiologia', desc: 'Risco de sangramento em pacientes com FA', icon: Heart, Component: CalcHASBLED },
     { id: 'qsofa', title: 'Critério qSOFA', category: 'Emergência e UTI', desc: 'Triagem clínica rápida e suspeita de Sepse', icon: Activity, Component: CalcQSOFA },
+    { id: 'opas', title: 'Risco Cardiovascular OPAS', category: 'Cardiologia', desc: 'Estimativa de risco CV (Tabelas OMS/OPAS)', icon: Heart, Component: CalcOPAS },
+    { id: 'ckdepi', title: 'TFG (CKD-EPI 2021)', category: 'Nefrologia', desc: 'Taxa de Filtração Glomerular sem correção de raça', icon: Activity, Component: CalcCKDEPI },
+    { id: 'fena', title: 'Fração de Excreção de Sódio', category: 'Nefrologia', desc: 'Diferenciação de Lesão Renal Aguda Pré-Renal vs Intrínseca', icon: Activity, Component: CalcFENa },
+    { id: 'metavir', title: 'Escore METAVIR', category: 'Gastroenterologia', desc: 'Classificação de biópsia hepática (Atividade e Fibrose)', icon: FileText, Component: CalcMETAVIR },
+    { id: 'alvarado', title: 'Escore de Alvarado', category: 'Emergência e UTI', desc: 'Estratificação de risco para Apendicite Aguda', icon: Stethoscope, Component: CalcAlvarado },
+    { id: 'abcd2', title: 'Escore ABCD²', category: 'Neurologia', desc: 'Risco de AVC isquêmico após Ataque Isquêmico Transitório (AIT)', icon: Brain, Component: CalcABCD2 },
   ];
   const filteredCalculators = searchTerm.trim() !== ''
     ? calculatorsList.filter(calc => 
@@ -1254,6 +1559,24 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     ),
     qsofa: (
       <p>O <strong>quick SOFA (qSOFA)</strong> é um sistema de alerta rápido (Early Warning Score) à beira-leito. Não diagnostica sépsis isoladamente; atua antes como sinalizador: doentes infetados com qSOFA ≥ 2 estão sob risco iminente de colapso, exigindo colheita urgente de lactatos, hemoculturas e reavaliação imediata.</p>
+    ),
+    opas: (
+      <p>As tabelas de Risco Cardiovascular da OPAS/OMS avaliam o risco de eventos cardiovasculares maiores em 10 anos, permitindo direcionar a terapêutica de forma alinhada com as orientações do protocolo HEARTS.</p>
+    ),
+    ckdepi: (
+      <p>A fórmula CKD-EPI de 2021, que removeu o coeficiente de correção para raça negra, é a recomendação atual do KDIGO para estimativa da Taxa de Filtração Glomerular, providenciando maior acuidade que a antiga Cockcroft-Gault.</p>
+    ),
+    fena: (
+      <p>A Fração de Excreção de Sódio (FENa) é crítica na Lesão Renal Aguda (LRA) oligúrica. FENa &lt; 1% traduz avidez renal por sódio (contexto pré-renal/hipovolemia), enquanto valores &gt; 1-2% sugerem necrose tubular aguda (NTA). Atenção ao uso concomitante de diuréticos, que enviesa o cálculo.</p>
+    ),
+    metavir: (
+      <p>O score METAVIR é o sistema descritivo padronizado utilizado em anatomia patológica para codificar o grau de atividade necroinflamatória (A0-A3) e o estadio de fibrose (F0-F4) das hepatites virais e outras hepatopatias crónicas na biópsia.</p>
+    ),
+    alvarado: (
+      <p>O Escore de Alvarado guia a decisão clínica na suspeita de apendicite aguda. Embora útil para "rule-out" em scores baixos (≤3), avaliações moderadas a altas exigem quase sempre correlação com ecografia abdominal ou Tomografia Computadorizada no adulto.</p>
+    ),
+    abcd2: (
+      <p>O score ABCD² estratifica o risco de um doente com Ataque Isquémico Transitório (AIT) vir a sofrer um Acidente Vascular Cerebral (AVC) definitivo nas 48 horas seguintes, orientando a decisão de admissão hospitalar versus investigação em ambulatório.</p>
     )
   };
   
