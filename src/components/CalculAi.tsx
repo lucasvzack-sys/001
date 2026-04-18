@@ -840,7 +840,7 @@ const CalcFRAX = () => {
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
        <div className="mb-6 p-4 bg-orange-50 text-orange-800 rounded-xl text-sm leading-relaxed border border-orange-100">
-        <span className="font-bold">Aviso sobre o FRAX®:</span> O algoritmo do FRAX é proprietário (Universidade de Sheffield). Esta interface de coleta de dados deve ser preenchida diretamente no site oficial ou integrada via API licenciada para obter a probabilidade exata de fratura em 10 anos.
+        <span className="font-bold">Aviso sobre o FRAX®:</span> O algoritmo do FRAX é proprietário (Universidade de Sheffield). Esta interface de coleta de dados deve ser preenchida diretamente no site oficial para obter a probabilidade exata de fratura em 10 anos.
       </div>
       <p className="text-gray-600 mb-6">Fatores avaliados: Idade, Sexo, Peso, Altura, Fratura Prévia, Pais com Fratura de Quadril, Tabagismo Atual, Uso de Glicocorticoides, Artrite Reumatoide, Osteoporose Secundária, Consumo de Álcool (≥3 unidades/dia) e DMO do Colo Femoral.</p>
       <a href="https://frax.shef.ac.uk/FRAX/tool.aspx?lang=po" target="_blank" rel="noopener noreferrer" className="inline-block bg-orange-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-orange-700 transition-colors">
