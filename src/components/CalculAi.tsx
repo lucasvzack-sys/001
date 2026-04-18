@@ -827,15 +827,32 @@ const CalcBallard = () => {
   return (
     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
       
-      {/* NOVA LEGENDA DE PONTUAÇÃO */}
-      <div className="mb-8 p-5 bg-purple-50 rounded-2xl border border-purple-100 text-sm text-purple-900 leading-relaxed">
-        <p className="font-bold mb-2 uppercase tracking-wide text-purple-700">O que significa a pontuação?</p>
-        <ul className="list-disc ml-5 space-y-1">
-          <li><strong>-1 e 0:</strong> Extrema imaturidade (Ex: hipotonia grave, pele gelatinosa/fina, sem lanugo ou cartilagem).</li>
-          <li><strong>1 e 2:</strong> Prematuridade intermediária (Ex: início de tônus fletor, pele fina, lanugo abundante).</li>
-          <li><strong>3 e 4:</strong> Maturidade de termo (Ex: hipertonia em flexão ativa, pele mais espessa/descamativa, cartilagem firme da orelha).</li>
-          <li><strong>5:</strong> Pós-termo (Ex: pele apergaminhada com fissuras profundas, ausência de lanugo, unhas longas).</li>
-        </ul>
+      {/* IMAGENS DE REFERÊNCIA ADICIONADAS NO LUGAR DO TEXTO */}
+      <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-purple-50 rounded-2xl border border-purple-100">
+        <div className="flex flex-col items-center justify-center bg-white p-2 rounded-xl shadow-inner border border-purple-100">
+          <img 
+            src="/ballard1.png" 
+            alt="Referência Visual Ballard 1 (Maturidade Neuromuscular)" 
+            className="max-h-80 w-auto object-contain rounded-lg"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+              (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<p class="text-xs text-red-500 mt-2 font-medium">⚠️ Imagem "ballard1.png" não encontrada na pasta "public".</p>');
+            }}
+          />
+          <span className="text-xs text-purple-700/70 mt-2 font-medium uppercase tracking-wider">Maturidade Neuromuscular</span>
+        </div>
+        <div className="flex flex-col items-center justify-center bg-white p-2 rounded-xl shadow-inner border border-purple-100">
+          <img 
+            src="/ballard2.png" 
+            alt="Referência Visual Ballard 2 (Maturidade Física)" 
+            className="max-h-80 w-auto object-contain rounded-lg"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+              (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<p class="text-xs text-red-500 mt-2 font-medium">⚠️ Imagem "ballard2.png" não encontrada na pasta "public".</p>');
+            }}
+          />
+          <span className="text-xs text-purple-700/70 mt-2 font-medium uppercase tracking-wider">Maturidade Física</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
