@@ -1257,12 +1257,15 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
     )
   };
   
-  const renderCalculatorContent = () => {
+ const renderCalculatorContent = () => {
     const calc = calculatorsList.find(c => c.id === selectedCalc);
     if (!calc) return null;
     
     return (
       <div className="space-y-6 animate-fade-in">
+        {/* 1º Anúncio: Acima da calculadora (com proteção mobile) */}
+        <AdSpace className="mb-4 max-h-[100px] md:max-h-none overflow-hidden" />
+
         {/* Renderiza a calculadora em si */}
         <calc.Component />
         
@@ -1275,9 +1278,10 @@ export default function CalculAi({ onNavigate }: CalculAiProps) {
             </h3>
             {calcDescriptions[calc.id]}
           </div>
+        )}
+
         {/* 2º Anúncio: Abaixo do lembrete clínico */}
         <AdSpace className="mt-8" />
-        )}
       </div>
     );
   };
