@@ -44,15 +44,13 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
   // Verifica se o município selecionado contém "RENAME" (Lista Nacional)
   const isListaNacional = municipio.includes('RENAME');
 
-   return (
+return (
     <div className="min-h-screen bg-white flex flex-col">
       <Navbar currentView="temnoposto" onNavigate={onNavigate} />
 
-      {/* ADICIONE A TAG MAIN AQUI */}
       <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
-
-        {/* Anúncio 1: Topo da página (com limite de altura no celular para evitar punição SEO) */}
-        <AdSpace className="mb-8 max-w-2xl mx-auto max-h-[100px] md:max-h-none overflow-hidden" />
+        
+        {/* O primeiro anúncio que ficava aqui foi removido */}
         
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
@@ -71,7 +69,7 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
           </p>
         </motion.div>
 
-        {/* Anúncio 2: Antes da barra de busca (também protegido para mobile) */}
+        {/* Anúncio: Antes da barra de busca */}
         <AdSpace className="mb-8 max-h-[100px] md:max-h-none overflow-hidden" />
 
         <form onSubmit={handleSearch} className="space-y-6 mb-8">
