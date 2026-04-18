@@ -163,10 +163,8 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Input Section */}
-        {/* Sugestão 1: Antes da entrada de texto */}
-        <AdSpace className="mb-8" />
+{/* Sugestão 1: Antes da entrada de texto (com limite de altura no mobile) */}
+        <AdSpace className="mb-8 max-h-[100px] md:max-h-none overflow-hidden" />
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Input Section */}
