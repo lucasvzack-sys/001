@@ -57,6 +57,7 @@ export default function Portal({ onNavigate }: PortalProps) {
                 />
                 <h2 className="text-2xl font-bold text-gray-800">TemNoPosto?</h2>
               </div>
+              
               <p className="text-gray-600">
                 Consulte a disponibilidade de medicamentos gratuitos na rede pública do seu município de forma rápida e fácil.
               </p>
@@ -117,6 +118,17 @@ export default function Portal({ onNavigate }: PortalProps) {
               <p className="text-sm italic">Novas ferramentas em desenvolvimento...</p>
             </div>
           </div>
+
+          <div className="mt-16 text-left bg-white/80 p-8 rounded-3xl shadow-sm border border-gray-100">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Praticidade Clínica Baseada em Evidências</h2>
+            <p className="text-gray-600 mb-4 leading-relaxed">
+              O desenvolvimento do <strong>SUSsego.com.br</strong> surgiu da necessidade de otimizar o tempo durante o atendimento médico. Na correria do dia a dia das enfermarias e emergências, ter acesso rápido a ferramentas validadas cientificamente reduz a margem de erro e melhora a segurança do paciente.
+            </p>
+            <p className="text-gray-600 leading-relaxed">
+              Nossa plataforma é constantemente atualizada com as diretrizes médicas mais recentes, oferecendo calculadoras clínicas precisas, integração com inteligência artificial para sumarização de laudos extensos e a facilidade de verificar o estoque de medicamentos nas farmácias públicas, promovendo uma melhor adesão terapêutica.
+            </p>
+          </div>
+          {/* ========================================== */}
 
           <AdSpace className="mt-12 max-w-2xl mx-auto" />
         </motion.div>
