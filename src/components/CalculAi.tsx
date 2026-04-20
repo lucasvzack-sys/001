@@ -2213,6 +2213,12 @@ const categories: { name: Category; icon: any }[] = [
               </div>
             </header>
 
+            <div className="mb-8 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-gray-600 leading-relaxed text-sm md:text-base">
+              <p>
+                As calculadoras médicas e os escores clínicos são instrumentos indispensáveis na prática médica moderna. Eles permitem estratificar riscos, definir condutas terapêuticas e estabelecer prognósticos de forma objetiva. Abaixo, você encontra nosso acervo categorizado, abrangendo desde a predição de mortalidade na Unidade de Terapia Intensiva até escores ambulatoriais de risco cardiovascular. Selecione a calculadora desejada ou utilize o campo de busca.
+              </p>
+            </div>
+
             {/* Banner AdSense antes da busca */}
             <AdSpace className="mb-8" />
 
