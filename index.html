@@ -1,42 +1,44 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-64X3HGKRNL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-64X3HGKRNL');
     </script>
     
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SUSsego.com.br - Sua central de ferramentas médicas</title>
+    
+    <meta name="description" content="SUSsego.com.br é a sua central de ferramentas médicas gratuitas. Acesse calculadoras clínicas (IMC, MELD, Glasgow, CURB-65), resumo de laudos com inteligência artificial e verifique a disponibilidade de medicamentos no SUS." />
+    <meta name="keywords" content="calculadoras médicas, medicina, internato, plantão médico, escores clínicos, disponibilidade de medicamentos SUS, inteligência artificial médica" />
+    <meta name="author" content="SUSsego" />
+    
+    <title>SUSsego.com.br - Sua central de ferramentas médicas e calculadoras clínicas</title>
     <link rel="icon" type="image/png" href="/susegado.png" />
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5745806143307154" crossorigin="anonymous"></script>
   </head>
   <body>
-    
     <div id="aviso-sistema-antigo" style="display: none; background-color: #f9b233; color: #000000; padding: 12px 20px; text-align: center; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; border-bottom: 2px solid #d99a29;">
       ⚠️ Você está usando um sistema ou navegador desatualizado. Algumas funcionalidades e cores do site não vão carregar corretamente. Por favor, atualize para uma versão mais recente.
     </div>
-
     <script>
       var ua = window.navigator.userAgent;
-      var isOldSystem = ua.indexOf('Windows NT 6.1') !== -1 || // Windows 7
-                        ua.indexOf('Windows NT 6.2') !== -1 || // Windows 8
-                        ua.indexOf('Windows NT 6.3') !== -1 || // Windows 8.1
-                        ua.indexOf('MSIE ') !== -1 ||          // Internet Explorer antigo
-                        ua.indexOf('Trident/') !== -1;         // Internet Explorer 11
-      
-      if (isOldSystem) {
-        document.getElementById('aviso-sistema-antigo').style.display = 'block';
-      }
+      var isOldSystem = ua.indexOf('Windows NT 6.1') !== -1 || ua.indexOf('Windows NT 6.2') !== -1 || ua.indexOf('Windows NT 6.3') !== -1 || ua.indexOf('MSIE ') !== -1 || ua.indexOf('Trident/') !== -1;
+      if (isOldSystem) { document.getElementById('aviso-sistema-antigo').style.display = 'block'; }
     </script>
 
-    <div id="root"></div>
+    <div id="root">
+      <div style="display: none;">
+        <h1>Central de Ferramentas Médicas - SUSsego</h1>
+        <p>Bem-vindo ao SUSsego, a plataforma desenvolvida para facilitar a prática médica baseada em evidências. Nossas ferramentas auxiliam médicos e estudantes de medicina em cálculos clínicos, prognósticos e triagem.</p>
+        <h2>Calculadoras Médicas e Escores Clínicos</h2>
+        <p>Acesse rapidamente o cálculo da Taxa de Filtração Glomerular (CKD-EPI, Cockcroft-Gault), escores de risco cardiovascular (PREVENT, HAS-BLED, CHA2DS2-VASc), avaliação neurológica (Escala de Glasgow, NIHSS, ASPECTS) e rotinas de obstetrícia e pediatria (Idade Gestacional, Caprini, Ballard).</p>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
