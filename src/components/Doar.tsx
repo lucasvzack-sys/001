@@ -5,7 +5,7 @@ import { View } from '../types';
 import Navbar from './Navbar';
 
 interface DoarProps {
-  onNavigate: (view: View) => void;
+  onNavigate: (view: View | string) => void;
 }
 
 export default function Doar({ onNavigate }: DoarProps) {
@@ -23,40 +23,38 @@ export default function Doar({ onNavigate }: DoarProps) {
             <h1 className="text-3xl font-bold text-gray-800">Apoie o SUSsego.com.br</h1>
           </div>
 
-            {/* Por que doar? */}
-            <section className="flex flex-col items-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2 text-center w-full sm:w-auto">Por que a sua doação é importante?</h2>
-              <p className="leading-relaxed text-lg text-justify w-full">
-                Todas as ferramentas oferecidas aqui são mantidas de forma <strong>100% gratuita</strong>. Porém, manter esse site funcionando envolve custos constantes com servidores de hospedagem, domínios e integração de dados.
-              </p>
-              <p className="leading-relaxed text-lg text-justify w-full mt-3">
-                Sua contribuição, de qualquer valor, ajuda a manter o site no ar e me permite dedicar mais tempo ao desenvolvimento de novas funcionalidades para ajudar pacientes e profissionais de saúde.
-              </p>
-            </section>
+          {/* Por que doar? */}
+          <section className="flex flex-col items-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2 text-center w-full sm:w-auto">Por que a sua doação é importante?</h2>
+            <p className="leading-relaxed text-lg text-justify w-full">
+              Todas as ferramentas oferecidas aqui são mantidas de forma <strong>100% gratuita</strong>. Porém, manter esse site funcionando envolve custos constantes com servidores de hospedagem, domínios e integração de dados.
+            </p>
+            <p className="leading-relaxed text-lg text-justify w-full mt-3">
+              Sua contribuição, de qualquer valor, ajuda a manter o site no ar e me permite dedicar mais tempo ao desenvolvimento de novas funcionalidades para ajudar pacientes e profissionais de saúde.
+            </p>
+          </section>
 
-            {/* Botões de Ação */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12 pt-8">
-              <a
-                href="https://link.mercadopago.com.br/sussegado"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center px-8 py-4 bg-pink-600 text-white rounded-xl font-bold hover:bg-pink-700 transition-colors shadow-lg transform hover:-translate-y-1"
-              >
-                <Heart className="mr-2 fill-current" size={20} />
-                Doar pelo Mercado Pago
-                <ExternalLink className="ml-2" size={18} />
-              </a>
-              
-              <a
-                href="mailto:lucasvzack@gmail.com"
-                className="flex items-center justify-center px-8 py-4 bg-gray-100 text-gray-800 rounded-xl font-bold hover:bg-gray-200 transition-colors shadow-sm"
-              >
-                <Mail className="mr-2" size={20} />
-                Falar com o Desenvolvedor
-              </a>
-            </div>
+          {/* Botões de Ação */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12 pt-8">
+            <a
+              href="https://link.mercadopago.com.br/sussegado"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center px-8 py-4 bg-pink-600 text-white rounded-xl font-bold hover:bg-pink-700 transition-colors shadow-lg transform hover:-translate-y-1"
+            >
+              <Heart className="mr-2 fill-current" size={20} />
+              Doar pelo Mercado Pago
+              <ExternalLink className="ml-2" size={18} />
+            </a>
+            
+            <a
+              href="mailto:lucasvzack@gmail.com"
+              className="flex items-center justify-center px-8 py-4 bg-gray-100 text-gray-800 rounded-xl font-bold hover:bg-gray-200 transition-colors shadow-sm"
+            >
+              <Mail className="mr-2" size={20} />
+              Falar com o Desenvolvedor
+            </a>
           </div>
-          
         </div>
       </main>
     </div>
