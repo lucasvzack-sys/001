@@ -39,6 +39,12 @@ export default function Footer({ onNavigate }: { onNavigate: (view: string) => v
             >
               Contato
             </button>
+            <button 
+              onClick={() => onNavigate('sobre')} 
+              className="text-gray-500 hover:text-medical-blue transition-colors"
+            >
+              Sobre o Projeto
+            </button>
             <span className="flex items-center text-sm font-bold text-gray-400">
               Feito com <Heart size={14} className="mx-1 text-red-500" /> no Brasil
             </span>
