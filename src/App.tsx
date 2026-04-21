@@ -11,6 +11,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Contact from './components/Contact';
 import CookieBanner from './components/CookieBanner';
 import { View } from './types';
+import About from './components/About';
 
 export default function App() {
   const location = useLocation();
@@ -33,6 +34,8 @@ export default function App() {
       document.title = "Política de Privacidade - SUSsego.com.br";
     } else if (path === '/contato') {
       document.title = "Contato - SUSsego.com.br";
+    } else if (path === '/sobre') {
+      document.title = "Sobre o Projeto - SUSsego.com.br";
     }
   }, [location.pathname]);
 
@@ -92,6 +95,12 @@ export default function App() {
             <Route path="/contato" element={
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 <Contact onNavigate={handleNavigate} />
+              </motion.div>
+            } />
+
+            <Route path="/sobre" element={
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                <About onNavigate={handleNavigate} />
               </motion.div>
             } />
 
