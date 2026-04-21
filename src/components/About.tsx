@@ -21,9 +21,9 @@ export default function About({ onNavigate }: AboutProps) {
         >
           <div className="text-center mb-12">
             <img src="/susegado.png" alt="SUSsego Logo" className="h-24 mx-auto mb-6" />
-            <h1 className="text-4xl font-extrabold text-gray-800 mb-4">Sobre o SUSsego</h1>
+            <h1 className="text-4xl font-extrabold text-gray-800 mb-4">Sobre o SUSsego.com.br</h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Tecnologia e Medicina unidas para transformar a saúde pública no Brasil.
+              Tecnologia e medicina unidas para transformar a saúde pública no Brasil.
             </p>
           </div>
 
@@ -50,10 +50,7 @@ export default function About({ onNavigate }: AboutProps) {
                 <BookOpen className="mr-2 text-orange-500" /> O Criador
               </h2>
               <p>
-                O projeto é idealizado e desenvolvido por <strong>Lucas</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Com início da trajetória acadêmica em 2022, Lucas une a experiência clínica em formação com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS).
-              </p>
-              <p className="mt-4">
-                Além do portal SUSsego, Lucas é autor do <em>Manual de Semiologia Básica (2025)</em> e atuou ativamente em lideranças acadêmicas e ligas de Medicina Interna, trazendo uma visão sistêmica sobre a educação e a prática médica.
+                O projeto é idealizado e desenvolvido por <strong>Lucas V. Zacaria</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Com início da trajetória acadêmica em 2022, Lucas une a experiência clínica em formação com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS).
               </p>
             </div>
 
