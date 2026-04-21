@@ -31,23 +31,23 @@ export default function Footer({ onNavigate }: { onNavigate: (view: string) => v
               onClick={() => navigate('/privacidade')} 
               className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
             >
-              Política de Privacidade
-            </button>
-            <button 
-              onClick={() => navigate('/contato')} 
-              className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
-            >
-              Contato
-            </button>
-            <button 
-              onClick={() => onNavigate('sobre')} 
-              className="text-gray-500 hover:text-medical-blue transition-colors"
-            >
-              Sobre o Projeto
-            </button>
-            <span className="flex items-center text-sm font-bold text-gray-400">
-              Feito com <Heart size={14} className="mx-1 text-red-500" /> no Brasil
-            </span>
+            Política de Privacidade
+          </button>
+          <button 
+            onClick={() => navigate('/contato')} 
+            className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
+          >
+            Contato
+          </button>
+          <button 
+            onClick={() => onNavigate('sobre')} 
+            className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
+          >
+            Sobre o Projeto
+          </button>
+          <span className="flex items-center text-sm font-bold text-gray-400">
+            Feito com <Heart size={14} className="mx-1 text-red-500" /> no Brasil
+          </span>
           </div>
         </div>
       </div>
