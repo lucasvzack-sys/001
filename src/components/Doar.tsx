@@ -23,15 +23,6 @@ export default function Doar({ onNavigate }: DoarProps) {
             <h1 className="text-3xl font-bold text-gray-800">Apoie o SUSsego.com.br</h1>
           </div>
 
-          <div className="space-y-8 text-gray-700">
-            {/* Sobre */}
-            <section className="flex flex-col items-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2 text-center w-full sm:w-auto">Sobre</h2>
-              <p className="leading-relaxed text-lg text-justify w-full">
-                Olá! Meu nome é Lucas V. Zacaria, sou estudante de medicina da Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA) e o criador deste projeto. O <strong>SUSsego.com.br</strong> nasceu com o objetivo de transformar burocracia em facilidade. Por meio das ferramentas TemNoPosto?, LaudAí e CalculAí, meu objetivo é democratizar o acesso à informação e simplificar a compreensão de exames e a busca por medicamentos, conectando as demandas do dia a dia às soluções digitais.
-              </p>
-            </section>
-
             {/* Por que doar? */}
             <section className="flex flex-col items-center">
               <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2 text-center w-full sm:w-auto">Por que a sua doação é importante?</h2>
