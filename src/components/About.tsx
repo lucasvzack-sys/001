@@ -42,7 +42,7 @@ export default function About({ onNavigate }: AboutProps) {
               <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 text-justify">
                 <GraduationCap className="text-medical-blue mb-3" size={32} />
                 <h3 className="font-bold text-gray-800 mb-2 text-left">Rigor Acadêmico</h3>
-                <p className="text-sm">Desenvolvido por quem vive o dia a dia do internato médico, garantindo que as ferramentas atendam às demandas reais das enfermarias e emergências.</p>
+                <p className="text-sm">Desenvolvido por quem vive o dia a dia médico, garantindo que as ferramentas atendam às demandas reais das enfermarias e emergências.</p>
               </div>
             </div>
 
