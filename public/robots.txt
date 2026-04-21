@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Apontamento para o Sitemap
+Sitemap: https://www.sussego.com.br/sitemap.xml
