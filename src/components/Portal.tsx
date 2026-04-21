@@ -120,12 +120,21 @@ export default function Portal({ onNavigate }: PortalProps) {
           </div>
 
           <div className="mt-16 text-left bg-white/80 p-8 rounded-3xl shadow-sm border border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Praticidade Clínica Baseada em Evidências</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Decisões clínicas inteligentes, no ritmo da sua rotina!</h2>
             <p className="text-gray-600 mb-4 leading-relaxed">
-              O desenvolvimento do <strong>SUSsego.com.br</strong> surgiu da necessidade de otimizar o tempo durante o atendimento médico. Na correria do dia a dia das enfermarias e emergências, ter acesso rápido a ferramentas validadas cientificamente reduz a margem de erro e melhora a segurança do paciente.
+              No cenário dinâmico da prática médica, cada segundo conta — e cada decisão carrega impacto direto na segurança e no desfecho do paciente. Foi justamente diante dessa realidade que nasceu o <strong>SUSsego.com.br</strong>: uma plataforma pensada para simplificar, agilizar e qualificar o atendimento em ambientes de alta demanda, como enfermarias e serviços de emergência.
             </p>
-            <p className="text-gray-600 leading-relaxed">
-              Nossa plataforma é constantemente atualizada com as diretrizes médicas mais recentes, oferecendo calculadoras clínicas precisas, integração com inteligência artificial para sumarização de laudos extensos e a facilidade de verificar o estoque de medicamentos nas farmácias públicas, promovendo uma melhor adesão terapêutica.
+            <p className="text-gray-600 mb-4 leading-relaxed">
+              Aqui, reunimos em um único lugar ferramentas baseadas em evidências, desenvolvidas para apoiar o raciocínio médico com confiança e eficiência. Nossas calculadoras clínicas são fundamentadas nas diretrizes mais atualizadas, permitindo decisões mais seguras, padronizadas e alinhadas às melhores práticas da medicina contemporânea.
+             </p>
+            <p className="text-gray-600 mb-4 leading-relaxed">
+              Além disso, a integração com inteligência artificial no <strong>LaudAí</strong>oferece suporte na interpretação e sumarização de laudos extensos, transformando informações complexas em insights claros e acionáveis — economizando tempo precioso e reduzindo a sobrecarga cognitiva do profissional.
+            </p>
+            <p className="text-gray-600 mb-4 leading-relaxed">
+              Outro diferencial é a funcionalidade de consulta ao estoque de medicamentos nas farmácias públicas por meio do <strong>TemNoPosto?</strong>. Afinal, uma boa conduta clínica também depende da viabilidade do tratamento no mundo real.
+            </p>
+             <p className="text-gray-600 mb-4 leading-relaxed">
+              O SUSsego.com.br não é apenas uma ferramenta — é um aliado na sua rotina. Uma solução pensada para trazer mais fluidez ao atendimento, mais segurança às decisões e mais tranquilidade para quem cuida.
             </p>
           </div>
           {/* ========================================== */}
