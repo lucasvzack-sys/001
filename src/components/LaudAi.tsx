@@ -163,6 +163,12 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           </p>
         </motion.div>
 
+        <div className="mb-8 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-gray-600 leading-relaxed text-sm md:text-base text-center">
+          <p>
+          A documentação médica precisa e estruturada é o pilar fundamental para a continuidade do cuidado e a segurança do paciente. O <strong>LaudAí</strong> oferece um ecossistema para a elaboração de evoluções. Nossa ferramenta padroniza o registro clínico, otimizando o tempo do profissional e elevando o rigor técnico das descrições, desde exames de imagem básicos até relatos cirúrgicos complexos.
+          </p>
+        </div>
+        
 {/* Sugestão 1: Antes da entrada de texto (com limite de altura no mobile) */}
         <AdSpace className="mb-8 max-h-[100px] md:max-h-none overflow-hidden" />
 
