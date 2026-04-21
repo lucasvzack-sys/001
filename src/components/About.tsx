@@ -20,16 +20,17 @@ export default function About({ onNavigate }: AboutProps) {
           className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 md:p-12"
         >
           <div className="text-center mb-12">
-            <img src="/susegado.png" alt="SUSsego Logo" className="h-24 mx-auto mb-6" />
-            <h1 className="text-4xl font-extrabold text-gray-800 mb-4">Sobre o SUSsego.com.br</h1>
+            {/* Logo aumentado de h-24 para h-32 */}
+            <img src="/susegado.png" alt="SUSsego Logo" className="h-32 mx-auto mb-6" />
+            <h1 className="text-4xl font-extrabold text-gray-800 mb-4">Sobre o SUSsego</h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Tecnologia e medicina unidas para transformar a saúde pública no Brasil.
+              Tecnologia e Medicina unidas para transformar a saúde pública no Brasil.
             </p>
           </div>
 
           <section className="space-y-8 text-gray-700 leading-relaxed">
-            <div>
-              <h2 className="text-2xl font-bold text-medical-blue mb-4 flex items-center">
+            <div className="text-justify">
+              <h2 className="text-2xl font-bold text-medical-blue mb-4 flex items-center text-left">
                 <ShieldCheck className="mr-2" /> Nossa Missão
               </h2>
               <p>
@@ -38,24 +39,27 @@ export default function About({ onNavigate }: AboutProps) {
             </div>
 
             <div className="py-4">
-              <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+              <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 text-justify">
                 <GraduationCap className="text-medical-blue mb-3" size={32} />
-                <h3 className="font-bold text-gray-800 mb-2">Rigor Acadêmico</h3>
+                <h3 className="font-bold text-gray-800 mb-2 text-left">Rigor Acadêmico</h3>
                 <p className="text-sm">Desenvolvido por quem vive o dia a dia do internato médico, garantindo que as ferramentas atendam às demandas reais das enfermarias e emergências.</p>
               </div>
             </div>
 
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <div className="text-justify">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center text-left">
                 <BookOpen className="mr-2 text-orange-500" /> O Criador
               </h2>
               <p>
-                O projeto é idealizado e desenvolvido por <strong>Lucas V. Zacaria</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Com início da trajetória acadêmica em 2022, Lucas une a experiência clínica em formação com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS).
+                O projeto é idealizado e desenvolvido por <strong>Lucas</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Iniciou sua trajetória em 2022 e une a vivência clínica em formação com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS).
+              </p>
+              <p className="mt-4">
+                Com uma atuação ativa na comunidade acadêmica, Lucas serviu como conselheiro discente no <strong>Conselho Universitário (CONSUN)</strong> da UFCSPA e atuou na diretoria de ensino e extensão da <strong>Liga de Medicina Interna</strong>. É também o autor do <em>Manual de Semiologia Básica (2025)</em>, reforçando seu compromisso com a educação médica e a propedêutica de qualidade.
               </p>
             </div>
 
-            <div className="border-t border-gray-100 pt-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <div className="border-t border-gray-100 pt-8 text-justify">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center text-left">
                 <Heart className="mr-2 text-red-500" /> O Ecossistema SUSsego
               </h2>
               <ul className="list-disc pl-6 space-y-3">
@@ -65,13 +69,12 @@ export default function About({ onNavigate }: AboutProps) {
               </ul>
             </div>
 
-            {/* Banner direcionando para a aba Doar */}
             <div className="mt-8 bg-orange-50 border border-orange-100 p-6 rounded-2xl text-center">
               <h3 className="text-lg font-bold text-gray-800 mb-2 flex justify-center items-center">
                 <Coffee className="mr-2 text-orange-500" size={24} /> Apoie este projeto
               </h3>
               <p className="text-sm text-gray-600 mb-5">
-                O SUSsego é gratuito e feito para ajudar nossa comunidade médica. Se esta ferramenta tem salvo tempo nos seus plantões e estudos, considere apoiar a manutenção do site!
+                O SUSsego.com.br é <strong>100% gratuito</strong> e feito para ajudar nossa comunidade médica. Se esta ferramenta tem salvo tempo nos seus plantões e estudos, considere apoiar a manutenção do site!
               </p>
               <button 
                 onClick={() => onNavigate('doar')}
