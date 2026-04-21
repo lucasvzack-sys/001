@@ -69,6 +69,12 @@ return (
           </p>
         </motion.div>
 
+        <div className="mb-8 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-gray-600 leading-relaxed text-sm md:text-base text-center">
+          <p>
+            A eficácia de um tratamento depende diretamente da adesão do paciente, que, no contexto da saúde pública, está intrinsecamente ligada à disponibilidade de medicamentos. O <strong>TemNoPosto?</strong> é uma ferramenta de consulta ágil à Relação Nacional de Medicamentos Essenciais (RENAME) e aos protocolos locais. Ele permite ao prescritor ou usuário identificar prontamente quais fármacos estão disponíveis na rede básica, facilitando uma prescrição consciente e viável dentro do Sistema Único de Saúde.
+          </p>
+        </div>
+
         {/* Anúncio: Antes da barra de busca */}
         <AdSpace className="mb-8 max-h-[100px] md:max-h-none overflow-hidden" />
 
