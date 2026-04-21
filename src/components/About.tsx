@@ -51,10 +51,7 @@ export default function About({ onNavigate }: AboutProps) {
                 <BookOpen className="mr-2 text-orange-500" /> O Criador
               </h2>
               <p>
-                O projeto é idealizado e desenvolvido por <strong>Lucas</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Iniciou sua trajetória em 2022 e une a vivência clínica em formação com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS).
-              </p>
-              <p className="mt-4">
-                Com uma atuação ativa na comunidade acadêmica, Lucas serviu como conselheiro discente no <strong>Conselho Universitário (CONSUN)</strong> da UFCSPA e atuou na diretoria de ensino e extensão da <strong>Liga de Medicina Interna</strong>. É também o autor do <em>Manual de Semiologia Básica (2025)</em>, reforçando seu compromisso com a educação médica e a propedêutica de qualidade.
+                O projeto é idealizado e desenvolvido por <strong>Lucas V. Zacaria</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Iniciou sua trajetória acadêmica em 2022 e une a vivência clínica com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS).
               </p>
             </div>
 
