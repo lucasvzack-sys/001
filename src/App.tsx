@@ -90,6 +90,20 @@ export default function App() {
             <Route path="/privacidade" element={
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 <PrivacyPolicy onNavigate={handleNavigate} />
+            
+    case 'termos':
+      return <TermsOfUse onNavigate={setView} />;
+    
+    case 'sobre':
+      return <About onNavigate={setView} />;
+    case 'contato':
+      return <Contact onNavigate={setView} />;
+    case 'doar':
+      return <Doar onNavigate={setView} />;
+    default:
+      return <Portal onNavigate={setView} />;
+  }
+};
               </motion.div>
             } />
 
