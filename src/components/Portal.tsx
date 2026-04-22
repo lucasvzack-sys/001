@@ -139,6 +139,13 @@ export default function Portal({ onNavigate }: PortalProps) {
               O SUSsego.com.br não é apenas uma ferramenta — é um aliado na sua rotina. Uma solução pensada para trazer mais fluidez ao atendimento, mais segurança às decisões e mais tranquilidade para quem cuida.
             </p>
           </div>
+
+          <footer className="bg-white py-12 px-4 border-t border-gray-200">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
+          <p className="text-gray-400 text-sm leading-relaxed">
+            As ferramentas são destinadas exclusivamente para fins educativos e de apoio à decisão clínica. O conteúdo apresentado não substitui, em circunstância alguma, a avaliação, o diagnóstico ou o tratamento por um profissional de saúde qualificado. A responsabilidade pelas decisões clínicas recai inteiramente sobre o profissional assistente. O SUSsego não se responsabiliza pelo uso indevido destas ferramentas. A responsabilidade final pela informação médica é do profissional assistente.
+          </p>
           {/* ========================================== */}
         </motion.div>
       </div>
