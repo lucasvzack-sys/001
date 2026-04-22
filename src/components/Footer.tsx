@@ -20,7 +20,6 @@ export default function Footer({ onNavigate }: { onNavigate: (view: string) => v
           </div>
         </div>
 
-        {/* ESTA É A PARTE QUE ADICIONA OS LINKS LEGAIS */}
         <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} SUSsego. Todos os direitos reservados.
@@ -28,25 +27,32 @@ export default function Footer({ onNavigate }: { onNavigate: (view: string) => v
           
           <div className="flex items-center gap-6">
             <button 
-              onClick={() => navigate('/privacidade')} 
+              onClick={() => onNavigate('privacidade')} 
+              className="text-sm text-gray-500 hover:text-medical-blue transition-colors font-medium"
+            >
+              Política de Privacidade
+            </button>
+            <button 
+              onClick={() => onNavigate('termos')} 
+              className="text-sm text-gray-500 hover:text-medical-blue transition-colors font-medium"
+            >
+              Termos de Uso
+            </button>
+            <button 
+              onClick={() => onNavigate('contato')} 
+              className="text-sm text-gray-500 hover:text-medical-blue transition-colors font-medium"
+            >
+              Contato
+            </button>
+            <button 
+              onClick={() => onNavigate('sobre')} 
               className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
             >
-            Política de Privacidade
-          </button>
-          <button onClick={() => onNavigate('termos')} className="hover:text-medical-blue transition-colors">
-            Termos de Uso
-          </button>
-          <button onClick={() => onNavigate('contato')} className="hover:text-medical-blue transition-colors">
-            Contato
-          </button>
-            onClick={() => onNavigate('sobre')} 
-            className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
-          >
-            Sobre o Projeto
-          </button>
-          <span className="flex items-center text-sm font-bold text-gray-400">
-            Feito com <Heart size={14} className="mx-1 text-red-500" /> no Brasil
-          </span>
+              Sobre o Projeto
+            </button>
+            <span className="flex items-center text-sm font-bold text-gray-400">
+              Feito com <Heart size={14} className="mx-1 text-red-500" /> no Brasil
+            </span>
           </div>
         </div>
       </div>
