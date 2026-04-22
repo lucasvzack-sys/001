@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { View } from '../types';
 import AdSpace from './AdSpace';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, AlertTriangle } from 'lucide-react';
 import Navbar from './Navbar'; // Adicionamos a importação da Navbar
 
 interface PortalProps {
