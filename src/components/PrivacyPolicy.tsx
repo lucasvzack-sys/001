@@ -32,7 +32,7 @@ export default function PrivacyPolicy({ onNavigate }: { onNavigate: (view: any) 
           <div className="space-y-8 text-gray-600 leading-relaxed text-justify">
             <section>
               <p>
-                O portal <strong>SUSsego.com.br</strong>, idealizado por Lucas, estudante de medicina da UFCSPA, tem como compromisso a transparência e a proteção da privacidade de seus usuários. Esta política descreve como tratamos as informações no contexto das nossas ferramentas (CalculAí, LaudAí e TemNoPosto?).
+                O portal <strong>SUSsego.com.br</strong> tem como compromisso a transparência e a proteção da privacidade de seus usuários. Esta política descreve como tratamos as informações no contexto das nossas ferramentas.
               </p>
             </section>
 
@@ -43,8 +43,8 @@ export default function PrivacyPolicy({ onNavigate }: { onNavigate: (view: any) 
               </p>
             </section>
 
-            <section className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
-              <h2 className="text-xl font-bold text-medical-blue mb-4">2. Cookies e Publicidade do Google AdSense</h2>
+             <section>
+              <h2 className="text-xl font-bold text-gray-800 mb-4"> Cookies e Publicidade do Google AdSense</h2>
               <p className="mb-4">
                 Para manter o portal gratuito e acessível, utilizamos o <strong>Google AdSense</strong> para veicular anúncios. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios neste site:
               </p>
