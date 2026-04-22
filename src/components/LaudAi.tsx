@@ -335,10 +335,11 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
         </div>
       </main>
 
-      <p className="text-gray-600 mb-4 leading-relaxed">
-        Como funciona e quando utilizar?
-          Ao inserir o texto bruto de um exame (como tomografias, ressonâncias ou ecocardiogramas), a ferramenta estrutura as informações, destacando os achados principais, alterações significativas e as conclusões do médico radiologista/especialista. Isso facilita a evolução diária em prontuários, a preparação para rounds clínicos e a passagem de plantão, organizando os dados de forma clara e acionável.
-      </p>
+       <div className="mt-16 text-left bg-white/80 p-8 rounded-3xl shadow-sm border border-gray-100">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Como funciona e quando utilizar?</h2>
+            <p className="text-gray-600 mb-4 leading-relaxed">
+          Ao inserir o texto bruto de um exame (como laboratoriais, tomografias, ressonâncias ou ecocardiogramas), a ferramenta estrutura as informações, destacando os achados principais, alterações significativas e as conclusões. Isso facilita a evolução diária em prontuários, a preparação para rounds clínicos e a passagem de plantão, organizando os dados de forma clara e acionável.
+            </p>
 
       <footer className="bg-white py-12 px-4 border-t border-gray-200">
         <div className="max-w-4xl mx-auto text-center">
