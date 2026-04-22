@@ -33,6 +33,8 @@ export default function App() {
       document.title = "CalculAí - SUSsego.com.br - calculadoras médicas";
     } else if (path === '/privacidade') {
       document.title = "Política de Privacidade - SUSsego.com.br";
+    } else if (path === '/termos') {
+      document.title = "Termos de Uso - SUSsego.com.br";
     } else if (path === '/contato') {
       document.title = "Contato - SUSsego.com.br";
     } else if (path === '/sobre') {
@@ -90,20 +92,13 @@ export default function App() {
             <Route path="/privacidade" element={
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 <PrivacyPolicy onNavigate={handleNavigate} />
-            
-    case 'termos':
-      return <TermsOfUse onNavigate={setView} />;
-    
-    case 'sobre':
-      return <About onNavigate={setView} />;
-    case 'contato':
-      return <Contact onNavigate={setView} />;
-    case 'doar':
-      return <Doar onNavigate={setView} />;
-    default:
-      return <Portal onNavigate={setView} />;
-  }
-};
+              </motion.div>
+            } />
+
+            {/* ADICIONADA A ROTA CORRETA DOS TERMOS DE USO AQUI */}
+            <Route path="/termos" element={
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                <TermsOfUse onNavigate={handleNavigate} />
               </motion.div>
             } />
 
