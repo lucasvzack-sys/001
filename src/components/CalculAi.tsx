@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 import CrossPromo from './CrossPromo';
 import AdSpace from './AdSpace';
 import { useParams, useNavigate } from 'react-router-dom';
+import { clinicalNotes } from '../data/clinicalNotes';
 
 interface CalculAiProps {
   onNavigate: (view: View) => void;
@@ -2025,164 +2026,97 @@ const categories: { name: Category; icon: any }[] = [
       : calculatorsList.filter(calc => calc.category === activeCategory);
   const currentCalcData = calculatorsList.find(c => c.id === selectedCalc);
 
-  // DICIONÁRIO DE NOTAS CLÍNICAS (SEO PARA ADSENSE E UTILIDADE MÉDICA)
-  const calcDescriptions: Record<string, React.ReactNode> = {
-    imc: (
-      <p>O Índice de Massa Corporal (IMC) é a métrica padrão da OMS para rastreio populacional. <strong>Nota clínica:</strong> O IMC não diferencia massa magra de massa gorda. Atletas ou idosos com sarcopenia podem ter a classificação sobrestimada ou subestimada, devendo ser complementado com a avaliação da circunferência abdominal.</p>
-    ),
-    clcr: (
-      <p>A fórmula de Cockcroft-Gault estima a Taxa de Filtração Glomerular (TFG). Embora as fórmulas CKD-EPI sejam as preferidas para estadiar a Doença Renal Crónica, a maioria dos Resumos das Características dos Medicamentos (como antibióticos e DOACs) ainda baseia o ajuste posológico rigoroso na Cockcroft-Gault.</p>
-    ),
-    childpugh: (
-      <p>O escore de Child-Pugh avalia o prognóstico da cirrose hepática, estimando a sobrevida e a necessidade de transplante. É amplamente utilizado na prática clínica para orientar o ajuste de dose de fármacos com metabolização hepática e avaliar o risco cirúrgico.</p>
-    ),
-    meld: (
-      <p>O <em>Model for End-Stage Liver Disease</em> (MELD) estima a probabilidade de mortalidade aos 3 meses em doentes com doença hepática terminal. Constitui o critério padronizado e oficial para a priorização de doentes na lista de espera para transplante hepático a nível mundial.</p>
-    ),
-    centor: (
-      <p>O Escore de Centor Modificado (McIsaac) ajuda a estratificar a probabilidade pré-teste de faringite estreptocócica (Estreptococo do Grupo A). Escores baixos (≤1) permitem geralmente excluir o diagnóstico, evitando o uso irracional de antibióticos.</p>
-    ),
-    chads: (
-      <p>O escore CHA₂DS₂-VASc avalia o risco de tromboembolismo sistémico (como AVC) em doentes com Fibrilhação Auricular não-valvular. Pontuações ≥ 2 em homens ou ≥ 3 em mulheres estabelecem indicação formal para terapêutica com anticoagulação oral (preferencialmente DOACs).</p>
-    ),
-    timi: (
-      <p>O Escore TIMI para Síndrome Coronária Aguda sem supradesnivelamento de ST (SCA) avalia o risco de mortalidade ou isquemia severa em 14 dias. É uma ferramenta chave na Sala de Emergência para decidir se o doente beneficia de uma estratégia invasiva precoce (cateterismo cardíaco).</p>
-    ),
-    glasgow: (
-      <p>A Escala de Coma de Glasgow (ECG) é o padrão de ouro na avaliação do nível de consciência, sobretudo no contexto de neurotrauma. Atualmente preconiza-se a documentação da reatividade pupilar (ECG-P). Uma pontuação ≤ 8 constitui indicação clássica e mandatória para intubação orotraqueal.</p>
-    ),
-    curb65: (
-      <p>O escore CURB-65 prevê a mortalidade em 30 dias na pneumonia adquirida na comunidade (PAC). Fornece orientação vital para o local de tratamento: ambulatório (0-1), enfermaria (2) ou admissão em Unidade de Cuidados Intensivos (≥3), embora doentes idosos exijam sempre juízo clínico.</p>
-    ),
-    wells: (
-      <p>O Escore de Wells para Trombose Venosa Profunda (TVP) baliza a investigação. Doentes com risco "Improvável" devem ser avaliados laboratorialmente com D-Dímeros. Se o risco for estratificado como "Provável", solicita-se diretamente a ecografia Doppler venosa sem perda de tempo.</p>
-    ),
-    nihss: (
-      <p>A Escala do NIH (NIHSS) quantifica o défice neurológico no AVC isquémico. É o indicador primário para a indicação de trombólise endovenosa (tradicionalmente considerada em doentes com pontuações entre 4 e 25) e serve de baseline para monitorizar recaídas.</p>
-    ),
-    meem: (
-      <p>O Mini-Exame do Estado Mental (MEEM) é a ferramenta neurocognitiva de rastreio mais utilizada globalmente. A interpretação do declínio cognitivo deve sempre ser ajustada à escolaridade do doente, uma vez que a iliteracia penaliza o score base de forma fisiológica.</p>
-    ),
-    phq9: (
-      <p>O <em>Patient Health Questionnaire-9</em> (PHQ-9) traduz em perguntas rápidas os critérios do DSM-V para depressão major. Altamente validado, serve tanto para o rastreio ativo nos Cuidados de Saúde Primários como para a titulação objetiva da resposta à terapêutica antidepressiva.</p>
-    ),
-    ig: (
-      <p>O cálculo obstétrico da Idade Gestacional pela Data da Última Menstruação (DUM) assume ciclos menstruais regulares de 28 dias. A ecografia pélvica do 1º trimestre (baseada no Comprimento Crânio-Caudal - CCN) permanece como a metodologia mais rigorosa para datar a gestação de forma definitiva.</p>
-    ),
-    dum_usg: (
-      <p>Este cálculo retrospetivo estabelece uma "DUM ecográfica" ou "DUM corrigida" com base na biometria fetal. Permite ao obstetra uniformizar o registo pré-natal no software de saúde sempre que a DUM relatada pela utente for incerta ou flagrantemente incompatível com a ecografia precoce.</p>
-    ),
-    kupperman: (
-      <p>O Índice de Kupperman-Blatt é a escala clássica ginecológica para quantificar a gravidade da sintomatologia climatérica (menopausa). É determinante para sustentar a indicação de Terapêutica Hormonal de Substituição (THS) e para avaliar o sucesso clínico do tratamento dos fogachos.</p>
-    ),
-    jones: (
-      <p>Os Critérios de Jones suportam o diagnóstico de Febre Reumática Aguda. <strong>Nota clínica vital:</strong> A documentação laboratorial de infeção recente por Estreptococo do Grupo A (seja por zaragatoa orofaríngea, teste rápido ou elevação de ASLO) é um pré-requisito obrigatório para fechar o diagnóstico.</p>
-    ),
-    apgar: (
-      <p>O Índice de Apgar quantifica a vitalidade do recém-nascido de forma estandardizada no 1º e 5º minutos de vida. <strong>Atenção:</strong> Não deve ser o critério decisor para iniciar manobras de reanimação, mas sim o indicador de resposta às manobras já instituídas pelo pediatra.</p>
-    ),
-    ldl: (
-      <p>A Fórmula de Friedewald indireta o colesterol LDL (CT - HDL - TG/5). No entanto, o cálculo fica matematicamente inválido se os triglicerídeos ultrapassarem os 400 mg/dL. Nessas circunstâncias de dislipidemia mista severa, exige-se o doseamento analítico direto ou a utilização da fórmula de Martin-Hopkins.</p>
-    ),
-    gad7: (
-      <p>O <em>Generalized Anxiety Disorder-7</em> (GAD-7) é um questionário psicométrico pragmático. Pontuações ≥ 10 evidenciam excelente sensibilidade e especificidade clínica, sugerindo Transtorno de Ansiedade Generalizada e sinalizando a necessidade imperativa de intervenção psicológica ou psicofarmacológica.</p>
-    ),
-    prevent: (
-      <p>As calculadoras <strong>AHA PREVENT (2023)</strong> são as sucessoras das equações ASCVD Pooled Cohort. Ao omitirem a raça e integrarem a função renal (eGFR) no algoritmo, oferecem uma precisão superior na predição de risco a 10 e 30 anos, fundamentando de forma robusta o início da prescrição de estatinas.</p>
-    ),
-    hasbled: (
-      <p>O <strong>HAS-BLED</strong> estima o risco de hemorragia major em doentes com Fibrilhação Auricular. Pontuações elevadas (≥ 3) alertam o clínico para redobrar a vigilância e corrigir fatores de risco (ex: pressão arterial não controlada), não constituindo, só por si, contraindicação formal à anticoagulação.</p>
-    ),
-    qsofa: (
-      <p>O <strong>quick SOFA (qSOFA)</strong> é um sistema de alerta rápido (Early Warning Score) à beira-leito. Não diagnostica sépsis isoladamente; atua antes como sinalizador: doentes infetados com qSOFA ≥ 2 estão sob risco iminente de colapso, exigindo colheita urgente de lactatos, hemoculturas e reavaliação imediata.</p>
-    ),
-    opas: (
-      <p>As tabelas de Risco Cardiovascular da OPAS/OMS avaliam o risco de eventos cardiovasculares maiores em 10 anos, permitindo direcionar a terapêutica de forma alinhada com as orientações do protocolo HEARTS.</p>
-    ),
-    ckdepi: (
-      <p>A fórmula CKD-EPI de 2021, que removeu o coeficiente de correção para raça negra, é a recomendação atual do KDIGO para estimativa da Taxa de Filtração Glomerular, providenciando maior acuidade que a antiga Cockcroft-Gault.</p>
-    ),
-    fena: (
-      <p>A Fração de Excreção de Sódio (FENa) é crítica na Lesão Renal Aguda (LRA) oligúrica. FENa &lt; 1% traduz avidez renal por sódio (contexto pré-renal/hipovolemia), enquanto valores &gt; 1-2% sugerem necrose tubular aguda (NTA). Atenção ao uso concomitante de diuréticos, que enviesa o cálculo.</p>
-    ),
-    metavir: (
-      <p>O score METAVIR é o sistema descritivo padronizado utilizado em anatomia patológica para codificar o grau de atividade necroinflamatória (A0-A3) e o estadio de fibrose (F0-F4) das hepatites virais e outras hepatopatias crónicas na biópsia.</p>
-    ),
-    alvarado: (
-      <p>O Escore de Alvarado guia a decisão clínica na suspeita de apendicite aguda. Embora útil para "rule-out" em scores baixos (≤3), avaliações moderadas a altas exigem quase sempre correlação com ecografia abdominal ou Tomografia Computadorizada no adulto.</p>
-    ),
-    abcd2: (
-      <p>O score ABCD² estratifica o risco de um doente com Ataque Isquémico Transitório (AIT) vir a sofrer um Acidente Vascular Cerebral (AVC) definitivo nas 48 horas seguintes, orientando a decisão de admissão hospitalar versus investigação em ambulatório.</p>
-    ),
-    aspects: (
-      <p>O <strong>ASPECTS</strong> quantifica os sinais precoces de isquemia no território da artéria cerebral média na TC sem contraste. Escores &gt; 7 indicam melhor prognóstico após terapias de reperfusão. Escores baixos denotam risco altíssimo de transformação hemorrágica.</p>
-    ),
-    atlanta: (
-      <p>A <strong>Classificação de Atlanta Modificada</strong> define a gravidade da pancreatite aguda baseada em falência orgânica sistêmica e complicações locais. Vital para definir a admissão em UCI.</p>
-    ),
-    frax: (
-      <p>A ferramenta <strong>FRAX®</strong> calcula a probabilidade em 10 anos de uma fratura maior osteoporótica. Por ser um algoritmo proprietário, use sempre o portal oficial certificado para decisões terapêuticas relativas à saúde óssea.</p>
-    ),
-    ballard: (
-      <p>O <strong>Novo Escore de Ballard</strong> correlaciona a maturidade física e neuromuscular fetal com a idade gestacional, auxiliando a equipa de neonatologia em recém-nascidos sem registos obstétricos fiáveis.</p>
-    ),
-    ranson: (
-      <p>Os <strong>Critérios de Ranson</strong> estimam a mortalidade e gravidade na Pancreatite Aguda. Diferenciam-se os parâmetros medidos à Admissão e às 48h. A hidratação agressiva inicial foca na contenção do sequestro hídrico previsto.</p>
-    ),
-    ipss: (
-      <p>O <strong>IPSS</strong> avalia os sintomas do trato urinário inferior (LUTS) tipicamente associados à Hiperplasia Benigna da Próstata (HBP). Score ≥ 8 justifica, via de regra, o início de tratamento farmacológico.</p>
-    ),
-    caprini: (
-      <p>O <strong>Escore de Caprini</strong> é fundamental para a profilaxia cirúrgica. Estratifica o risco de trombose peroperatória, justificando o uso de meias elásticas, compressão pneumática intermitente ou heparina de baixo peso molecular (HBPM).</p>
-    ),
-    ferriman: (
-      <p>O <strong>Escore de Ferriman-Gallwey</strong> quantifica objetivamente a gravidade do hirsutismo. Útil para o diagnóstico formal da Síndrome dos Ovários Policísticos (SOP) e para monitorizar a resposta ao tratamento antiandrogénico.</p>
-    ),
-    mmrc: (
-      <p>A escala de dispneia <strong>mMRC</strong> avalia o impacto da falta de ar no dia a dia. É essencial para cruzar com a gravidade espirométrica (GOLD) e a exacerbação na estratificação ABC/ABE da DPOC.</p>
-    ),
-    cat: (
-      <p>O questionário <strong>CAT</strong> providencia uma métrica abrangente de como a DPOC afeta a qualidade de vida do doente (sono, energia, sintomas basais). Útil para guiar o incremento de LABA/LAMA e ICS.</p>
-    ),
-    padua: (
-      <p>O <strong>Escore de Pádua</strong> determina quais doentes clínicos (não cirúrgicos) hospitalizados beneficiam de profilaxia antitrombótica (score ≥ 4). A maioria dos doentes acamados por quadros agudos atinge facilmente esta pontuação.</p>
-    ),
-    balthazar: (
-      <p>O <strong>Índice de Severidade Tomográfica (Escore de Balthazar)</strong> avalia a inflamação e a extensão da necrose no pâncreas. Essencial para predizer o risco de infeção local e disfunção multiorgânica nas fases tardias.</p>
-    ),
-    phq2: (
-      <p>O <strong>PHQ-2</strong> (Patient Health Questionnaire-2) é um instrumento ultrarrápido de rastreio para depressão, focado nas duas dimensões principais do Transtorno Depressivo Maior: humor deprimido e anedonia. Um escore ≥ 3 possui boa sensibilidade e exige a aplicação do PHQ-9 completo ou avaliação clínica detalhada.</p>
-    )
-  };
+const renderCalculatorContent = () => {
+  const calc = calculatorsList.find(c => c.id === selectedCalc);
+  if (!calc) return null;
   
- const renderCalculatorContent = () => {
-    const calc = calculatorsList.find(c => c.id === selectedCalc);
-    if (!calc) return null;
-    
-    return (
-      <div className="space-y-6 animate-fade-in">
-        {/* 1º Anúncio: Acima da calculadora (com proteção mobile) */}
-        <AdSpace className="mb-4 max-h-[100px] md:max-h-none overflow-hidden" />
+  // Busca o texto correspondente ao ID da calculadora atual no nosso arquivo separado
+  const notaClinica = clinicalNotes[calc.id];
+  
+  return (
+    <div className="space-y-6 animate-fade-in">
+      {/* 1º Anúncio: Acima da calculadora */}
+      <AdSpace className="mb-4 max-h-[100px] md:max-h-none overflow-hidden" />
 
-        {/* Renderiza a calculadora em si */}
-        <calc.Component />
-        
-        {/* Renderiza a caixa de texto para o AdSense / Médico, se existir */}
-        {calcDescriptions[calc.id] && (
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-orange-100 text-sm text-gray-600 leading-relaxed">
-            <h3 className="font-bold text-gray-800 mb-2 flex items-center">
-              <FileText size={18} className="mr-2 text-orange-500" />
-              Lembrete Clínico
-            </h3>
-            {calcDescriptions[calc.id]}
+      {/* Renderiza a calculadora interativa */}
+      <calc.Component />
+      
+      {/* ARTIGO CLÍNICO TIPO "MEDSCAPE" PARA O ADSENSE */}
+      {notaClinica && (
+        <article className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden mt-8 text-gray-700">
+          <div className="bg-gray-50 border-b border-gray-200 px-6 py-4 flex items-center">
+            <BookOpen className="text-orange-600 mr-3" size={24} />
+            <h2 className="text-xl font-bold text-gray-800">Revisão Clínica: {calc.title}</h2>
           </div>
-        )}
+          
+          <div className="p-6 md:p-8 space-y-8 text-base leading-relaxed">
+            
+            {/* O Que É e Histórico */}
+            <section>
+              <h3 className="flex items-center text-lg font-bold text-gray-800 mb-3">
+                <Info size={20} className="text-blue-500 mr-2" /> O que é e Histórico
+              </h3>
+              <p className="mb-3">{notaClinica.oqueE}</p>
+              <p className="text-gray-600 italic text-sm border-l-4 border-gray-300 pl-4 py-1">{notaClinica.historico}</p>
+            </section>
 
-        {/* 2º Anúncio: Abaixo do lembrete clínico */}
-        <AdSpace className="mt-8" />
-      </div>
-    );
-  };
+            {/* Indicação Clínica e Interpretação */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <section className="bg-blue-50/50 p-5 rounded-2xl border border-blue-100">
+                <h3 className="flex items-center text-lg font-bold text-blue-800 mb-3">
+                  <CheckCircle size={20} className="text-blue-600 mr-2" /> Indicação Clínica
+                </h3>
+                <p className="text-blue-900/80">{notaClinica.indicacao}</p>
+              </section>
+
+              <section className="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100">
+                <h3 className="flex items-center text-lg font-bold text-emerald-800 mb-3">
+                  <BarChart2 size={20} className="text-emerald-600 mr-2" /> Como Interpretar
+                </h3>
+                <p className="text-emerald-900/80">{notaClinica.interpretacao}</p>
+              </section>
+            </div>
+
+            {/* Cuidados e Limitações (Aviso Clínico) */}
+            <section className="bg-red-50 p-6 rounded-2xl border border-red-100">
+              <h3 className="flex items-center text-lg font-bold text-red-800 mb-3">
+                <AlertTriangle size={20} className="text-red-600 mr-2" /> Cuidados e Limitações
+              </h3>
+              <div className="space-y-3 text-red-900/80">
+                <p><strong>Cuidados na aplicação:</strong> {notaClinica.cuidados}</p>
+                <p><strong>Limitações do Escore:</strong> {notaClinica.limitacoes}</p>
+              </div>
+            </section>
+
+            {/* Referências Bibliográficas */}
+            <section className="pt-6 border-t border-gray-100">
+              <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center">
+                Referências Bibliográficas
+              </h3>
+              <ul className="list-disc pl-5 space-y-2 text-sm">
+                {notaClinica.referencias.map((ref, idx) => (
+                  <li key={idx} className="text-gray-600">
+                    {ref.url ? (
+                      <a href={ref.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">
+                        {ref.titulo}
+                      </a>
+                    ) : (
+                      ref.titulo
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+          </div>
+        </article>
+      )}
+
+      {/* 2º Anúncio: Abaixo do conteúdo clínico */}
+      <AdSpace className="mt-8" />
+    </div>
+  );
+};
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
