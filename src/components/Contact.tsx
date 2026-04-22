@@ -33,15 +33,15 @@ export default function Contact({ onNavigate }: any) {
 
               <div className="space-y-4">
                 <a 
-                  href="mailto:contato@sussego.com.br" 
+                  href="mailto:lucasvzack@gmail.com" 
                   className="flex items-center p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:border-orange-300 hover:bg-orange-50 transition-all group"
                 >
                   <div className="bg-white p-3 rounded-xl shadow-sm mr-4 group-hover:bg-orange-600 group-hover:text-white transition-colors">
                     <Send size={24} className="text-orange-600 group-hover:text-white" />
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-gray-400 uppercase tracking-wider">E-mail Oficial</span>
-                    <span className="text-gray-700 font-medium">contato@sussego.com.br</span>
+                    <span className="block text-xs font-bold text-gray-400 uppercase tracking-wider">E-mail</span>
+                    <span className="text-gray-700 font-medium">lucasvzack@gmail.com</span>
                   </div>
                 </a>
 
