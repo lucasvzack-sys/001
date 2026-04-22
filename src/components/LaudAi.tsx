@@ -336,7 +336,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
       </main>
 
      {/* Bloco Informativo para AdSense e SEO */}
-<section className="mt-16 text-left bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
+<section className="mt-16 text-justify bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
   <h2 className="text-2xl font-bold text-gray-800 mb-6">
     Como o LaudAí otimiza o raciocínio clínico na prática médica?
   </h2>
@@ -349,7 +349,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
     <div className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
       <h3 className="text-lg font-bold text-medical-blue mb-2">Como utilizar?</h3>
       <p>
-        Ao inserir o texto bruto de um exame (como laboratoriais, tomografias, ressonâncias ou ecocardiogramas), a ferramenta estrutura as informações, destacando os achados principais, alterações significativas e as conclusões presentesm, facilitando a evolução diária em prontuários, a preparação para rounds clínicos e a passagem de plantão.
+        Ao inserir o texto bruto de um exame (como laboratoriais, tomografias, ressonâncias ou ecocardiogramas), a ferramenta estrutura as informações, destacando os achados principais, alterações significativas e as conclusões presentes, facilitando a evolução diária em prontuários, a preparação para rounds clínicos e a passagem de plantão.
       </p>
     </div>
 
