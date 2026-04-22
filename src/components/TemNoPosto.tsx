@@ -1,3 +1,10 @@
+O erro aconteceu porque, ao colar o código, faltou fechar a tag `</section>` do bloco informativo antes de começar o `<footer>`. No React (JSX), todas as tags abertas precisam ser obrigatoriamente fechadas.
+
+Além disso, coloquei o bloco de texto *dentro* da tag `<main>`, para garantir que ele fique alinhado certinho com o resto da página.
+
+Substitua **todo** o conteúdo do seu arquivo `src/components/TemNoPosto.tsx` por este código corrigido abaixo:
+
+```tsx
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, MapPin, Info, CheckCircle2, XCircle } from 'lucide-react';
@@ -49,8 +56,6 @@ return (
       <Navbar currentView="temnoposto" onNavigate={onNavigate} />
 
       <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
-        
-        {/* O primeiro anúncio que ficava aqui foi removido */}
         
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
@@ -187,7 +192,6 @@ return (
             <p className="text-gray-600 mb-6">Saiba onde deve retirar o seu medicamento:</p>
 
             <div className="space-y-4">
-              {/* Componente Básico */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-green-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Básico
@@ -198,7 +202,6 @@ return (
                 </div>
               </div>
 
-              {/* Componente Especializado */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Especializado
@@ -209,7 +212,6 @@ return (
                 </div>
               </div>
 
-              {/* Componente Estratégico */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-orange-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Estratégico
@@ -220,7 +222,6 @@ return (
                 </div>
               </div>
 
-              {/* Oncológico */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-purple-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Oncológico
@@ -233,8 +234,23 @@ return (
             </div>
           </div>
         )}
-        {/* FIM DA LEGENDA DO SUS */}
         
+        {/* Bloco Informativo para AdSense e SEO */}
+        <section className="mt-16 text-left bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            Adesão Terapêutica e o papel do SUS
+          </h2>
+          
+          <div className="space-y-6 text-gray-600 leading-relaxed">
+            <p>
+              A adesão ao tratamento depende diretamente da viabilidade financeira do paciente. O <strong>TemNoPosto?</strong> ajuda o prescritor a identificar fármacos da RENAME disponíveis na rede pública, garantindo que a conduta clínica se traduza em tratamento real. 
+            </p>
+            <p>
+              Consulte a disponibilidade para ajustar a sua prescrição conforme o estoque das unidades básicas, promovendo uma saúde mais democrática e resolutiva.
+            </p>
+          </div>
+        </section>
+
         <div className="mt-16 space-y-6">
           <AdSpace /> 
           <CrossPromo target="laudai" onNavigate={onNavigate} />
@@ -242,21 +258,6 @@ return (
           <AdSpace />
         </div>
       </main>
-
- {/* Bloco Informativo para AdSense e SEO */}
-<section className="mt-16 text-left bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
-  <h2 className="text-2xl font-bold text-gray-800 mb-6">
-    Adesão Terapêutica e o papel do SUS
-  </h2>
-  
-  <div className="space-y-6 text-gray-600 leading-relaxed">
-    <p>
-      A adesão ao tratamento depende diretamente da viabilidade financeira do paciente. O <strong>TemNoPosto?</strong> ajuda o prescritor a identificar fármacos da RENAME disponíveis na rede pública, garantindo que a conduta clínica se traduza em tratamento real. 
-    </p>
-    <p>
-      Consulte a disponibilidade para ajustar a sua prescrição conforme o estoque das unidades básicas, promovendo uma saúde mais democrática e resolutiva.
-    </p>
-  </div>
 
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
@@ -270,3 +271,4 @@ return (
     </div>
   );
 }
+```
