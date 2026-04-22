@@ -235,6 +235,22 @@ return (
         )}
         {/* FIM DA LEGENDA DO SUS */}
         
+{/* Bloco de Texto Educativo para AdSense (Maneira Correta - Na Caixa e Justificado) */}
+        <div className="mt-16 bg-white p-8 md:p-10 rounded-3xl border border-gray-200 shadow-md text-justify">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center md:text-left">
+            Adesão Terapêutica e o papel do SUS
+          </h2>
+          <div className="space-y-4 text-gray-600 leading-relaxed">
+            <p>
+              A adesão ao tratamento depende diretamente da viabilidade financeira do paciente. O <strong>TemNoPosto?</strong> ajuda o prescritor a identificar 
+              fármacos da RENAME disponíveis na rede pública, garantindo que a conduta clínica se traduza em tratamento real.
+            </p>
+            <p>
+              Consulte a disponibilidade para ajustar a sua prescrição conforme o estoque das unidades básicas, promovendo uma saúde mais democrática e resolutiva.
+            </p>
+          </div>
+        </div>
+
         <div className="mt-16 space-y-6">
           <AdSpace /> 
           <CrossPromo target="laudai" onNavigate={onNavigate} />
@@ -242,20 +258,6 @@ return (
           <AdSpace />
         </div>
       </main>
-
-      {/* Bloco de Texto Educativo para AdSense */}
-<div className="mt-16 bg-white/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-100 text-left">
-  <h2 className="text-2xl font-bold text-gray-800 mb-4">Adesão Terapêutica e o papel do SUS</h2>
-  <div className="space-y-4 text-gray-600 leading-relaxed">
-    <p>
-      A adesão ao tratamento depende diretamente da viabilidade financeira do paciente. O <strong>TemNoPosto?</strong> ajuda o prescritor a identificar 
-      fármacos da RENAME disponíveis na rede pública, garantindo que a conduta clínica se traduza em tratamento real.
-    </p>
-    <p>
-      Consulte a disponibilidade para ajustar a sua prescrição conforme o estoque das unidades básicas, promovendo uma saúde mais democrática e resolutiva.
-    </p>
-  </div>
-</div>
 
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
