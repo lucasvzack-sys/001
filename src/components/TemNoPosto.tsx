@@ -234,8 +234,16 @@ return (
           </div>
         )}
         {/* FIM DA LEGENDA DO SUS */}
-        
-{/* Bloco de Texto Educativo para AdSense (Maneira Correta - Na Caixa e Justificado) */}
+
+        <div className="mt-16 space-y-6">
+          <AdSpace /> 
+          <CrossPromo target="laudai" onNavigate={onNavigate} />
+          <CrossPromo target="calculai" onNavigate={onNavigate} />
+          <AdSpace />
+        </div>
+      </main>
+
+      {/* Bloco de Texto Educativo para AdSense (Maneira Correta - Na Caixa e Justificado) */}
         <div className="mt-16 bg-white p-8 md:p-10 rounded-3xl border border-gray-200 shadow-md text-justify">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center md:text-left">
             Adesão Terapêutica e o papel do SUS
@@ -250,14 +258,6 @@ return (
             </p>
           </div>
         </div>
-
-        <div className="mt-16 space-y-6">
-          <AdSpace /> 
-          <CrossPromo target="laudai" onNavigate={onNavigate} />
-          <CrossPromo target="calculai" onNavigate={onNavigate} />
-          <AdSpace />
-        </div>
-      </main>
 
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
