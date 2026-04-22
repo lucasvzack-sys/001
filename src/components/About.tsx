@@ -51,7 +51,7 @@ export default function About({ onNavigate }: AboutProps) {
                 <BookOpen className="mr-2 text-orange-500" /> O Criador
               </h2>
               <p>
-                O projeto é idealizado e desenvolvido por <strong>Lucas V. Zacaria</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Iniciou sua trajetória acadêmica em 2022 e une a vivência clínica com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS).
+                O projeto é idealizado e desenvolvido por <strong>Lucas V. Zacaria</strong>, graduando em Medicina pela <strong>Universidade Federal de Ciências da Saúde de Porto Alegre (UFCSPA)</strong>. Iniciou sua trajetória acadêmica em 2022 e une a vivência clínica com competências em desenvolvimento de software para criar soluções que resolvem gargalos reais do Sistema Único de Saúde (SUS). Lucas possui trajetória destacada em ensino, pesquisa e extensão, pesquisador em múltiplas áreas da saúde pública e clínica e autor com publicação internacional. Foi conselheiro universitário da UFCSPA, diretor de ligas acadêmicas e vencedor do Prêmio CAPES Talento Universitário (2023).
               </p>
             </div>
 
