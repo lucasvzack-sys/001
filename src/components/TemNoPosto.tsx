@@ -1,10 +1,3 @@
-O erro aconteceu porque, ao colar o código, faltou fechar a tag `</section>` do bloco informativo antes de começar o `<footer>`. No React (JSX), todas as tags abertas precisam ser obrigatoriamente fechadas.
-
-Além disso, coloquei o bloco de texto *dentro* da tag `<main>`, para garantir que ele fique alinhado certinho com o resto da página.
-
-Substitua **todo** o conteúdo do seu arquivo `src/components/TemNoPosto.tsx` por este código corrigido abaixo:
-
-```tsx
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, MapPin, Info, CheckCircle2, XCircle } from 'lucide-react';
@@ -236,7 +229,7 @@ return (
         )}
         
         {/* Bloco Informativo para AdSense e SEO */}
-        <section className="mt-16 text-left bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
+        <section className="mt-16 text-justify bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             Adesão Terapêutica e o papel do SUS
           </h2>
