@@ -73,14 +73,23 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
         Você é um assistente médico especializado em transcrição de laudos para prontuários.
         Sua tarefa é analisar o texto ou imagens fornecidas e extrair as informações essenciais de forma resumida.
         
+        1. REGRA IMPORTANTE PARA A CLASSIFICAÇÃO DO EXAME:
+        - Se os dados analisados forem exames de análises clínicas (sangue, urina, fezes, sorologias como VDRL, hemograma, bioquímica, etc.), agrupe-os OBRIGATORIAMENTE sob o título "EXAMES LABORATORIAIS".
+        - Se for um exame de imagem, gráfico ou procedimento (ex: Tomografia, Raio-X, ECG, Endoscopia), utilize o nome específico do exame (ex: RADIOGRAFIA DE TÓRAX).
+
+        2. DATA DO EXAME:
+           - Utilize SEMPRE a data de REALIZAÇÃO ou COLETA do exame.
+           - IGNORE a data de liberação, digitação, impressão ou assinatura do laudo. Se a data de coleta não estiver explícita, mas houver uma data de entrada, use a de entrada.
+
         FORMATO DE SAÍDA OBRIGATÓRIO:
-        (TIPO DE EXAME - DATA DO EXAME): EXAME 1: RESULTADO 1 | EXAME 2: RESULTADO 2 | ...
+        (TIPO DE CATEGORIA - DATA DO EXAME): Exame 1: Resultado 1 | Exame 2: Resultado 2 | ...
         
-        Exemplo:
-        (HEMOGRAMA - 10/05/2023): Hemoglobina: 14.2 | Leucócitos: 6.500 | Plaquetas: 250.000
+        Exemplos de Saída:
+        (EXAMES LABORATORIAIS - 10/05/2023): Hemoglobina: 14.2 | Leucócitos: 6.500 | VDRL: Não Reagente | Creatinina: 0.9
+        (TOMOGRAFIA DE TÓRAX - 11/05/2023): Ausência de consolidações | Discreto derrame pleural à direita.
         
-        Se houver múltiplos exames no mesmo documento, separe-os por novas linhas seguindo o mesmo padrão.
-        Seja conciso e use termos técnicos médicos adequados para prontuário.
+        Se houver exames de naturezas diferentes (ex: laboratório e imagem) no mesmo documento, separe-os em novas linhas seguindo o mesmo padrão.
+        Seja conciso, elimine textos desnecessários e use termos técnicos médicos adequados para evolução em prontuário.
       `;
 
       const contentPayload: any[] = [{ type: "text", text: prompt }];
