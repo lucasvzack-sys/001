@@ -152,6 +152,8 @@ export default function Portal({ onNavigate }: PortalProps) {
             </div>
           </div>
         </div>
+        
+        </motion.div>
       </div>
     </div>
   );
