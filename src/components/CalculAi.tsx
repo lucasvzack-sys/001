@@ -2140,13 +2140,17 @@ const renderCalculatorContent = () => {
           </div>
         ) : (
           <>
-            <header className="mb-8 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
-              <img src="/calculai.png" alt="CalculAí" className="w-32 md:w-40 h-auto object-contain" />
-              <div className="md:mt-4">
-                <h1 className="text-3xl font-extrabold text-gray-800">CalculAí</h1>
-                <p className="text-gray-500">Suporte à decisão clínica baseada em evidências.</p>
-              </div>
-            </header>
+            <div className="text-center mb-12 flex flex-col items-center animate-fade-in">
+              <img 
+                src="/calculai.png" 
+                alt="Logo CalculAí" 
+                className="w-32 md:w-48 h-auto mb-6 object-contain"
+              />
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">CalculAí</h1>
+              <p className="text-gray-600 max-w-xl mx-auto">
+                Suporte à decisão clínica baseada em evidências.
+              </p>
+            </div>
             <div className="mb-8 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-gray-600 leading-relaxed text-sm md:text-base text-center">
               <p>
                 As calculadoras médicas e os escores clínicos são instrumentos indispensáveis na prática médica moderna. Eles permitem estratificar riscos, definir condutas terapêuticas e estabelecer prognósticos de forma objetiva. Abaixo, você encontra nosso acervo categorizado, abrangendo desde a predição de mortalidade na Unidade de Terapia Intensiva até escores ambulatoriais de risco cardiovascular. Selecione a calculadora desejada ou utilize o campo de busca.
