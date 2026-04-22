@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import CookieBanner from './components/CookieBanner';
 import { View } from './types';
 import About from './components/About';
+import TermsOfUse from './components/TermsOfUse';
 
 export default function App() {
   const location = useLocation();
