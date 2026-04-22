@@ -11,6 +11,51 @@ interface TemNoPostoProps {
   onNavigate: (view: View) => void;
 }
 
+const normalizeStr = (str: string) => {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remove acentos
+    .replace(/[^\w\s]/gi, ' '); // Substitui pontuações por espaço
+};
+
+// Calcula quantos erros de digitação existem entre duas palavras
+const levenshtein = (a: string, b: string): number => {
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // Substituição
+          Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1) // Inserção/Deleção
+        );
+      }
+    }
+  }
+  return matrix[b.length][a.length];
+};
+
+// Verifica se a palavra pesquisada corresponde à palavra alvo (com tolerância a erros)
+const isMatchWithTolerance = (searchWord: string, targetText: string) => {
+  // Se a palavra (ou parte dela) existir perfeitamente, já retorna verdadeiro
+  if (targetText.includes(searchWord)) return true;
+
+  // Palavras muito curtas exigem correspondência exata para evitar falsos positivos
+  if (searchWord.length <= 3) return false;
+
+  const targetWords = targetText.split(/\s+/).filter(Boolean);
+  
+  // Define a tolerância: 1 erro para palavras médias, 2 erros para palavras grandes (ex: sulfametoxazol)
+  const maxErrors = searchWord.length > 7 ? 2 : 1;
+
+  // Verifica se alguma palavra do medicamento tem uma similaridade aceitável com o que foi digitado
+  return targetWords.some(targetWord => levenshtein(searchWord, targetWord) <= maxErrors);
+};
+
 export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
   const [municipio, setMunicipio] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,15 +67,21 @@ export default function TemNoPosto({ onNavigate }: TemNoPostoProps) {
     return Array.from(set).sort();
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
+ const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!municipio || !searchTerm) return;
 
-    // Filtra todos os correspondentes na base de dados
-    const found = medicinesData.filter(m => 
-      m.municipio === municipio && 
-      m.medicamento.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Limpa a busca e divide em termos (ex: "sulfametoxazol trimetoprima" -> ['sulfametoxazol', 'trimetoprima'])
+    const searchWords = normalizeStr(searchTerm).split(/\s+/).filter(Boolean);
+
+    const found = medicinesData.filter(m => {
+      if (m.municipio !== municipio) return false;
+
+      const medNameNormalized = normalizeStr(m.medicamento);
+
+      // O "every" garante que TODAS as palavras pesquisadas devem ser encontradas ou aproximadas
+      return searchWords.every(word => isMatchWithTolerance(word, medNameNormalized));
+    });
 
     if (found.length > 0) {
       setResults(found);
