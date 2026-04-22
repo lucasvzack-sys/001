@@ -119,6 +119,8 @@ export default function Portal({ onNavigate }: PortalProps) {
             </div>
           </div>
 
+          <AdSpace className="mt-12 max-w-2xl mx-auto" />
+
           <div className="mt-16 text-justify bg-white/80 p-8 rounded-3xl shadow-sm border border-gray-100">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Decisões clínicas inteligentes, no ritmo da sua rotina!</h2>
             <p className="text-gray-600 mb-4 leading-relaxed">
@@ -138,8 +140,6 @@ export default function Portal({ onNavigate }: PortalProps) {
             </p>
           </div>
           {/* ========================================== */}
-
-          <AdSpace className="mt-12 max-w-2xl mx-auto" />
         </motion.div>
       </div>
     </div>
