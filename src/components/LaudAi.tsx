@@ -343,18 +343,18 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
   
   <div className="space-y-6 text-gray-600 leading-relaxed">
     <p>
-      A rotina em enfermarias, ambulatórios e serviços de emergência exige agilidade, precisão e foco. A sobrecarga cognitiva é um desafio real para médicos e estudantes, especialmente durante os intensos estágios do internato e plantões, onde o tempo para tomada de decisão é escasso. O <strong>LaudAí</strong> foi desenvolvido para atuar como um assistente de produtividade clínica, utilizando inteligência artificial para processar e sumarizar laudos de exames complementares extensos.
+      A rotina em enfermarias, ambulatórios e serviços de emergência exige agilidade, precisão e foco. A sobrecarga cognitiva é um desafio real para médicos e estudantes, onde o tempo para tomada de decisão é escasso. O <strong>LaudAí</strong> foi desenvolvido para atuar como um assistente de produtividade clínica, utilizando inteligência artificial para processar e sumarizar laudos de exames complementares extensos.
     </p>
 
     <div className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
-      <h3 className="text-lg font-bold text-medical-blue mb-2">Como funciona e quando utilizar?</h3>
+      <h3 className="text-lg font-bold text-medical-blue mb-2">Como utilizar?</h3>
       <p>
-        Ao inserir o texto bruto de um exame (como tomografias, ressonâncias ou ecocardiogramas), a ferramenta estrutura as informações, destacando os achados principais, alterações significativas e as conclusões do médico especialista. Isso facilita a evolução diária em prontuários, a preparação para rounds clínicos e a passagem de plantão, organizando os dados de forma clara e acionável.
+        Ao inserir o texto bruto de um exame (como laboratoriais, tomografias, ressonâncias ou ecocardiogramas), a ferramenta estrutura as informações, destacando os achados principais, alterações significativas e as conclusões presentesm, facilitando a evolução diária em prontuários, a preparação para rounds clínicos e a passagem de plantão.
       </p>
     </div>
 
     <section>
-      <h3 className="text-lg font-bold text-gray-800 mb-2">Segurança e Prática Baseada em Evidências</h3>
+      <h3 className="text-lg font-bold text-gray-800 mb-2">MAS ATENÇÃO...</h3>
       <p>
         É fundamental ressaltar que a inteligência artificial atua como uma ferramenta de apoio à leitura. O uso do LaudAí não isenta o profissional da responsabilidade de avaliar o laudo original em sua totalidade, tampouco substitui a correlação clínica com a anamnese e o exame físico do paciente. O objetivo é reduzir o tempo burocrático e permitir que o foco retorne para onde realmente importa: o cuidado com o paciente.
       </p>
