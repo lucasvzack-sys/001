@@ -50,6 +50,8 @@ return (
 
       <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
         
+        {/* O primeiro anúncio que ficava aqui foi removido */}
+        
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -185,6 +187,7 @@ return (
             <p className="text-gray-600 mb-6">Saiba onde deve retirar o seu medicamento:</p>
 
             <div className="space-y-4">
+              {/* Componente Básico */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-green-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Básico
@@ -195,6 +198,7 @@ return (
                 </div>
               </div>
 
+              {/* Componente Especializado */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-blue-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Especializado
@@ -205,6 +209,7 @@ return (
                 </div>
               </div>
 
+              {/* Componente Estratégico */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-orange-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Estratégico
@@ -215,6 +220,7 @@ return (
                 </div>
               </div>
 
+              {/* Oncológico */}
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="px-4 py-2 bg-purple-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl min-w-[130px] text-center shadow-sm">
                   Oncológico
@@ -227,8 +233,17 @@ return (
             </div>
           </div>
         )}
+        {/* FIM DA LEGENDA DO SUS */}
         
- {/* Bloco de Texto Educativo para AdSense */}
+        <div className="mt-16 space-y-6">
+          <AdSpace /> 
+          <CrossPromo target="laudai" onNavigate={onNavigate} />
+          <CrossPromo target="calculai" onNavigate={onNavigate} />
+          <AdSpace />
+        </div>
+      </main>
+
+      {/* Bloco de Texto Educativo para AdSense */}
 <div className="mt-16 bg-white/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-100 text-left">
   <h2 className="text-2xl font-bold text-gray-800 mb-4">Adesão Terapêutica e o papel do SUS</h2>
   <div className="space-y-4 text-gray-600 leading-relaxed">
@@ -242,14 +257,6 @@ return (
   </div>
 </div>
 
-        <div className="mt-16 space-y-6">
-          <AdSpace /> 
-          <CrossPromo target="laudai" onNavigate={onNavigate} />
-          <CrossPromo target="calculai" onNavigate={onNavigate} />
-          <AdSpace />
-        </div>
-      </main>
-
       <footer className="bg-gray-50 py-12 px-4 border-t border-gray-100 mt-auto">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
@@ -262,4 +269,3 @@ return (
     </div>
   );
 }
-```
