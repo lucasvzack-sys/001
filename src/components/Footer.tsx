@@ -33,13 +33,12 @@ export default function Footer({ onNavigate }: { onNavigate: (view: string) => v
             >
             Política de Privacidade
           </button>
-          <button 
-            onClick={() => navigate('/contato')} 
-            className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
-          >
+          <button onClick={() => onNavigate('termos')} className="hover:text-medical-blue transition-colors">
+            Termos de Uso
+          </button>
+          <button onClick={() => onNavigate('contato')} className="hover:text-medical-blue transition-colors">
             Contato
           </button>
-          <button 
             onClick={() => onNavigate('sobre')} 
             className="text-sm text-gray-500 hover:text-orange-600 transition-colors font-medium"
           >
