@@ -44,7 +44,7 @@ export default function PrivacyPolicy({ onNavigate }: { onNavigate: (view: any) 
             </section>
 
              <section>
-              <h2 className="text-xl font-bold text-gray-800 mb-4"> Cookies e Publicidade do Google AdSense</h2>
+              <h2 className="text-xl font-bold text-gray-800 mb-4"> 2.Cookies e Publicidade do Google AdSense</h2>
               <p className="mb-4">
                 Para manter o portal gratuito e acessível, utilizamos o <strong>Google AdSense</strong> para veicular anúncios. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios neste site:
               </p>
