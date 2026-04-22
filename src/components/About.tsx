@@ -24,7 +24,7 @@ export default function About({ onNavigate }: AboutProps) {
           {/* CABEÇALHO COM IMAGEM AMPLIADA */}
           <div className="bg-orange-50 px-8 py-12 border-b border-orange-100 text-center flex flex-col items-center">
             <img 
-              src="/sussegado.png" 
+              src="/susegado.png" 
               alt="Logo Sussego" 
               className="w-36 md:w-48 h-auto mb-8 object-contain drop-shadow-md transform hover:scale-105 transition-transform duration-300" 
             />
