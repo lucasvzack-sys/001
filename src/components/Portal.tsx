@@ -140,14 +140,18 @@ export default function Portal({ onNavigate }: PortalProps) {
             </p>
           </div>
 
-          <footer className="bg-white py-12 px-4 border-t border-gray-200">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-4">Aviso Ético e Legal</p>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            As ferramentas são destinadas exclusivamente para fins educativos e de apoio à decisão clínica. O conteúdo apresentado não substitui, em circunstância alguma, a avaliação, o diagnóstico ou o tratamento por um profissional de saúde qualificado. A responsabilidade pelas decisões clínicas recai inteiramente sobre o profissional assistente. O SUSsego não se responsabiliza pelo uso indevido destas ferramentas. A responsabilidade final pela informação médica é do profissional assistente.
-          </p>
-          {/* ========================================== */}
-        </motion.div>
+         {/* SEÇÃO DE AVISO ÉTICO E LEGAL */}
+        <div className="bg-amber-50 border border-amber-100 rounded-2xl p-6 max-w-4xl mx-auto">
+          <div className="flex items-start">
+            <AlertTriangle className="text-amber-600 mr-4 flex-shrink-0" size={24} />
+            <div className="text-left">
+              <h4 className="text-amber-800 font-bold mb-1 uppercase text-xs tracking-wider">Aviso Importante</h4>
+              <p className="text-amber-900/70 text-sm leading-relaxed">
+                As ferramentas disponibilizadas no Portal SUSsegado destinam-se a apoiar a decisão clínica de profissionais e estudantes de saúde devidamente capacitados. <strong>Não substituem o julgamento clínico individual.</strong> O Portal não se responsabiliza por decisões tomadas sem a devida avaliação presencial do paciente.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
