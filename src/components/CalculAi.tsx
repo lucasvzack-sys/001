@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Activity, Heart, Brain, Baby, Stethoscope,
-  ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator, Search
+  ArrowLeft, Smile, Calendar, PlusSquare, FileText, Calculator, Search,
+  BookOpen, Info, AlertTriangle, CheckCircle, BarChart2
 } from 'lucide-react';
 import { View } from '../types';
 import Navbar from './Navbar';
