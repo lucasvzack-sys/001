@@ -335,11 +335,15 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
         </div>
       </main>
 
-        <div className="mb-8 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-gray-600 leading-relaxed text-sm md:text-base text-center">
-          <h2>className="text-2xl font-bold text-gray-800 mb-4">Como funciona e quando utilizar?</h2>
-            <p className="text-gray-600 mb-4 leading-relaxed">
-            Ao inserir o texto bruto de um exame (como laboratoriais, tomografias, ressonâncias ou ecocardiogramas), a ferramenta estrutura as informações, destacando os achados principais, alterações significativas e as conclusões. Isso facilita a evolução diária em prontuários, a preparação para rounds clínicos e a passagem de plantão, organizando os dados de forma clara e acionável.
-            </p>
+      <section className="mt-16 text-left bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          Como o LaudAí otimiza o raciocínio clínico na prática médica?
+        </h2>
+  
+        <div className="space-y-6 text-gray-600 leading-relaxed">
+          <p>
+            A rotina em enfermarias, ambulatórios e serviços de emergência exige agilidade, precisão e foco. A sobrecarga cognitiva é um desafio real para médicos e estudantes, especialmente durante os intensos estágios do internato e plantões, onde o tempo para tomada de decisão é escasso. O <strong>LaudAí</strong> foi desenvolvido para atuar como um assistente de produtividade clínica, utilizando inteligência artificial para processar e sumarizar laudos de exames complementares extensos.
+          </p>
 
       <footer className="bg-white py-12 px-4 border-t border-gray-200">
         <div className="max-w-4xl mx-auto text-center">
