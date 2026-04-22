@@ -119,7 +119,7 @@ export default function Portal({ onNavigate }: PortalProps) {
             </div>
           </div>
 
-          <div className="mt-16 text-left bg-white/80 p-8 rounded-3xl shadow-sm border border-gray-100">
+          <div className="mt-16 text-justify bg-white/80 p-8 rounded-3xl shadow-sm border border-gray-100">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Decisões clínicas inteligentes, no ritmo da sua rotina!</h2>
             <p className="text-gray-600 mb-4 leading-relaxed">
               No cenário dinâmico da prática médica, cada segundo conta — e cada decisão carrega impacto direto na segurança e no desfecho do paciente. Foi justamente diante dessa realidade que nasceu o <strong>SUSsego.com.br:</strong> uma plataforma pensada para simplificar, agilizar e qualificar o atendimento em ambientes de alta demanda, como enfermarias e serviços de emergência.
