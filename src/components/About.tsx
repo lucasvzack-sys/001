@@ -13,18 +13,20 @@ export default function About({ onNavigate }: AboutProps) {
     <div className="min-h-screen bg-gray-50 flex flex-col pb-10">
       <Navbar currentView="sobre" onNavigate={onNavigate} />
 
-      <main className="flex-grow max-w-4xl mx-auto px-6 py-12">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 md:p-12"
-        >
-          <div className="text-center mb-12">
-            {/* Logo aumentado de h-24 para h-32 */}
-            <img src="/susegado.png" alt="SUSsego Logo" className="h-32 mx-auto mb-6" />
-            <h1 className="text-4xl font-extrabold text-gray-800 mb-4">Sobre o SUSsego</h1>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              Tecnologia e Medicina unidas para transformar a saúde pública no Brasil.
+      <main className="max-w-4xl mx-auto px-4 py-12">
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+          {/* CABEÇALHO COM IMAGEM AMPLIADA */}
+          <div className="bg-orange-50 px-8 py-12 border-b border-orange-100 text-center flex flex-col items-center">
+            <img 
+              src="/calculai.png" 
+              alt="Logo CalculAí" 
+              className="w-48 md:w-64 h-auto mb-8 object-contain drop-shadow-md transform hover:scale-105 transition-transform duration-300" 
+            />
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+              Sobre o CalculAí e o Portal SUSsegado
+            </h1>
+            <p className="text-lg text-orange-800/80 max-w-2xl mx-auto">
+              Tecnologia e Medicina Baseada em Evidências unidas para facilitar a prática clínica e a saúde pública.
             </p>
           </div>
 
