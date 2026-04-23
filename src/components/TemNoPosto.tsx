@@ -109,7 +109,7 @@ return (
           className="text-center mb-12 flex flex-col items-center"
         >
           <img 
-            src="/temnoposto.png" 
+            src="/temnoposto.webp" 
             alt="Logo Tem No Posto" 
             className="w-32 md:w-48 h-auto mb-6 object-contain"
           />
