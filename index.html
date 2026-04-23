@@ -1,14 +1,6 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-64X3HGKRNL"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-64X3HGKRNL');
-    </script>
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -18,8 +10,9 @@
     
     <title>SUSsego.com.br - Sua central de ferramentas médicas e calculadoras clínicas</title>
     <link rel="icon" type="image/png" href="/susegado.png" />
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5745806143307154" crossorigin="anonymous"></script>
+    
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   </head>
   <body>
     <div id="aviso-sistema-antigo" style="display: none; background-color: #f9b233; color: #000000; padding: 12px 20px; text-align: center; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; border-bottom: 2px solid #d99a29;">
@@ -40,5 +33,39 @@
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+      var scriptsLoaded = false;
+      function loadHeavyScripts() {
+        if (scriptsLoaded) return;
+        scriptsLoaded = true;
+
+        // 1. Injetar Google Analytics
+        var gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-64X3HGKRNL";
+        document.body.appendChild(gtagScript);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-64X3HGKRNL');
+
+        // 2. Injetar Google AdSense
+        var adsScript = document.createElement('script');
+        adsScript.async = true;
+        adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5745806143307154";
+        adsScript.crossOrigin = "anonymous";
+        document.body.appendChild(adsScript);
+      }
+
+      // Descarrega os scripts assim que o utilizador rolar a página, mover o rato ou tocar no ecrã do telemóvel
+      window.addEventListener('scroll', loadHeavyScripts, { passive: true });
+      window.addEventListener('mousemove', loadHeavyScripts, { passive: true });
+      window.addEventListener('touchstart', loadHeavyScripts, { passive: true });
+      
+      // Carregamento de segurança: Se o utilizador abrir o site e não mexer em nada durante 4 segundos, carrega os scripts na mesma.
+      setTimeout(loadHeavyScripts, 4000);
+    </script>
   </body>
 </html>
