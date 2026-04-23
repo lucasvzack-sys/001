@@ -162,7 +162,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           className="text-center mb-10 flex flex-col items-center"
         >
           <img 
-            src="/laudai.png" 
+            src="/laudai.webp" 
             alt="Logo LaudAí" 
             className="w-32 md:w-48 h-auto mb-6 object-contain" 
           />
