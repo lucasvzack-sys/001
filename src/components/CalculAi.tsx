@@ -2132,7 +2132,7 @@ const renderCalculatorContent = () => {
                 <ArrowLeft size={20} className="mr-2" /> Voltar
               </button>
              <div className="flex items-center bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100">
-                <img src="/calculai.png" alt="Logo" className="w-24 md:w-32 h-auto mr-4 object-contain" />
+                <img src="/calculai.webp" alt="Logo" className="w-24 md:w-32 h-auto mr-4 object-contain" />
                 <h2 className="text-xl md:text-2xl font-bold text-gray-800">{currentCalcData?.title}</h2>
               </div>
             </div>
