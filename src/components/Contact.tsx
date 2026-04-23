@@ -16,7 +16,7 @@ export default function Contact({ onNavigate }: any) {
               <div className="bg-orange-500 p-8 rounded-full mb-6 shadow-lg">
                 <Mail size={80} strokeWidth={1.5} className="text-white" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">Fale Connosco</h2>
+              <h2 className="text-2xl font-bold mb-2">Fale Conosco</h2>
               <p className="text-orange-100 text-center text-sm">
                 Estamos aqui para ouvir as suas sugestões, críticas ou propostas de parceria.
               </p>
@@ -25,9 +25,9 @@ export default function Contact({ onNavigate }: any) {
             {/* COLUNA DA DIREITA: INFORMAÇÕES DE CONTACTO */}
             <div className="p-8 md:p-12 flex flex-col justify-center space-y-8">
               <div>
-                <h1 className="text-3xl font-extrabold text-gray-800 mb-2">Contacto</h1>
+                <h1 className="text-3xl font-extrabold text-gray-800 mb-2">Contato</h1>
                 <p className="text-gray-500">
-                  Utilize os canais abaixo para entrar em contacto direto com a nossa equipa.
+                  Utilize os canais abaixo para entrar em contato direto com a nossa equipa.
                 </p>
               </div>
 
@@ -55,12 +55,7 @@ export default function Contact({ onNavigate }: any) {
                   </div>
                 </div>
               </div>
-
-              <p className="text-xs text-gray-400 italic">
-                *Respondemos habitualmente num prazo de 24 a 48 horas úteis.
-              </p>
             </div>
-
           </div>
         </div>
       </main>
