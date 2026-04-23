@@ -164,7 +164,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
           <img 
             src="/laudai128192.webp" 
             alt="Logo LaudAí" 
-            className="w-40 md:w-56 h-auto mb-6 object-contain" 
+            className="w-48 md:w-64 h-auto mb-6 object-contain" 
           />
           <h2 className="text-3xl font-bold text-gray-900 mb-4">LaudAí</h2>
           <p className="text-gray-600 max-w-xl mx-auto">
