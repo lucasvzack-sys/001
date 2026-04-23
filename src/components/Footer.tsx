@@ -50,7 +50,7 @@ export default function Footer({ onNavigate }: { onNavigate: (view: string) => v
             >
               Sobre o Projeto
             </button>
-            <span className="flex items-center text-sm font-bold text-gray-400">
+            <span className="flex items-center text-sm font-bold text-gray-500">
               Feito com <Heart size={14} className="mx-1 text-red-500" /> no Brasil
             </span>
           </div>
