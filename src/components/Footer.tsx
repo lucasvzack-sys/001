@@ -11,7 +11,7 @@ export default function Footer({ onNavigate }: { onNavigate: (view: string) => v
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
           <div>
             <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-              <img src="/susegadoicone.png" alt="Logo" className="w-8 h-8 object-contain" />
+              <img src="/susegadoicone.webp" alt="Logo" className="w-8 h-8 object-contain" />
               <span className="text-xl font-black text-gray-800 tracking-tighter">SUSsego.com.br</span>
             </div>
             <p className="text-gray-500 max-w-sm">
