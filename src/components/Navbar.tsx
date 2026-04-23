@@ -16,7 +16,7 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
           onClick={() => onNavigate('portal')}
         >
           <img 
-            src="/susegadoicone.png" 
+            src="/susegadoicone.webp"
             alt="SUSsego.com.br"
             className="h-14 mr-2 group-hover:scale-110 transition-transform"
             referrerPolicy="no-referrer"
