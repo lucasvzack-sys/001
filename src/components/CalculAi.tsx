@@ -2142,7 +2142,7 @@ const renderCalculatorContent = () => {
           <>
             <div className="text-center mb-12 flex flex-col items-center animate-fade-in">
               <img 
-                src="/calculai.png" 
+                src="/calculai.webp" 
                 alt="Logo CalculAí" 
                 className="w-32 md:w-48 h-auto mb-6 object-contain"
               />
