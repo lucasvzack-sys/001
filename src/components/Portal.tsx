@@ -140,8 +140,8 @@ export default function Portal({ onNavigate }: PortalProps) {
             </p>
           </div>
 
-         {/* SEÇÃO DE AVISO ÉTICO E LEGAL */}
-        <div className="bg-amber-50 border border-amber-100 rounded-2xl p-6 max-w-4xl mx-auto">
+        {/* SEÇÃO DE AVISO ÉTICO E LEGAL */}
+        <div className="mt-16 bg-amber-50 border border-amber-100 rounded-2xl p-6 max-w-4xl mx-auto">
           <div className="flex items-start">
             <AlertTriangle className="text-amber-600 mr-4 flex-shrink-0" size={24} />
             <div className="text-left">
