@@ -89,7 +89,7 @@ export default function Navbar({ currentView, onNavigate }: NavbarProps) {
             className={`p-2 sm:px-4 sm:py-2 rounded-xl flex items-center font-bold transition-colors ${
               currentView === 'doar'
                 ? 'bg-pink-100 text-pink-700'
-                : 'text-pink-600 bg-pink-50 hover:bg-pink-100'
+                : 'text-pink-700 bg-pink-50 hover:bg-pink-100'
             }`}
             title="Apoie o Projeto"
           >
