@@ -61,7 +61,7 @@ export default function Portal({ onNavigate }: PortalProps) {
               <p className="text-gray-600">
                 Consulte a disponibilidade de medicamentos gratuitos na rede pública do seu município de forma rápida e fácil.
               </p>
-              <div className="mt-6 flex items-center text-sus-green font-bold">
+              <div className="mt-6 flex items-center text-green-700 font-bold">
                 Acessar ferramenta <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
               </div>
             </motion.button>
@@ -107,7 +107,7 @@ export default function Portal({ onNavigate }: PortalProps) {
               <p className="text-gray-600">
                 Escores e calculadoras médicas essenciais: IMC, Risco Cardiovascular, Glasgow, CURB-65 e muito mais.
               </p>
-              <div className="mt-6 flex items-center text-orange-600 font-bold">
+              <div className="mt-6 flex items-center text-orange-700 font-bold">
                 Acessar calculadoras <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
               </div>
             </motion.button>
@@ -146,7 +146,7 @@ export default function Portal({ onNavigate }: PortalProps) {
             <AlertTriangle className="text-amber-600 mr-4 flex-shrink-0" size={24} />
             <div className="text-left">
               <h4 className="text-amber-800 font-bold mb-1 uppercase text-xs tracking-wider">Aviso Importante</h4>
-              <p className="text-amber-900/70 text-sm leading-relaxed">
+              <p className="text-amber-900 text-sm leading-relaxed">
                 As ferramentas disponibilizadas no Portal SUSsegado destinam-se a apoiar a decisão clínica de profissionais e estudantes de saúde devidamente capacitados. <strong>Não substituem o julgamento clínico individual.</strong> O Portal não se responsabiliza por decisões tomadas sem a devida avaliação presencial do paciente.
               </p>
             </div>
