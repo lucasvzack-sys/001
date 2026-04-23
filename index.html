@@ -26,14 +26,8 @@
       if (isOldSystem) { document.getElementById('aviso-sistema-antigo').style.display = 'block'; }
     </script>
 
-    <div id="root">
-      <div style="display: none;">
-        <h1>Central de Ferramentas Médicas - SUSsego</h1>
-        <p>Bem-vindo ao SUSsego, a plataforma desenvolvida para facilitar a prática médica baseada em evidências. Nossas ferramentas auxiliam médicos e estudantes de medicina em cálculos clínicos, prognósticos e triagem.</p>
-        <h2>Calculadoras Médicas e Escores Clínicos</h2>
-        <p>Acesse rapidamente o cálculo da Taxa de Filtração Glomerular (CKD-EPI, Cockcroft-Gault), escores de risco cardiovascular (PREVENT, HAS-BLED, CHA2DS2-VASc), avaliação neurológica (Escala de Glasgow, NIHSS, ASPECTS) e rotinas de obstetrícia e pediatria (Idade Gestacional, Caprini, Ballard).</p>
-      </div>
-    </div>
+    <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
 
     <script>
@@ -42,7 +36,7 @@
         if (scriptsLoaded) return;
         scriptsLoaded = true;
 
-        // 1. Injetar Google Analytics
+        // 1. Injetar Google Analytics (Mantido com lazy-load para performance)
         var gtagScript = document.createElement('script');
         gtagScript.async = true;
         gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-64X3HGKRNL";
@@ -52,16 +46,12 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-64X3HGKRNL');
-
-        // AQUI FOI REMOVIDA A INJEÇÃO ANTIGA DO ADSENSE
       }
 
-      // Descarrega os scripts assim que o utilizador rolar a página, mover o rato ou tocar no ecrã do telemóvel
       window.addEventListener('scroll', loadHeavyScripts, { passive: true });
       window.addEventListener('mousemove', loadHeavyScripts, { passive: true });
       window.addEventListener('touchstart', loadHeavyScripts, { passive: true });
       
-      // Carregamento de segurança: Se o utilizador abrir o site e não mexer em nada durante 4 segundos, carrega os scripts na mesma.
       setTimeout(loadHeavyScripts, 4000);
     </script>
   </body>
