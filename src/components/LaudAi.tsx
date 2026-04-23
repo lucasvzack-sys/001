@@ -345,7 +345,7 @@ export default function LaudAi({ onNavigate }: LaudAiProps) {
       </main>
 
      {/* Bloco Informativo para AdSense e SEO */}
-<section className="mt-16 text-justify bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
+<section className="mt-16 mb-16 text-justify bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
   <h2 className="text-2xl font-bold text-gray-800 mb-6">
     Como o LaudAí otimiza o raciocínio clínico na prática médica?
   </h2>
