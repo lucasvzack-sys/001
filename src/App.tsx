@@ -55,7 +55,7 @@ export default function App() {
     <div className="min-h-screen font-sans flex flex-col">
       <CookieBanner />
       
-      <div className="flex-grow">
+      <main className="flex-grow">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             
@@ -116,7 +116,7 @@ export default function App() {
 
           </Routes>
         </AnimatePresence>
-      </div>
+      </main>
       
       <Footer onNavigate={handleNavigate} />
     </div>
