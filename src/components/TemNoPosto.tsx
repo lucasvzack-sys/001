@@ -113,7 +113,7 @@ return (
             alt="Logo Tem No Posto" 
             className="w-32 md:w-48 h-auto mb-6 object-contain"
           />
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">TemNoPosto?</h2>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">TemNoPosto?</h1>
           <p className="text-gray-600">Verifique a disponibilidade gratuita na rede pública do seu município.</p>
           <p className="text-gray-600 mt-2 text-sm max-w-2xl">
             ATENÇÃO: Mesmo que um medicamento apareça na lista nacional (RENAME), cada prefeitura tem autonomia para decidir o que será padronizado localmente, por isso sempre confira sua cidade.
