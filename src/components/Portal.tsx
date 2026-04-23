@@ -25,7 +25,7 @@ export default function Portal({ onNavigate }: PortalProps) {
           className="max-w-4xl w-full text-center"
         >
           <img 
-            src="/susegado.webp"
+            src="/susegadoportal.webp"
             alt="SUSsegado Logo" 
             className="h-90 mx-auto mb-8 drop-shadow-2xl"
             referrerPolicy="no-referrer"
@@ -50,7 +50,7 @@ export default function Portal({ onNavigate }: PortalProps) {
             >
               <div className="flex items-center mb-4">
                 <img 
-                  src="/temnoposto.webp"
+                  src="/temnopostoportal.webp"
                   alt="TemNoPosto Logo" 
                   className="h-16 mr-4"
                   referrerPolicy="no-referrer"
@@ -74,7 +74,7 @@ export default function Portal({ onNavigate }: PortalProps) {
             >
               <div className="flex items-center mb-4">
                 <img 
-                  src="/laudai.webp"
+                  src="/laudaiportal.webp"
                   alt="LaudAí Logo" 
                   className="h-16 mr-4"
                   referrerPolicy="no-referrer"
@@ -97,7 +97,7 @@ export default function Portal({ onNavigate }: PortalProps) {
             >
               <div className="flex items-center mb-4">
                 <img 
-                  src="/calculai.webp"
+                  src="/calculaiportal.webp"
                   alt="CalculAí Logo" 
                   className="h-16 mr-4"
                   referrerPolicy="no-referrer"
