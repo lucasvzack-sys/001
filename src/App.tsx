@@ -18,9 +18,11 @@ export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
- useEffect(() => {
+useEffect(() => {
     const path = location.pathname;
+    const baseUrl = "https://www.sussego.com.br";
 
+    // 1. Atualizar o Título da Página (Seu código original expandido)
     if (path === '/') {
       document.title = "SUSsego.com.br";
     } else if (path.includes('/temnoposto')) {
@@ -40,8 +42,27 @@ export default function App() {
     } else if (path === '/sobre') {
       document.title = "Sobre o Projeto - SUSsego.com.br";
     }
-  }, [location.pathname]);
 
+    // 2. Lógica do Passo 3: Atualizar a Tag Canónica
+    // Criamos a URL completa (ex: https://www.sussego.com.br/calculai)
+    const canonicalUrl = path === '/' ? baseUrl + '/' : baseUrl + path;
+    
+    // Procuramos a tag <link id="canonical-link"> que você criou no index.html
+    let canonicalTag = document.getElementById('canonical-link') as HTMLLinkElement;
+    
+    if (canonicalTag) {
+      canonicalTag.href = canonicalUrl;
+    } else {
+      // Caso a tag ainda não exista (segurança), criamos uma nova
+      canonicalTag = document.createElement('link');
+      canonicalTag.id = 'canonical-link';
+      canonicalTag.rel = 'canonical';
+      canonicalTag.href = canonicalUrl;
+      document.head.appendChild(canonicalTag);
+    }
+    
+  }, [location.pathname]); // Executa sempre que a rota mudar
+  
   const handleNavigate = (view: View | string) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (view === 'portal') {
